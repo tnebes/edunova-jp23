@@ -1,0 +1,10 @@
+out/
+learning/
+*.java~
+*.un~
+*.swp
+.idea/
+/**/.idea/
+*.iml
+.gitignore~
+*.class
