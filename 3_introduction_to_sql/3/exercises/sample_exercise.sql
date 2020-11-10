@@ -21,19 +21,19 @@ create table course_group(
 );
 
 create table lecturer(
-    lecturer_id int,
-    lecturer_name varchar(50),
-    course_id int,
-    pid char(11),
-    email varchar(50),
-    iban varchar(50)
+    lecturer_id         int,
+    lecturer_name       varchar(50),
+    course_id           int,
+    pid                 char(11),
+    email               varchar(50),
+    iban                varchar(50)
 );
 
 create table student(
-    student_id int,
-    student_first_name varchar(50),
-    student_last_name varchar(50),
-    pid char(11),
-    email varchar(50),
-    contract_number varchar(50)
+    student_id          int,
+    student_first_name  varchar(50),
+    student_last_name   varchar(50),
+    pid                 char(11),
+    email               varchar(50),
+    contract_number     varchar(50)
 );
