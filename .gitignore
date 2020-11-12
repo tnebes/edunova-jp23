@@ -9,3 +9,4 @@ learning/
 .gitignore~
 *.class
 *.log
+*.sql~
