@@ -1,7 +1,7 @@
-drop database if exists edunovajp23_3_3_organisation;
-create database edunovajp23_3_3_organisation;
+drop database if exists jp23_3_3_organisation;
+create database jp23_3_3_organisation;
 
-use edunovajp23_3_3_organisation;
+use jp23_3_3_organisation;
 
 create table person(
     id              int,

@@ -8,3 +8,4 @@ learning/
 *.iml
 .gitignore~
 *.class
+*.log

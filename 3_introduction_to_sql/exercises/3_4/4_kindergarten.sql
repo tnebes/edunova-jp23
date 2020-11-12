@@ -1,7 +1,7 @@
-drop database if exists edunovajp23_3_4_kindergarten;
-create database edunovajp23_3_4_kindergarten;
+drop database if exists jp23_3_4_kindergarten;
+create database jp23_3_4_kindergarten;
 
-use edunovajp23_3_4_kindergarten;
+use jp23_3_4_kindergarten;
 
 create table edu_group(
     id          int,
