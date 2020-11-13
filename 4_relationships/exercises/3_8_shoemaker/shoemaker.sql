@@ -23,8 +23,7 @@ create table apprentice(
 	id			int primary key not null auto_increment,
 	first_name	varchar(50) not null,
 	last_name	varchar(50) not null,
-	iban		varchar(32) not null,
-	job			int
+	iban		varchar(32) not null
 );
 
 create table job(
@@ -34,11 +33,21 @@ create table job(
 	description	varchar(255)
 );
 
+create table apprentice_job(
+	apprentice	int not null,
+	job			int not null
+);
+
 alter table repair
 	add foreign key (repair_user) references repair_user(id);
+
 alter table footwear
 	add foreign key (job) references job(id);
-alter table apprentice
+
+alter table apprentice_job
+	add foreign key (apprentice) references apprentice(id);
+alter table apprentice_job
 	add foreign key (job) references job(id);
+
 alter table job
 	add foreign key (repair) references repair(id);
