@@ -16,10 +16,14 @@ create table workshop(
 	teacher		int not null
 );
 
-create table child(
+create table person(
 	id			int primary key not null auto_increment,
 	first_name	varchar(50) not null,
-	last_name	varchar(50) not null,
+	last_name	varchar(50) not null
+);
+
+create table child(
+	person		int not null,
 	phone_num	varchar(20) not null
 );
 
@@ -29,16 +33,21 @@ create table child_workshop(
 );
 
 create table teacher(
-	id			int primary key not null auto_increment,
-	first_name	varchar(50) not null,
-	last_name	varchar(50) not null
+	person		int not null
 );
 
-alter table workshop
-	add foreign key (teacher) references teacher(id);
+alter table child
+	add foreign key (person) references person(id);
 
 alter table child_workshop
-	add foreign key (child) references child(id);
+	add foreign key (child) references child(person);
 alter table child_workshop
 	add foreign key (workshop) references workshop(id);
+
+alter table teacher
+	add foreign key (person) references person(id);
+
+alter table workshop
+	add foreign key (teacher) references teacher(person);
+
 
