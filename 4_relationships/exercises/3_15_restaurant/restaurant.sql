@@ -10,26 +10,26 @@ create database jp23_3_15_restaurant;
 use jp23_3_15_restaurant;
 
 create table menu(
-	id			int primary key not null unique auto_increment,
+	id			int primary key not null auto_increment,
 	name		varchar(50)
 );
 
 create table category(
-	id			int primary key not null unique auto_increment,
+	id			int primary key not null auto_increment,
 	menu		int null,
 	name		varchar(50) not null,
 	description	varchar(255)
 );
 
 create table meal(
-	id			int primary key not null unique auto_increment,
+	id			int primary key not null auto_increment,
 	category	int not null,
 	name		varchar(50) not null,
 	description	varchar(255) not null
 );
 
 create table drink(
-	id			int primary key not null unique auto_increment,
+	id			int primary key not null auto_increment,
 	name		varchar(50) not null,
 	description	varchar(255)
 );
