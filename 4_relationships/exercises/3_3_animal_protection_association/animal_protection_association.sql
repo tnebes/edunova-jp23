@@ -1,7 +1,7 @@
 drop database if exists jp23_3_3_animal_protection_association;
 create database jp23_3_3_animal_protection_association;
 
-use jp23_3_3_animal_:protection_association;
+use jp23_3_3_animal_protection_association;
 
 create table person(
 	id					int primary key not null auto_increment,
