@@ -1,6 +1,6 @@
-/* the book club has memebers who read books.
- * a reader can read many books
- * while a book can be read by many readers.
+/* the book club has members who read books
+ * a member can read many books
+ * while a book can be read by many members.
  * Each book has one and only one owner
  * while an owner can have many books.
  * the owner is a reader.
@@ -17,48 +17,28 @@ create table member(
    last_name      varchar(50) not null
 );
 
-create table reader(
-   member         int not null
-);
-
-create table owner(
-   reader         int not null
-);
-
 create table book(
-   id             int primary key not null auto_increment,
-   issn           char(8) not null,
-   author         int not null,
-   year           int(4) not null,
-   owner          int not null
+   id                int primary key not null auto_increment,
+   issn              char(8) not null,
+   author_last_name  varchar(50) not null,
+   author_first_name varchar(50) not null,
+   year              int(4) not null,
+   owner             int not null
 );
 
-create table book_reader(
+create table book_member(
    book           int not null,
-   reader         int not null
+   member         int not null,
+   active         bool
 );
 
-create table author(
-   id             int primary key not null auto_increment,
-   last_name      varchar(50),
-   first_name     varchar(50)
-);
-
-alter table reader
-   add foreign key (member) references member(id);
-
-alter table owner
-   add foreign key (reader) references reader(member);
-
 alter table book
-   add foreign key (author) references author(id);
-alter table book
-   add foreign key (owner) references owner(reader);
+   add foreign key (owner) references member(id);
 
-alter table book_reader
+alter table book_member
    add foreign key (book) references book(id);
-alter table book_reader
-   add foreign key (reader) references reader(member);
+alter table book_member
+   add foreign key (member) references member(id);
 
 
 
