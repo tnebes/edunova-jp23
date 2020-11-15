@@ -70,7 +70,7 @@ create table assignsubmission_onlinetext(
 
 create table assign_user_flags(
    id                bigint(10) primary key not null auto_increment,
-   userid            bigint(10) null, # TODO missing userid, for all userid now null
+   userid            bigint(10) not null,
    assignment        bigint(10) not null,
    locked            bigint(10) not null,
    mailed            smallint(4) not null,
@@ -81,7 +81,7 @@ create table assign_user_flags(
 
 create table assignfeedback_editpdf_quick(
    id          bigint(10) primary key not null auto_increment,
-   userid      bigint(10) null, # TODO missing userid
+   userid      bigint(10) not null, # TODO missing userid
    rawtext     longtext not null,
    width       bigint(10) not null,
    colour      varchar(10)
@@ -97,7 +97,7 @@ create table assignfeedback_file(
 create table assign_user_mapping(
    id          bigint(10) primary key not null auto_increment,
    assignment  bigint(10) not null,
-   userid      bigint(10) null # TODO missing userid
+   userid      bigint(10) not null # TODO missing userid
 );
 
 create table assign_grades(
@@ -161,18 +161,15 @@ alter table assignsubmission_onlinetext
 alter table assignsubmission_onlinetext
    add foreign key (submission) references assign_submission(id);
 
-/* TODO where does the userid come from??? what???
- * userid missing. cannot be found in database
 alter table assign_user_flags
-   add foreign key (userid) references 
-*/
+   add foreign key (userid) references jp23_moodle_users.user(id);
+
 alter table assign_user_flags
    add foreign key (assignment) references assign(id);
 
-/* TODO userid missing
 alter table assignfeedback_editpdf_quick
-   add foreign key (userid) references
-*/
+   add foreign key (userid) references jp23_moodle_users.user(id);
+
 
 alter table assignfeedback_file
    add foreign key (assignment) references assign(id);
@@ -181,10 +178,9 @@ alter table assignfeedback_file
 
 alter table assign_user_mapping
    add foreign key (assignment) references assign(id);
-/* TODO userid missing
+
 alter table assign_user_mapping
-   add foreign key (userid) references
-*/
+   add foreign key (userid) references jp23_moodle_users.user(id);
 
 alter table assign_grades
    add foreign key (assignment) references assign(id);
