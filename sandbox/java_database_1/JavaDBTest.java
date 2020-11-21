@@ -1,18 +1,26 @@
 /* connect to a database
  * insert dummy values from a list
  */
+package JDBC;
 
 import java.sql.*; // we need this to connect to the db
 
 public class JavaDBTest {
    public static void main(String[] args)
       throws SQLException, ClassNotFoundException { // what does this do?
-      Class.forName("com.mysql.jdbc.Driver");
+      try {
+         Class.forName("com.mysql.jdbc.Driver");
+      } catch (ClassNotFoundException e) {
+         e.printStackTrace();
+      }
       System.out.print("Driver loaded\n");
 
-      // getConnection(dblocation, u, p)
+      String url = "jdbc:mysql://localhost/edunova";
+      String username = "edunova";
+      String password = "edunova";
+
       Connection connect = DriverManager.getConnection(
-         "jdbc:mysql://localhost/edunova", "edunova", "edunova");
+         url, username, password);
 
       String[] names = new String[] {"Tomislav", "Lucija", "Petar",
          "Dragan", "Zeljko", "Bobo"};
