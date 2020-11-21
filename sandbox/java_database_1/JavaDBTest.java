@@ -16,19 +16,19 @@ public class JavaDBTest {
       System.out.print("Driver loaded\n");
 
       // setting up the connection
-      final String url = "jdbc:mysql://localhost/";
-      final String database_name = "java_db_test";
-      final String username = "edunova";
-      final String password = "edunova";
+      final String URL = "jdbc:mysql://localhost/";
+      final String DATABASE_NAME = "java_db_test";
+      final String USERNAME = "edunova";
+      final String PASSWORD = "edunova";
 
       //connecting to localhost to prepare the database
       Connection connection = DriverManager.getConnection(
-         url, username, password);
-      prepareDatabase(connection, database_name);
+         URL, USERNAME, PASSWORD);
+      prepareDatabase(connection, DATABASE_NAME);
 
       //connecting to the prepared database
       connection = DriverManager.getConnection(
-         url + database_name, username, password);
+         URL + DATABASE_NAME, USERNAME, PASSWORD);
 
       //dummy data for the database
       String[] names = new String[] {"Tomislav", "Lucija", "Petar",
