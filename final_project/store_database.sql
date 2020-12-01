@@ -119,6 +119,7 @@ create table invoice (
    customer_id          int,
    customer_order_id    int,
    shipping_info_id     int,
+   transaction_type_id  tinyint,
    status_id            tinyint not null,
    total                decimal(18,2),
    total_discount       tinyint(3),
@@ -133,6 +134,8 @@ alter table invoice
    add foreign key (shipping_info_id) references shipping_info(id);
 alter table invoice
    add foreign key (status_id) references status(id);
+alter table invoice
+   add foreign key (transaction_type_id) references transaction_type(id);
 
 create table warehouse_receipt (
    id                   int primary key not null auto_increment,
