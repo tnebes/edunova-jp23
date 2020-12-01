@@ -11,3 +11,4 @@ learning/
 *.log
 *.sql~
 materials/
+*.bak
