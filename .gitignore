@@ -2,6 +2,7 @@ out/
 learning/
 *.java~
 *.un~
+*.md~
 *.swp
 .idea/
 /**/.idea/
