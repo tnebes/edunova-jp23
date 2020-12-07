@@ -8,6 +8,9 @@ create database final_project_store_database character set utf8;
 
 use final_project_store_database;
 
+/*
+* Thanks @mtutavac!
+*/
 create table address(
    id                int primary key not null auto_increment,
    `type`            enum('billing', 'shipping') not null default 'billing',
