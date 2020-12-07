@@ -26,3 +26,5 @@ insert into muskarac(bojaociju, maraka, zena)
     values  ('smeđa', 100.4, 1),
             ('crna', 56.4, 2),
             ('zelena', 0.5, 3);
+
+#10:00
