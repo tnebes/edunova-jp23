@@ -12,3 +12,5 @@ learning/
 *.sql~
 materials/
 *.bak
+/my_exercises/sql_DDL_DML.pdf
+
