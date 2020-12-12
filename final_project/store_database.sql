@@ -13,7 +13,7 @@ use final_project_store_database;
 */
 create table address(
    id                int primary key not null auto_increment,
-   `type`            enum('billing', 'shipping') not null default 'billing',
+   `type`            bit not null default 0, # 0 - billing, 1 - shipping
    city              varchar(50) not null,
    ZIP_code          varchar(32) not null,
    street            varchar(50) not null,
@@ -24,6 +24,7 @@ create table address(
 
 create table customer(
    id                      int primary key not null auto_increment,
+   `type`                  bit not null default 0, # 0 - natural person, 1 - legal person
    date_of_creation        datetime not null default now(),
    VATIN                   varchar(32),
    national_id_number      varchar(32),                
@@ -60,6 +61,8 @@ create table invoice (
    transaction_type_id        tinyint not null,
    status_id                  tinyint not null,
    invoice_discount_percent   tinyint not null default 0,
+   subtotal                   decimal(10,2) default 0.0, # amount without tax
+   amount_due                 decimal(10,2) default 0.0,
    amount_paid                decimal(10,2) not null default 0.0,
    shipping_address_id        int
 );
@@ -91,12 +94,12 @@ create table article_invoice(
    date_of_creation     datetime not null default now(),
    article_id           int not null,
    invoice_id           int not null,
-   note                 varchar(255),
    discount             tinyint not null default 0,
    quantity             int not null default 1,
    wholesale_price      decimal(10,2) not null,
    retail_price         decimal(10,2),
-   tax_rate             tinyint default 25
+   tax_rate             tinyint default 25,
+   note                 varchar(255)
 );
 
 alter table article_invoice

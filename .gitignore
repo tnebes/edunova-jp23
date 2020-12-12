@@ -11,7 +11,7 @@ learning/
 *.class
 *.log
 *.sql~
-materials/
+/**/materials/
 *.bak
-/my_exercises/sql_DDL_DML.pdf
+/**/sql_DDL_DML.pdf
 
