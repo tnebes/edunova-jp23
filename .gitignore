@@ -1,17 +1,20 @@
 out/
 learning/
+*/.metadata/
+*/bin/
+.idea/
+/**/.idea/
+/**/materials/
+/**/sql_DDL_DML.pdf
+
 *.java~
 *.un~
 *.md~
 *.swp
-.idea/
-/**/.idea/
 *.iml
 .gitignore~
 *.class
 *.log
 *.sql~
-/**/materials/
 *.bak
-/**/sql_DDL_DML.pdf
 
