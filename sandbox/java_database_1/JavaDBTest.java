@@ -42,11 +42,11 @@ public class JavaDBTest {
       Statement statement;
       for (int i = 0; i < entities.length - 1; i++) {
          statement = connection.createStatement();
-         String sql_statement = "create table " + entities[i] +
-            "(id integer primary key not null auto_increment, " +
-            " name varchar(25) not null)";
+         String sql_statement = "create table " + entities[i] + "(id integer primary key not null auto_increment, "
+               + " name varchar(25) not null)";
          statement.executeUpdate(sql_statement);
       }
+
       statement = connection.createStatement();
       statement.executeUpdate("create table " + entities[entities.length - 1] +
          "(person integer not null, " +
