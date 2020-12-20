@@ -5,11 +5,20 @@ import javax.swing.*;
 public class DecimalOnly {
 	
 	public static void main(String[] args) {
+
 		/*
-		 * User gets only the decimals of the number
+		 * user enters decimal number, receives int from input
+		 * user receives the numbers after the dot
+		 * \\. is used because in regex . means any char.
 		 */
-		String theNumber = JOptionPane.showInputDialog("Enter decimal number");
-		System.out.printf("%s",
-			theNumber.substring(theNumber.indexOf('.') + 1));
+
+		String[] userInput;
+		do {
+			userInput = JOptionPane.showInputDialog(
+					"Enter number with decimals: ").split("\\.");
+		} while(userInput.length == 0);
+				
+		System.out.printf("Whole number: %d\nNumbers after decimal point: %d",
+			Integer.parseInt(userInput[0]), Integer.parseInt(userInput[1]));		
 	}
 }
