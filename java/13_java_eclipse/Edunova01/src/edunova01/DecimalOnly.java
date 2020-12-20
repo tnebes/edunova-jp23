@@ -16,7 +16,7 @@ public class DecimalOnly {
 		do {
 			userInput = JOptionPane.showInputDialog(
 					"Enter number with decimals: ").split("\\.");
-		} while(userInput.length == 0);
+		} while(userInput.length == 1);
 				
 		System.out.printf("Whole number: %d\nNumbers after decimal point: %d",
 			Integer.parseInt(userInput[0]), Integer.parseInt(userInput[1]));		
