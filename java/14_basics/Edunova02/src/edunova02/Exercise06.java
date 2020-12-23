@@ -11,7 +11,7 @@ public class Exercise06 {
 		// else write the the whole part of quotient of the first and second number
 		
 		int number1 = Integer.parseInt(JOptionPane.showInputDialog("Enter first number"));
-		int number2 = Integer.parseInt(JOptionPane.showInputDialog("Enter first number"));
+		int number2 = Integer.parseInt(JOptionPane.showInputDialog("Enter second number"));
 		
 		System.out.printf("%d\n",
 				(number1 * number2) % 2 == 0 ? number1 - number2 : number1 / number2);
