@@ -9,5 +9,7 @@ Basics of manipulating SQL databases, including, but not limited to, using comma
 
 ## Java ##
 
-TODO
+Basics of using Java in commandline and compiling from commandline. Using IDEs for Java, e.g. Eclipse, and debugging.
+
+Basic syntax of Java. Variables, arrays, methods and packages.
 
