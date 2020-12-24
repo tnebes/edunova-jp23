@@ -45,7 +45,7 @@ public class Exercise05 {
 	 */
 	public static int[][] initialiseMatrix(int firstInteger, int secondInteger) {
 		// setting up array size
-		int numberOfNumbers = secondInteger - (firstInteger - 1);
+		int numberOfNumbers = Math.abs(secondInteger - firstInteger) + 1;
 		int matrixSize = (int) Math.sqrt(numberOfNumbers);
 		if (matrixSize * matrixSize >= numberOfNumbers)
 			return new int[matrixSize][matrixSize];
