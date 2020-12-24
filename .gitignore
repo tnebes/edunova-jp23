@@ -6,6 +6,7 @@ learning/
 /**/.idea/
 /**/materials/
 /**/sql_DDL_DML.pdf
+.settings/
 
 *.java~
 *.un~
@@ -17,4 +18,6 @@ learning/
 *.log
 *.sql~
 *.bak
+*.classpath
+*.project
 
