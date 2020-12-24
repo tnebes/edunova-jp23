@@ -10,8 +10,8 @@ public class Exercise02 {
 
 		final int TABLE_SIZE = 15;
 
-		for (int i = 1; i <= TABLE_SIZE + 1; i++) {
-			for (int j = 1; j < TABLE_SIZE + 1; j++) {
+		for (int i = 1; i <= TABLE_SIZE; i++) {
+			for (int j = 1; j <= TABLE_SIZE; j++) {
 				System.out.printf("%5d", i * j);
 				if (j == 1) {
 					System.out.print("|");
