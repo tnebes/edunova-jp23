@@ -27,13 +27,13 @@ public class Exercise05 {
 			// initialise the matrix
 			circulantMatrix = initialiseMatrix(firstInteger, secondInteger);
 		} while (circulantMatrix.length == 0);
-
+		
 		fillMatrix(circulantMatrix, firstInteger, secondInteger);
 		printMatrix(circulantMatrix);
 	}
 
 	/**
-	 * Method returns a matrix whose nRows = nColumns
+	 * Method returns a matrix whose nRows * nColumns ~ n
 	 * 
 	 * @param firstInteger
 	 * @param secondInteger
@@ -42,12 +42,13 @@ public class Exercise05 {
 	public static int[][] initialiseMatrix(int firstInteger, int secondInteger) {
 		// setting up array size
 		int numberOfNumbers = secondInteger - (firstInteger - 1);
-		for (int i = 1; i <= numberOfNumbers; i++) {
-			if (numberOfNumbers / i == i) {
-				return new int[i][i];
-			}
-		}
-		return new int[0][0];
+		int matrixSize = (int) Math.sqrt(numberOfNumbers);
+		if (matrixSize * matrixSize >= numberOfNumbers)
+			return new int[matrixSize][matrixSize];
+		else if (matrixSize * (matrixSize + 1) >= numberOfNumbers)
+			return new int[matrixSize][matrixSize + 1];
+		else
+			return new int[matrixSize + 1][matrixSize + 1];
 	}
 
 	/**
@@ -75,54 +76,62 @@ public class Exercise05 {
 		return temp;
 	}
 
+	/**
+	 * Fills a matrix starting from [max][max] spiralling towards centre
+	 * anticlockwise.
+	 * 
+	 * @param matrix
+	 * @param firstInteger
+	 * @param secondInteger
+	 */
 	public static void fillMatrix(int[][] matrix, int firstInteger, int secondInteger) {
-		int maxColumn = matrix.length - 1;
-		int maxRow = matrix[0].length - 1;
-		int minColumn = 0;
-		int minRow = 0;
+		int maxColumn = matrix.length - 1, minColumn = 0;
+		int maxRow = matrix[0].length - 1, minRow = 0;
 		int currentNumber = firstInteger;
-		int i = matrix.length - 1, j = matrix[0].length - 1;
 
 		while (currentNumber <= secondInteger) {
-			if (i == maxColumn && j == maxColumn) {
-				while (j >= minRow) {
-					matrix[i][j--] = currentNumber++;
-				}
-				maxColumn--;
-				/*
-				// index out of range check
-				if (i > minColumn)
-					i--;
-				*/
-			} else if (j == minRow) {
-				while (i >= minColumn) {
-					matrix[i--][j] = currentNumber++;
-				}
-				minRow++;
-				/*
-				// index out of range check
-				if (j < maxRow)
-					j++;
-				*/
-			} else if (i == minColumn) {
-				while (j < maxRow) {
-					matrix[i][j++] = currentNumber++;
-				}
-				minColumn++;				
-			} else if (j == maxRow) {
-				while (i < maxColumn) {
-					matrix[i++][j] = currentNumber++;
-				}
-				maxRow--;
-				if (j != 0)
-					j--;
-			}		
+			// L->R
+			for (int j = maxRow; j >= minRow; j--) {
+				matrix[maxColumn][j] = currentNumber++;
+				if (currentNumber > secondInteger)
+					return;
+			}
+			maxColumn--;
+
+			// D->U
+			for (int i = maxColumn; i >= minColumn; i--) {
+				matrix[i][minRow] = currentNumber++;
+				if (currentNumber > secondInteger)
+					return;
+			}
+			minRow++;
+
+			//R->L
+			for (int j = minRow; j <= maxRow; j++) {
+				matrix[minColumn][j] = currentNumber++;
+				if (currentNumber > secondInteger)
+					return;
+			}
+			minColumn++;
+
+			//U->D
+			for (int i = minColumn; i <= maxColumn; i++) {
+				matrix[i][maxRow] = currentNumber++;
+				if (currentNumber > secondInteger)
+					return;
+			}
+			maxRow--;
 		}
 	}
+
+	/**
+	 * Prints a 2d matrix to console.
+	 * @param matrix
+	 */
 	public static void printMatrix(int[][] matrix) {
 		for (int[] i : matrix) {
 			for (int j : i) {
-				System.out.printf("%d ", j);
+				System.out.printf("%3d ", j);
 			}
 			System.out.print("\n");
 		}
