@@ -12,8 +12,8 @@ public class Problem003 {
 		 * What is the largest prime factor of the number 600851475143 ? Solution: 6857
 		 */
 
-		final long PRIME_NUMBER = 600851475143L;
-		System.out.printf("The largest prime factor of %d is %d\n", PRIME_NUMBER, largestPrimeFactor(PRIME_NUMBER));
+		final long NUMBER = 600851475143L;
+		System.out.printf("The largest prime factor of %d is %d\n", NUMBER, largestPrimeFactor(NUMBER));
 	}
 
 	/**
@@ -28,6 +28,7 @@ public class Problem003 {
 		// a prime number > 2 cannot be even
 		while (number % 2 == 0) {
 			// divide it by 2 in that case until we reach an odd number
+			largest_prime_factor = 2;
 			number >>= 1;
 		}
 
@@ -43,7 +44,6 @@ public class Problem003 {
 			largest_prime_factor = number;
 
 		return largest_prime_factor;
-
 	}
 
 }
