@@ -12,9 +12,9 @@ public class Exercise03 {
 		java.util.Scanner input = new java.util.Scanner(System.in);
 		int firstInteger, secondInteger;
 		System.out.print("Please enter first integer: ");
-		firstInteger = Math.abs(input.nextInt());
+		firstInteger = input.nextInt();
 		System.out.print("Please enter second integer: ");
-		secondInteger = Math.abs(input.nextInt());
+		secondInteger = input.nextInt();
 		input.close();
 
 		// validating input
@@ -25,9 +25,13 @@ public class Exercise03 {
 		}
 
 		// collecting primes
-		int[] primes = new int[secondInteger - firstInteger];
-		int primeIndex = 0;
-		for (int i = firstInteger + 1; i < secondInteger; i++) {
+		int[] primes = new int[Math.abs(secondInteger - firstInteger) + 1];
+		int primeIndex = 0, startInteger;
+		if (firstInteger < 0)
+			startInteger = 1;
+		else
+			startInteger = firstInteger;
+		for (int i = startInteger + 1; i < secondInteger; i++) {
 			boolean isPrime = true;
 			for (int j = 2; j < i; j++) {
 				if (i % j == 0) {
