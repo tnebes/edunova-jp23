@@ -16,7 +16,7 @@ public class Exercise01 {
 			numbers[i] = rng.nextInt(Math.abs(Integer.MAX_VALUE / 256));
 		}
 
-		int sum = 0, smallest = Integer.MAX_VALUE, largest = 0;
+		int sum = 0, smallest = numbers[0], largest = 0;
 
 		for (int number : numbers) {
 			sum += number;

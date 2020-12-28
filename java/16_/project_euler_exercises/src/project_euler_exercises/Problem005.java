@@ -13,23 +13,45 @@ public class Problem005 {
 		// What is the smallest positive number that is evenly divisible by all of the
 		// numbers from 1 to 20?
 
+		final int STARTING_NUMBER = 1;
 		final int LARGEST_NUMBER = 20;
-		long smallestNumber = smallestNumberDivisible(20);
-		System.out.printf("Smallest positive number divisible by all the numbers from 1 to %d is %d", LARGEST_NUMBER,
+		long smallestNumber = leastCommonMultiple(STARTING_NUMBER, LARGEST_NUMBER);
+		System.out.printf("Smallest positive number divisible by all the numbers from 1 to %d is %d\n", LARGEST_NUMBER,
 				smallestNumber);
 
 	}
 
-	
-	public static long smallestNumberDivisible(int largest_number) {
-		
-		/*
-		 * Finding the lowest common multiple of n numbers can be solved by using
-		 * the greatest common divisor.
-		 */	
-		
-		return 0;
+	private static long greatestCommonDivisor(long a, long b)
+	{
+	    while (b > 0)
+	    {
+	        long temp = b;
+	        b = a % b; // % is remainder
+	        a = temp;
+	    }
+	    return a;
 	}
+
+	private static long greatestCommonDivisor(long[] input)
+	{
+	    long result = input[0];
+	    for(int i = 1; i < input.length; i++) result = greatestCommonDivisor(result, input[i]);
+	    return result;
+	}
+	
+	private static long leastCommonMultiple(long a, long b)
+	{
+	    return a * (b / greatestCommonDivisor(a, b));
+	}
+
+	private static long leastCommonMultiple(long[] input)
+	{
+	    long result = input[0];
+	    for(int i = 1; i < input.length; i++) result = leastCommonMultiple(result, input[i]);
+	    return result;
+	}
+	
+	
 	
 	/**
 	 * Slow method of finding the number.
