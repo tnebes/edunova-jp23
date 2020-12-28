@@ -12,67 +12,67 @@ public class Problem005 {
 	public static void main(String[] args) {
 		// What is the smallest positive number that is evenly divisible by all of the
 		// numbers from 1 to 20?
+		
 
 		final int STARTING_NUMBER = 1;
-		final int LARGEST_NUMBER = 20;
-		long smallestNumber = leastCommonMultiple(STARTING_NUMBER, LARGEST_NUMBER);
-		System.out.printf("Smallest positive number divisible by all the numbers from 1 to %d is %d\n", LARGEST_NUMBER,
+		final int END_NUMBER = 20;
+		long smallestNumber = smallestDivisibleNumber(STARTING_NUMBER, END_NUMBER);
+		System.out.printf("Smallest positive number divisible by all the numbers from %d to %d is %d\n", STARTING_NUMBER, END_NUMBER,
 				smallestNumber);
 
 	}
 
-	private static long greatestCommonDivisor(long a, long b)
-	{
-	    while (b > 0)
-	    {
-	        long temp = b;
-	        b = a % b; // % is remainder
-	        a = temp;
-	    }
-	    return a;
-	}
-
-	private static long greatestCommonDivisor(long[] input)
-	{
-	    long result = input[0];
-	    for(int i = 1; i < input.length; i++) result = greatestCommonDivisor(result, input[i]);
-	    return result;
+	public static long smallestDivisibleNumber(int startingNumber, int endNumber) {
+		int[] range = new int[(endNumber - startingNumber) + 1];
+		for (int i = 0; i < range.length; i++) {
+			range[i] = startingNumber++;
+		}
+		
+		return lowestCommonMultiple(range);
 	}
 	
-	private static long leastCommonMultiple(long a, long b)
-	{
-	    return a * (b / greatestCommonDivisor(a, b));
+	public static long lowestCommonMultiple(int[] range) {
+		long result = range[0];
+		for (int i = 1; i < range.length; i++) {
+			result = lowestCommonMultiple(result, range[i]);
+		}
+		return result;
 	}
-
-	private static long leastCommonMultiple(long[] input)
-	{
-	    long result = input[0];
-	    for(int i = 1; i < input.length; i++) result = leastCommonMultiple(result, input[i]);
-	    return result;
+	 
+	public static long lowestCommonMultiple(long firstNumber, long secondNumber) {
+		return firstNumber * (secondNumber / greatestCommonDivisor(firstNumber, secondNumber));
 	}
 	
-	
+	public static long greatestCommonDivisor(long firstNumber, long secondNumber) {
+		while (secondNumber > 0) {
+			long temp = secondNumber;
+			secondNumber = firstNumber % secondNumber;
+			firstNumber = temp;
+		}
+		return firstNumber;
+	}
 	
 	/**
-	 * Slow method of finding the number.
+	 * Slow method of finding the number. I don't even know if it works.
+	 * 
 	 * @param largestNumber
 	 * @return
 	 */
 	/*
-	public static long smallestNumberDivisible(int largestNumber) {
-		boolean smallestFound = false;
-		for (int i = 1; i < Integer.MAX_VALUE; i++) {
-			System.out.printf("%d\n", i);
-			long smallestNumber = largestNumber * i;
-			for (int j = 2; j < 20; j++) {
-				if (smallestNumber % j != 0)
-					break;
-			}
-			if (smallestFound)
-				return smallestNumber;
-		}
-		return -1;
-	}
-	*/
+	 * public static long smallestNumberDivisible(int largestNumber) {
+	 * 	boolean smallestFound = false;
+	 * 	for (int i = 1; i < Integer.MAX_VALUE; i++) {
+	 * 		System.out.printf("%d\n", i);
+	 * 		long smallestNumber = largestNumber * i;
+	 * 		for (int j = 2; j < 20; j++) {
+	 * 			if (smallestNumber % j != 0)
+	 * 				break;
+	 * 		}
+	 * 		if (smallestFound)
+	 * 			return smallestNumber; 
+	 * 		}
+	 * 		return -1;
+	 * }
+	 */
 
 }

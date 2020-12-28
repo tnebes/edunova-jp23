@@ -27,7 +27,7 @@ public class Exercise03 {
 		// collecting primes
 		int[] primes = new int[secondInteger - firstInteger];
 		int primeIndex = 0;
-		for (int i = firstInteger; i < secondInteger; i++) {
+		for (int i = firstInteger + 1; i < secondInteger; i++) {
 			boolean isPrime = true;
 			for (int j = 2; j < i; j++) {
 				if (i % j == 0) {
