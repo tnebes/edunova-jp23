@@ -1,6 +1,7 @@
 /**
- * Input is an integer and the position of the desired digit.
- * Program returns the digit as position defined by user.
+ * Input is an integer and the position of the desired digit. Program returns
+ * the digit as position defined by user.
+ * 
  * @author tnebes
  *
  */
@@ -8,7 +9,7 @@
 public class GetDigitNumber {
 
 	static java.util.Scanner input = new java.util.Scanner(System.in);
-	
+
 	public static void main(String[] args) {
 
 		int number = getNumber();
@@ -24,13 +25,14 @@ public class GetDigitNumber {
 
 	/**
 	 * Method sanitises output. Returns the number.
+	 * 
 	 * @return int
 	 */
 	public static int getNumber() {
 		System.out.print("Please enter a number: ");
 		int number;
 		try {
-			number = input.nextInt();
+			number = Integer.parseInt(input.nextLine());
 		} catch (Exception InputMismatchException) {
 			System.out.print("Error. Please enter an integer.\n");
 			number = getNumber();
@@ -40,6 +42,7 @@ public class GetDigitNumber {
 
 	/**
 	 * Method returns the number of digits in an int.
+	 * 
 	 * @param number
 	 * @return int
 	 */
@@ -54,6 +57,7 @@ public class GetDigitNumber {
 
 	/**
 	 * Method returns the sanitised version of the desired user input.
+	 * 
 	 * @return int
 	 */
 	public static int getUserDigit() {
@@ -61,7 +65,7 @@ public class GetDigitNumber {
 		System.out.print("Print digit at position: ");
 		int digit;
 		try {
-			digit = input.nextInt();
+			digit = Integer.parseInt(input.nextLine());
 		} catch (Exception InputMismatchException) {
 			System.out.print("Error. Please enter an integer.\n");
 			digit = getUserDigit();
@@ -71,6 +75,7 @@ public class GetDigitNumber {
 
 	/**
 	 * Method checks whether the user has entered an acceptable digit position
+	 * 
 	 * @param numberOfDigits
 	 * @param desiredDigit
 	 * @return boolean
@@ -88,6 +93,7 @@ public class GetDigitNumber {
 
 	/**
 	 * Method returns the digit as the position specified by the user.
+	 * 
 	 * @param number
 	 * @param numberOfDigits
 	 * @param desiredDigit
@@ -97,16 +103,20 @@ public class GetDigitNumber {
 		int numberOfDivisions = 0;
 		int userDigit = 0;
 		if (desiredDigit < 0) {
-			numberOfDivisions = Math.abs(desiredDigit);
+			numberOfDivisions = Math.abs(desiredDigit) - 1;
 		} else {
 			numberOfDivisions = numberOfDigits - desiredDigit;
 		}
-		userDigit = number % 10;
-		while (numberOfDivisions != 0) {
+		if (numberOfDivisions == 0) {
 			userDigit = number % 10;
-			number /= 10;
-			numberOfDivisions--;
+		} else {
+			while (numberOfDivisions > 0) {
+				number /= 10;
+				userDigit = number % 10;
+				numberOfDivisions--;
+			}
 		}
+
 		return userDigit;
 	}
 
