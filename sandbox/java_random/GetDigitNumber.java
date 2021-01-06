@@ -7,6 +7,8 @@
 
 public class GetDigitNumber {
 
+	static java.util.Scanner input = new java.util.Scanner(System.in);
+	
 	public static void main(String[] args) {
 
 		int number = getNumber();
@@ -15,6 +17,7 @@ public class GetDigitNumber {
 		do {
 			desiredDigit = getUserDigit();
 		} while (!userInputValid(numberOfDigits, desiredDigit));
+		input.close(); // input can finally be closed.
 		int theDigit = getDesiredDigit(number, numberOfDigits, desiredDigit);
 		System.out.printf("The digit at position %d is: %d\n", desiredDigit, theDigit);
 	}
@@ -24,7 +27,6 @@ public class GetDigitNumber {
 	 * @return int
 	 */
 	public static int getNumber() {
-		java.util.Scanner input = new java.util.Scanner(System.in);
 		System.out.print("Please enter a number: ");
 		int number;
 		try {
@@ -33,7 +35,6 @@ public class GetDigitNumber {
 			System.out.print("Error. Please enter an integer.\n");
 			number = getNumber();
 		}
-		// input.close(); // do not close input, it closes System.in input stream as well!!!
 		return Math.abs(number);
 	}
 
@@ -65,9 +66,6 @@ public class GetDigitNumber {
 			System.out.print("Error. Please enter an integer.\n");
 			digit = getUserDigit();
 		}
-		// input can now be closed as we except no input anymore.
-		// better solution would be to place input in main();
-		input.close();
 		return digit;
 	}
 
@@ -103,11 +101,12 @@ public class GetDigitNumber {
 		} else {
 			numberOfDivisions = numberOfDigits - desiredDigit;
 		}
-		do {
+		userDigit = number % 10;
+		while (numberOfDivisions != 0) {
 			userDigit = number % 10;
 			number /= 10;
 			numberOfDivisions--;
-		} while (numberOfDivisions != 0);
+		}
 		return userDigit;
 	}
 
