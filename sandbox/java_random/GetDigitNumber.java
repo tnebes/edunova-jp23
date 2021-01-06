@@ -61,7 +61,6 @@ public class GetDigitNumber {
 	 * @return int
 	 */
 	public static int getUserDigit() {
-		java.util.Scanner input = new java.util.Scanner(System.in);
 		System.out.print("Print digit at position: ");
 		int digit;
 		try {
