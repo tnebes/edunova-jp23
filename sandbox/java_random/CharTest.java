@@ -9,7 +9,7 @@ public class CharTest {
 		int c4 = 'a';
 		int c5 = 'b';
 				
-		System.out.printf("%c\n", c0); //  <-- nema nicega
+		System.out.printf("%c\n", c0); //  nothing
 		System.out.printf("%c\n", c1); // 0
 		System.out.printf("%c\n", c2); // 1
 		System.out.printf("%c\n", c3 - c0); // 
