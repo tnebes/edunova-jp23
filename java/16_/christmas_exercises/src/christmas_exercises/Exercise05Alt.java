@@ -1,8 +1,6 @@
 package christmas_exercises;
 
-import java.util.InputMismatchException;
-
-public class Exercise05 {
+public class Exercise05Alt {
 
 	/*
 	 * Write an algorithm that cyclically fills a 2d array with values, starting
@@ -16,7 +14,9 @@ public class Exercise05 {
 	 * 6 19 18 17 16
 	 * 5 4  3  2  1
 	 * 
-	 * input is two integers representing the width and height of the matrix
+	 * input is two integers:
+	 * first represents the starting number
+	 * the second one the ending number.
 	 */
 
 	public static void main(String[] args) {
@@ -32,14 +32,14 @@ public class Exercise05 {
 			secondInteger = temp[1];
 			// initialise the matrix
 			circulantMatrix = initialiseMatrix(firstInteger, secondInteger);
-		} while (circulantMatrix.length == 0 || circulantMatrix[0].length == 0);
-
-		fillMatrix(circulantMatrix);
+		} while (circulantMatrix.length == 0);
+		
+		fillMatrix(circulantMatrix, firstInteger, secondInteger);
 		printMatrix(circulantMatrix);
 	}
 
 	/**
-	 * Method returns a matrix with height = firstInteger, width = secondInteger
+	 * Method returns a matrix whose nRows * nColumns ~ n
 	 * 
 	 * @param firstInteger
 	 * @param secondInteger
@@ -47,16 +47,19 @@ public class Exercise05 {
 	 */
 	public static int[][] initialiseMatrix(int firstInteger, int secondInteger) {
 		// setting up array size
-		if (firstInteger < 0 || secondInteger < 0) {
-			System.out.print("Width and height must be whole numbers.\n");
-			return new int[0][0];
-		} else {
-			return new int[firstInteger][secondInteger];
-		}
+		int numberOfNumbers = Math.abs(secondInteger - firstInteger) + 1;
+		int matrixSize = (int) Math.sqrt(numberOfNumbers);
+		if (matrixSize * matrixSize >= numberOfNumbers)
+			return new int[matrixSize][matrixSize];
+		else if (matrixSize * (matrixSize + 1) >= numberOfNumbers)
+			return new int[matrixSize][matrixSize + 1];
+		else
+			return new int[matrixSize + 1][matrixSize + 1];
 	}
 
 	/**
-	 * Gets user input from console. Returns two ints stored in int[] 
+	 * Gets user input from console. Returns two ints stored in int[] whereby int[0]
+	 * < int[1]
 	 * 
 	 * @return int[]
 	 */
@@ -64,14 +67,17 @@ public class Exercise05 {
 		// getting input from user
 		java.util.Scanner input = new java.util.Scanner(System.in);
 		int[] temp = new int[2];
-		try {
-			System.out.print("Please enter matrix height: ");
-			temp[0] = input.nextInt();
-			System.out.print("Please enter matrix width: ");
-			temp[1] = input.nextInt();
-		} catch (InputMismatchException e) {
-			System.out.print("Input must be an integer.\n");
-			return getUserInput();
+		System.out.print("Please enter the starting integer: ");
+		temp[0] = input.nextInt();
+		System.out.print("Please enter the final integer: ");
+		temp[1] = input.nextInt();
+		input.close();
+
+		// validating input
+		if (temp[0] > temp[1]) {
+			int tempInt = temp[0];
+			temp[0] = temp[1];
+			temp[1] = tempInt;
 		}
 		return temp;
 	}
@@ -84,16 +90,16 @@ public class Exercise05 {
 	 * @param firstInteger
 	 * @param secondInteger
 	 */
-	public static void fillMatrix(int[][] matrix) {
+	public static void fillMatrix(int[][] matrix, int firstInteger, int secondInteger) {
 		int maxColumn = matrix.length - 1, minColumn = 0;
 		int maxRow = matrix[0].length - 1, minRow = 0;
-		int currentNumber = 1, desiredNumber = matrix.length * matrix[0].length;
+		int currentNumber = firstInteger;
 
-		while (currentNumber <= desiredNumber) {
+		while (currentNumber <= secondInteger) {
 			// L->R
 			for (int j = maxRow; j >= minRow; j--) {
 				matrix[maxColumn][j] = currentNumber++;
-				if (currentNumber > desiredNumber)
+				if (currentNumber > secondInteger)
 					return;
 			}
 			maxColumn--;
@@ -101,23 +107,23 @@ public class Exercise05 {
 			// D->U
 			for (int i = maxColumn; i >= minColumn; i--) {
 				matrix[i][minRow] = currentNumber++;
-				if (currentNumber > desiredNumber)
+				if (currentNumber > secondInteger)
 					return;
 			}
 			minRow++;
 
-			// R->L
+			//R->L
 			for (int j = minRow; j <= maxRow; j++) {
 				matrix[minColumn][j] = currentNumber++;
-				if (currentNumber > desiredNumber)
+				if (currentNumber > secondInteger)
 					return;
 			}
 			minColumn++;
 
-			// U->D
+			//U->D
 			for (int i = minColumn; i <= maxColumn; i++) {
 				matrix[i][maxRow] = currentNumber++;
-				if (currentNumber > desiredNumber)
+				if (currentNumber > secondInteger)
 					return;
 			}
 			maxRow--;
@@ -126,7 +132,6 @@ public class Exercise05 {
 
 	/**
 	 * Prints a 2d matrix to console.
-	 * 
 	 * @param matrix
 	 */
 	public static void printMatrix(int[][] matrix) {
