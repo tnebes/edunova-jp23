@@ -28,22 +28,27 @@ public class Zadatak05 {
 		int[][] matrica = new int[redak][stupac];
 
 		// unos vrijednosti u matricu (iznimka rješena pomoću if-a - linija 61)
-		while (broj < redak * stupac) {
+		while (broj <= redak * stupac) {
 
 			// (redak) desno -> lijevo
-			for (int i = zadStupac; i > pocStupac; i--) {
+			for (int i = zadStupac; i >= pocStupac; i--) {
 				matrica[zadRedak][i] = broj++;
 			}
 			
-			//ako je svaki element matrice popunjen program staje
+			zadRedak--;
+			
+			//ako je svaki element matrice popunjen 
+			//(ako je zadnji element koji je upisan >= redak*stupac) program staje
 			if(provjera(matrica,broj)) {
 				break;
 			}
 
 			// (stupac) dolje -> gore
-			for (int i = zadRedak; i > pocRedak; i--) {
+			for (int i = zadRedak; i >= pocRedak; i--) {
 				matrica[i][pocStupac] = broj++;
 			}
+			
+			pocStupac++;
 			
 			if(provjera(matrica,broj)) {
 				break;
@@ -54,6 +59,8 @@ public class Zadatak05 {
 				matrica[pocRedak][i] = broj++;
 			}
 			
+			pocRedak++;
+			
 			if(provjera(matrica,broj)) {
 				break;
 			}
@@ -63,15 +70,11 @@ public class Zadatak05 {
 				matrica[i][zadStupac] = broj++;
 			}
 			
+			zadStupac--;
+			
 			if(provjera(matrica,broj)) {
 				break;
 			}
-
-			zadStupac--;
-			zadRedak--;
-			pocStupac++;
-			pocRedak++;
-
 		}
 
 		/*
@@ -92,6 +95,6 @@ public class Zadatak05 {
 	}
 	
 	static boolean provjera(int[][] niz2d, int br) {
-		return br == niz2d.length * niz2d[0].length;
+		return br >= niz2d.length * niz2d[0].length;
 	}
 }

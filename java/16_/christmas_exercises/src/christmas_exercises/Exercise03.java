@@ -31,8 +31,9 @@ public class Exercise03 {
 			startInteger = 1;
 		else
 			startInteger = firstInteger;
+		boolean isPrime;
 		for (int i = startInteger + 1; i < secondInteger; i++) {
-			boolean isPrime = true;
+			isPrime = true;
 			for (int j = 2; j < i; j++) {
 				if (i % j == 0) {
 					isPrime = false;
