@@ -1,3 +1,4 @@
+package homework;
 
 abstract public class Animal {
 
