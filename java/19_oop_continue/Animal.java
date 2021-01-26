@@ -12,6 +12,10 @@ abstract public class Animal {
 		this.sound = sound;
 	}
 	
+	public Animal() {
+		
+	}
+	
 	public int getNumberOfLegs() {
 		return numberOfLegs;
 	}
