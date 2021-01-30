@@ -30,12 +30,16 @@ public class Start {
 		carnivora.setHasFeathers(false);
 
 		// felidae family
-		Family felidae = new Family(carnivora);
-		felidae.setFamilyName("Felidae");
-		felidae.setBearsNuts(false);
+//		Family felidae = new Family(carnivora);
+//		felidae.setFamilyName("Felidae");
+//		felidae.setBearsNuts(false);
+		
+//		Felidae felidae = new Felidae; // extends family? 
 		
 		// felis catus species
-		Species felisCatus = new Species(felidae);
+		Species felisCatus = new Species();
+		felisCatus.setFamilyName("felidae");
+		felisCatus.setBearsNuts(false);
 		felisCatus.setSpeciesName("Felis catus");
 		felisCatus.setCute(true);
 		felisCatus.setIndividualName("Felix");
@@ -50,7 +54,7 @@ public class Start {
 				felisCatus.getOrderName(),
 				felisCatus.getClassName(),
 				felisCatus.getKingdomName(),
-				Domain.getDomainName()
+				felisCatus.getDomainName()
 				);
 		System.out.printf("Fun facts about %s:\n", felisCatus.getIndividualName());
 		System.out.printf("%s is cute? %b\n", felisCatus.getIndividualName(), felisCatus.isCute());

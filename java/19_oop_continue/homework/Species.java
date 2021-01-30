@@ -6,23 +6,10 @@ public class Species extends Family {
 	private String speciesName;
 	private boolean isCute;
 	private boolean needsWater;
-	private Family family;
 	private String individualName;
 	
 	public Species() {
 		
-	}
-	
-	public Species(Family family) {
-		this.family = family;
-	}
-	
-	public Family getFamily() {
-		return family;
-	}
-
-	public void setFamily(Family family) {
-		this.family = family;
 	}
 	
 	public String getSpeciesName() {

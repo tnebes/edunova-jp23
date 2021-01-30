@@ -11,8 +11,8 @@ public class Kingdom extends Domain {
 
 	private static final int rank = 0;
 	private String kingdomName;
-	private boolean isMulticellular;
-	private boolean canSexuallyReproduce;
+	private boolean multiCellular;
+	private boolean sexuallyReproduce;
 	private boolean exclusivelyLandBased;
 	
 	public Kingdom() {
@@ -32,19 +32,19 @@ public class Kingdom extends Domain {
 	}
 	
 	public boolean isMulticellular() {
-		return isMulticellular;
+		return multiCellular;
 	}
 	
 	public void setMulticellular(boolean isMulticellular) {
-		this.isMulticellular = isMulticellular;
+		this.multiCellular = isMulticellular;
 	}
 	
 	public boolean isCanSexuallyReproduce() {
-		return canSexuallyReproduce;
+		return sexuallyReproduce;
 	}
 	
 	public void setCanSexuallyReproduce(boolean canSexuallyReproduce) {
-		this.canSexuallyReproduce = canSexuallyReproduce;
+		this.sexuallyReproduce = canSexuallyReproduce;
 	}
 	
 	public boolean isExclusivelyLandBased() {

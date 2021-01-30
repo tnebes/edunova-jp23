@@ -2,13 +2,13 @@ package homework;
 
 public abstract class Domain {
 
-	static private String domainName = "Life";
-	static private String planet = "Terra";
+	private String domainName = "Life";
+	private String planet = "Terra";
 	
-	public static String getDomainName() {
+	public String getDomainName() {
 		return domainName;
 	}
-	public static String getPlanet() {
+	public String getPlanet() {
 		return planet;
 	}
 	
