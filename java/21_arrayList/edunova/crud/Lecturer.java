@@ -38,11 +38,11 @@ public class Lecturer {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("first name: ");
+		sb.append("\tfirst name: ");
 		sb.append(firstName);
-		sb.append(" last name: ");
+		sb.append("\tlast name: ");
 		sb.append(lastName);
-		sb.append(" IBAN: ");
+		sb.append("\tIBAN: ");
 		sb.append(IBAN);
 		return sb.toString();
 	}

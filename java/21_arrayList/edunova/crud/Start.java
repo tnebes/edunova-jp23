@@ -27,7 +27,7 @@ public class Start {
 		int userInput;
 		do {
 			mainMenu();
-			System.out.print("\n\n");
+			System.out.print("\n");
 			userInput = input.nextInt();
 			switch(userInput) {
 			case 1 : 	showSubMenuGeneric(userInput);
@@ -46,7 +46,7 @@ public class Start {
 	}
 
 	private void showSubMenuGeneric(int choice) {
-		System.out.print("\n\n");
+		System.out.print("\n");
 		int userInput;
 		do {
 			for (int i = 0; i < subMenuChoices.length; i++) {
@@ -66,6 +66,7 @@ public class Start {
 			default :	showErrorMessage(subMenuChoices.length);
 							break;			
 			}
+			System.out.print("\n");
 		} while (userInput != subMenuChoices.length);
 				
 	}
@@ -115,7 +116,7 @@ public class Start {
 	}
 
 	private void genericAdd(int choice) {
-		System.out.printf("When entering multiple pieces of information, make sure you press enter after each information! ");
+		System.out.printf("\nWhen entering multiple pieces of information, make sure you press enter after each information!\n");
 		switch (choice) {
 		case 1 : 	addCourses();
 						break;
@@ -129,8 +130,6 @@ public class Start {
 		default :	showErrorMessage(4);
 						break;	
 		}
-
-		
 	}
 
 	private void addCourses() {
@@ -170,8 +169,6 @@ public class Start {
 		default :	showErrorMessage(4);
 						break;	
 		}
-
-		
 	}
 
 	private void changeCourses() {
@@ -207,8 +204,6 @@ public class Start {
 		default :	showErrorMessage(4);
 						break;	
 		}
-
-		
 	}
 	
 	private void deleteCourses() {
@@ -218,7 +213,6 @@ public class Start {
 		if (checkDeleteInputValid(userInput, courses.size())) {
 			courses.remove(userInput);
 		}
-		
 	}
 
 	private void deleteGroups() {
@@ -228,7 +222,6 @@ public class Start {
 		if (checkDeleteInputValid(userInput, groups.size())) {
 			groups.remove(userInput);
 		}
-		
 	}
 
 	private void deleteStudents() {
@@ -238,7 +231,6 @@ public class Start {
 		if (checkDeleteInputValid(userInput, students.size())) {
 			students.remove(userInput);
 		}
-		
 	}
 
 	private void deleteLecturers() {
@@ -259,6 +251,7 @@ public class Start {
 		for(int i = 0; i < mainMenuChoices.length; i++) {
 			System.out.printf("%d - %s\n", i + 1, mainMenuChoices[i]);
 		}
+		System.out.print("\n");
 	}
 
 	public static void main(String[] args) {

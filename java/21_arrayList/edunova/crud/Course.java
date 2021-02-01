@@ -23,7 +23,7 @@ public class Course {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("name: ");
+		sb.append("\tname: ");
 		sb.append(name);
 		return sb.toString();
 	}
