@@ -34,21 +34,22 @@ public class UserInputHandler {
 	 * @return long
 	 */
 	static public long getIntegerInput(boolean isRequired) {
+		String userInput;
+		Long returnValue;
 		while (true) {
-			String userInput = input.nextLine();
-			if (!isRequired) {
-				if (userInput.isEmpty()) {
-					return 0;
-				} else {
-					try {
-						return Long.valueOf(userInput);
-					} catch (NumberFormatException e) {
-						System.out.print("A number must be entered.\n");
-					}
-				}
-
+			userInput = input.nextLine();
+			if (!isRequired && userInput.isEmpty()) {
+				return 0;
+			}
+			try {
+				returnValue = Long.valueOf(userInput.trim());
+				break;
+			} catch (NumberFormatException e) {
+				System.out.print("A number must be entered.\n");
+				continue;
 			}
 		}
+		return returnValue;
 	}
 
 }
