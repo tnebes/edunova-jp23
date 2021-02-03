@@ -119,10 +119,19 @@ public class DataHandler {
 		System.out.print("* Please enter unique invoice ID: ");
 		newInvoice.setId(getId((byte) 0));
 		newInvoice.setDateOfCreation(new Date(System.currentTimeMillis()));
-		System.out.print("Please enter customer ID or name: ");
-		
-		newInvoice.setCustomerId(customerId);
-		
+		// TODO
+		newInvoice.setStatusId((byte) -1);
+		// TODO
+		newInvoice.setTranscationTypeId((byte) -1);
+		// TODO customer id by searching through names or providing id
+		newInvoice.setCustomerId(-1);
+		if (!(UI.yesNoDialogue("Has shipping addres? "))) {
+			newInvoice.setShippingAddressId(-1);
+		} else {
+//			addAddress();
+//			newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
+		}
+		invoices.add(newInvoice);
 	}
 
 	public static void addCustomer() {

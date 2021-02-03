@@ -120,4 +120,9 @@ public class UI {
 		} while (true);
 		// options menu
 	}
+	
+	public static boolean yesNoDialogue(String message) {
+		System.out.print(message);
+		return UserInputHandler.input.next().toLowerCase().equals("y");
+	}
 }
