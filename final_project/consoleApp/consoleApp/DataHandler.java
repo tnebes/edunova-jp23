@@ -46,6 +46,32 @@ public class DataHandler {
 		System.out.print("Entering data. Fields marked * are mandatory.\n");
 	}
 	
+	public static void showInvoice(Invoice invoice) {
+		System.out.printf("%d %s", invoice.getId(), invoice.getDateOfCreation().toString());
+	}
+
+	public static void showInvoices() {
+		for (Invoice invoice : invoices) {
+			showInvoice(invoice);
+			System.out.print("\n");
+		}
+	}
+
+	public static void showCustomers() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void showAddresses() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void showArticles() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private static boolean invoiceIdIsUnique(long id) {
 		for (Invoice invoice : invoices) {
 			if (invoice.getId() == id) {
@@ -125,13 +151,15 @@ public class DataHandler {
 		newInvoice.setTranscationTypeId((byte) -1);
 		// TODO customer id by searching through names or providing id
 		newInvoice.setCustomerId(-1);
-		if (!(UI.yesNoDialogue("Has shipping addres? "))) {
+		if (!(UI.yesNoDialogue("Has shipping address? "))) {
 			newInvoice.setShippingAddressId(-1);
 		} else {
 //			addAddress();
 //			newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
 		}
 		invoices.add(newInvoice);
+		System.out.printf("Successfully added invoice ", newInvoice.getId());
+		showInvoice(newInvoice);
 	}
 
 	public static void addCustomer() {
@@ -188,6 +216,7 @@ public class DataHandler {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	
 	

@@ -4,7 +4,7 @@ public class UI {
 
 	// Menu strings.
 	static private String[] mainMenuChoices = { "Invoices", "Customers", "Addresses", "Articles", "Options", "Exit" };
-	static private String[] genericManipulation = { "Add", "Change", "Delete", "Exit" };
+	static private String[] genericManipulation = { "Show", "Add", "Change", "Delete", "Exit" };
 	static private String notification = "=== Drau ElektroSoftware GmbH ===";
 
 	// value of ints is not index but what user sees. e.g. invoices is 1 and not 0.
@@ -13,13 +13,13 @@ public class UI {
 
 	public static void mainMenu() {
 		System.out.printf("%s\n\n", notification);
-		for (int i = 0; i < mainMenuChoices.length; i++) {
-			// i + 1 for proper user choice
-			System.out.printf("%d - %s\n", i + 1, mainMenuChoices[i]);
-		}
-		System.out.print("\nChoice: ");
 		int userChoice;
 		do {
+			for (int i = 0; i < mainMenuChoices.length; i++) {
+				// i + 1 for proper user choice
+				System.out.printf("%d - %s\n", i + 1, mainMenuChoices[i]);
+			}
+			System.out.print("\nChoice: ");
 			userChoice = (int) UserInputHandler.getIntegerInput(true);
 			// should the user enter rubbish
 			if (userChoice <= 0 || userChoice > mainMenuChoices.length) {
@@ -57,8 +57,27 @@ public class UI {
 			}
 			// submenu choices
 			switch (userInput) {
-			// add
+			// show
 			case 1:
+				// if invoices
+				if (previousMenu == 1) {
+					DataHandler.showInvoices();
+				}
+				// if customers
+				else if (previousMenu == 2) {
+					DataHandler.showCustomers();
+				}
+				// if addresses
+				else if (previousMenu == 3) {
+					DataHandler.showAddresses();
+				}
+				// if articles
+				else if (previousMenu == 4) {
+					DataHandler.showArticles();
+				}
+				break;
+			// add
+			case 2:
 				// if invoices
 				if (previousMenu == 1) {
 					DataHandler.addInvoice();
@@ -77,7 +96,7 @@ public class UI {
 				}
 				break;
 			// change
-			case 2:
+			case 3:
 				// if invoices
 				if (previousMenu == 1) {
 					DataHandler.changeInvoice();
@@ -96,7 +115,7 @@ public class UI {
 				}
 				break;
 			// delete
-			case 3:
+			case 4:
 				// if invoices
 				if (previousMenu == 1) {
 					DataHandler.deleteInvoice();
@@ -114,7 +133,8 @@ public class UI {
 					DataHandler.deleteArticle();
 				}
 				break;
-			case 4:
+			case 5:
+				System.out.print("\n");
 				return;
 			}
 		} while (true);
@@ -123,6 +143,6 @@ public class UI {
 	
 	public static boolean yesNoDialogue(String message) {
 		System.out.print(message);
-		return UserInputHandler.input.next().toLowerCase().equals("y");
+		return UserInputHandler.input.nextLine().toLowerCase().equals("y");
 	}
 }
