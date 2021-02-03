@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class Invoice {
 	
-	private long id;
-	private Date dateOfCreation;
-	private long customerId;
-	private byte transcationTypeId;
-	private byte statusId;
-	private byte invoiceDiscountPercent;
-	private float subtotal;
-	private float amountDue;
-	private float amountPaid;
-	private long shippingAddressId;
+	private long 	id;
+	private Date 	dateOfCreation;
+	private long 	customerId;
+	private byte 	transcationTypeId;
+	private byte 	statusId;
+	private byte 	invoiceDiscountPercent;
+	private float 	subtotal;
+	private float 	amountDue;
+	private float	amountPaid;
+	private long 	shippingAddressId;
 	
 	public long getId() {
 		return id;
