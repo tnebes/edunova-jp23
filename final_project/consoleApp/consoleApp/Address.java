@@ -1,20 +1,18 @@
 package consoleApp;
 
-import java.util.Date;
-
 public class Address {
 
-	private long id;
-	private Date dateOfCreation;
-	private int customerId;
-	private byte transactionTypeId;
-	private byte statusId;
-	private byte invoiceDiscountPercent;
-	private float subtotal;
-	private float amountDue;
-	private float amountPaid;
-	private long ShippingAddressId;
+	static public final boolean BILLING_ADDRESS = false;
+	static public final boolean SHIPPING_ADDRESS = true;
 	
+	private long 		id;
+	private boolean	type;
+	private String 	city;
+	private String		ZIPCode;
+	private String		street;
+	private String		streetNumber;
+	private String		streetLetter;
+	private String		country;
 	
 	public long getId() {
 		return id;
@@ -22,59 +20,47 @@ public class Address {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getDateOfCreation() {
-		return dateOfCreation;
+	public boolean isType() {
+		return type;
 	}
-	public void setDateOfCreation(Date dateOfCreation) {
-		this.dateOfCreation = dateOfCreation;
+	public void setType(boolean type) {
+		this.type = type;
 	}
-	public int getCustomerId() {
-		return customerId;
+	public String getCity() {
+		return city;
 	}
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setCity(String city) {
+		this.city = city;
 	}
-	public byte getTransactionTypeId() {
-		return transactionTypeId;
+	public String getZIPCode() {
+		return ZIPCode;
 	}
-	public void setTransactionTypeId(byte transactionTypeId) {
-		this.transactionTypeId = transactionTypeId;
+	public void setZIPCode(String ZIPCode) {
+		this.ZIPCode = ZIPCode;
 	}
-	public byte getStatusId() {
-		return statusId;
+	public String getStreet() {
+		return street;
 	}
-	public void setStatusId(byte statusId) {
-		this.statusId = statusId;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	public byte getInvoiceDiscountPercent() {
-		return invoiceDiscountPercent;
+	public String getStreetNumber() {
+		return streetNumber;
 	}
-	public void setInvoiceDiscountPercent(byte invoiceDiscountPercent) {
-		this.invoiceDiscountPercent = invoiceDiscountPercent;
+	public void setStreetNumber(String streetNumber) {
+		this.streetNumber = streetNumber;
 	}
-	public float getSubtotal() {
-		return subtotal;
+	public String getStreetLetter() {
+		return streetLetter;
 	}
-	public void setSubtotal(float subtotal) {
-		this.subtotal = subtotal;
+	public void setStreetLetter(String streetLetter) {
+		this.streetLetter = streetLetter;
 	}
-	public float getAmountDue() {
-		return amountDue;
+	public String getCountry() {
+		return country;
 	}
-	public void setAmountDue(float amountDue) {
-		this.amountDue = amountDue;
-	}
-	public float getAmountPaid() {
-		return amountPaid;
-	}
-	public void setAmountPaid(float amountPaid) {
-		this.amountPaid = amountPaid;
-	}
-	public long getShippingAddressId() {
-		return ShippingAddressId;
-	}
-	public void setShippingAddressId(long shippingAddressId) {
-		ShippingAddressId = shippingAddressId;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 	

@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Customer {
 
-	static private final boolean NATURAL_PERSON = true;
-	static private final boolean LEGAL_PERSON = false;
+	static public final boolean NATURAL_PERSON = true;
+	static public final boolean LEGAL_PERSON = false;
 	private long id;
 	private boolean type;
 	private Date dateOfCreation;

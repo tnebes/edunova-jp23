@@ -9,7 +9,13 @@ public class DataHandler {
 	static private ArrayList<Address> addresses = new ArrayList<>();
 	static private ArrayList<Article> articles = new ArrayList<>();	
 	
-
+	/* TODO
+	 * load file
+	 * if file loads
+	 * populate arraylist
+	 * print it out
+	 */
+	
 	public ArrayList<Invoice> getInvoices() {
 		return invoices;
 	}
@@ -47,7 +53,65 @@ public class DataHandler {
 	}
 	
 	public static void showInvoice(Invoice invoice) {
-		System.out.printf("%d %s", invoice.getId(), invoice.getDateOfCreation().toString());
+		StringBuilder sb = new StringBuilder();
+		sb.append(invoice.getId());
+		sb.append(" ");
+		sb.append(invoice.getDateOfCreation().toString());
+		System.out.print(sb.toString());
+	}
+	
+	private static void showCustomer(Customer customer) {
+		StringBuilder sb = new StringBuilder();
+		if (customer.isType() == Customer.NATURAL_PERSON) {
+			sb.append(customer.getId()).append(" ");
+			sb.append(customer.getNationalIdNumber()).append(" ");
+			sb.append(customer.getFirstName()).append(" ");
+			sb.append(customer.getMiddleName()).append(" ");
+			sb.append(customer.getLastName()).append(" ");
+			System.out.print(sb.toString());
+		} else {
+			System.out.printf("%d %s %s", customer.getId(), customer.getName(), customer.getVATID());
+			sb.append(customer.getId()).append(" ");
+			sb.append(customer.getId()).append(" ");
+			sb.append(customer.getName()).append(" ");
+			sb.append(customer.getVATID());
+			System.out.print(sb.toString());
+		}
+	}
+
+	private static void showAddress(Address address) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(address.getId()).append(" ");
+		sb.append(address.isType() == Address.BILLING_ADDRESS ? "billing address" : "shipping address").append(" ");
+		sb.append(address.getStreet()).append(" ");
+		sb.append(address.getStreetNumber()).append(" ");
+		sb.append(address.getStreetLetter()).append(" ");
+		sb.append(address.getCity()).append(" ");
+		sb.append(address.getZIPCode()).append(" ");
+		sb.append(address.getCountry());
+		System.out.print(sb.toString());
+	}
+	
+	private static void showArticle(Article article) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(article.getId()).append(" ");
+		sb.append(article.getLongName()).append(" ");
+		sb.append(article.getShortName()).append(" ");
+		sb.append(article.getWarehouseLocation()).append(" ");
+		sb.append(article.getWarehouseQuantity()).append(" ");
+		sb.append(article.getRetailPrice());
+		System.out.print(sb.toString());
+		
+	}
+	
+	private static Customer findCustomer(long id) {
+		for (Customer customer : customers) {
+			if (customer.getId() == id) {
+				return customer;
+			}
+		}
+		System.out.printf("Customer with id %d not found!\n", id);
+		return null;
 	}
 
 	public static void showInvoices() {
@@ -58,18 +122,24 @@ public class DataHandler {
 	}
 
 	public static void showCustomers() {
-		// TODO Auto-generated method stub
-		
+		for (Customer customer : customers) {
+			showCustomer(customer);
+			System.out.print("\n");
+		}
 	}
-
+	
 	public static void showAddresses() {
-		// TODO Auto-generated method stub
-		
+		for (Address address : addresses) {
+			showAddress(address);
+			System.out.print("\n");
+		}		
 	}
 
 	public static void showArticles() {
-		// TODO Auto-generated method stub
-		
+		for (Article article : articles) {
+			showArticle(article);
+			System.out.print("\n");
+		}		
 	}
 	
 	private static boolean invoiceIdIsUnique(long id) {
