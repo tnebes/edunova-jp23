@@ -54,9 +54,9 @@ public class DataHandler {
 	
 	public static void showInvoice(Invoice invoice) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(invoice.getId());
-		sb.append(" ");
-		sb.append(invoice.getDateOfCreation().toString());
+		sb.append(invoice.getId()).append(" ");
+		showCustomer(findCustomer(invoice.getCustomerId()));
+		sb.append(" ").append(invoice.getDateOfCreation().toString());
 		System.out.print(sb.toString());
 	}
 	
@@ -70,7 +70,6 @@ public class DataHandler {
 			sb.append(customer.getLastName()).append(" ");
 			System.out.print(sb.toString());
 		} else {
-			System.out.printf("%d %s %s", customer.getId(), customer.getName(), customer.getVATID());
 			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getName()).append(" ");
