@@ -53,16 +53,76 @@ public class UI {
 					System.out.printf("Input must be from 1 to %d\n", genericManipulation.length);
 					continue;
 				}
-				switch(userInput) {
-					// TODO
+				// submenu choices
+				switch (userInput) {
+				// add
+				case 1:
+					// if invoices
+					if (previousMenu == 1) {
+						DataHandler.addInvoice();
+					}
+					// if customers
+					else if (previousMenu == 2) {
+						DataHandler.addCustomer();
+					} 
+					// if addresses
+					else if (previousMenu == 3) {
+						DataHandler.addAddress();
+					} 
+					// if articles
+					else if (previousMenu == 4) {
+						DataHandler.addArticle();
+					}
+					break;
+				// change
+				case 2:
+					// if invoices
+					if (previousMenu == 1) {
+						DataHandler.changeInvoice();
+					}
+					// if customers
+					else if (previousMenu == 2) {
+						DataHandler.changeCustomer();
+					} 
+					// if addresses
+					else if (previousMenu == 3) {
+						DataHandler.changeAddress();
+					} 
+					// if articles
+					else if (previousMenu == 4) {
+						DataHandler.changeArticle();
+					}
+					break;
+				// delete
+				case 3: 
+					// if invoices
+					if (previousMenu == 1) {
+						DataHandler.deleteInvoice();
+					}
+					// if customers
+					else if (previousMenu == 2) {
+						DataHandler.deleteCustomer();
+					} 
+					// if addresses
+					else if (previousMenu == 3) {
+						DataHandler.deleteAddress();
+					} 
+					// if articles
+					else if (previousMenu == 4) {
+						DataHandler.deleteArticle();
+					}
+					break;
 				}
+				case 4:
+					return;
 			} while (true);
 			
 			
 		}
 		// options menu
 		else {
-			
+			// TODO temporary
+			System.exit(1);
 		}
 		
 	}
