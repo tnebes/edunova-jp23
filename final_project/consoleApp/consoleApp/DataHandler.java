@@ -219,8 +219,111 @@ public class DataHandler {
 		// TODO
 		newInvoice.setTranscationTypeId((byte) -1);
 		// TODO customer id by searching through names or providing id
-		newInvoice.setCustomerId(-1);
-		if (!(UI.yesNoDialogue("Has shipping address? "))) {
+		
+		// do we need a customer?
+		if(UserInputHandler.yesNoDialogue("Customer required? ")) {
+			boolean customerFound = false;
+			while (true) {
+				if (UserInputHandler.oneOrTwoDialogue("1 - existing customer\n2 - new customer ")) {
+					// existing customer
+					if (customers.size() == 0) {
+						System.out.print("No customers in database\n");
+						continue;
+					} else {
+						while (true) {
+							System.out.print("Enter ID or name. Empty to cancel: ");
+							String searchToken = UserInputHandler.getStringInput(true);
+							// check if cancelled
+							if (searchToken.isEmpty()) {
+								break;
+							}
+							// if it is an id
+							if (UserInputHandler.isLongInput(searchToken)) {
+								Customer invoiceCustomer = findCustomer(Long.parseLong(searchToken.trim()));
+								if (invoiceCustomer != null && invoiceCustomer.getId() != -1) {
+									// customer found
+									newInvoice.setCustomerId(invoiceCustomer.getId());
+									customerFound = true;
+									break;
+								} else {
+									// no hit
+									System.out.print("No such customer.\n");
+									showCustomers();
+									continue;
+								}
+							} else {
+								// if it a string
+								// search all names and report them
+								ArrayList<Customer> suspectCustomers = new ArrayList<>();
+								for (Customer customer : customers) {
+									if (customer.getFirstName().toLowerCase().contains(searchToken.toLowerCase())) {
+										suspectCustomers.add(customer);
+										continue;
+									} else if (customer.getMiddleName().toLowerCase().contains(searchToken.toLowerCase())) {
+										suspectCustomers.add(customer);
+										continue;
+									} else if (customer.getLastName().toLowerCase().contains(searchToken.toLowerCase())) {
+										suspectCustomers.add(customer);
+										continue;
+									}
+								}
+								// if none
+								// restart search
+								if (suspectCustomers.size() == 0) {
+									System.out.print("No such customer found\n");
+									continue;
+								}
+								// if there is only one
+								// get his id
+								else if (suspectCustomers.size() == 1) {
+									newInvoice.setCustomerId(suspectCustomers.get(0).getId());
+									customerFound = true;
+									break;
+								}
+								// if more than one
+								else {
+									for (Customer customer : suspectCustomers) {
+										showCustomer(customer);
+										System.out.print("\n");
+									}
+									System.out.print("Enter one of the IDs above. Leave blank to retry: ");
+									String idChoice = UserInputHandler.getStringInput(false);
+									if (idChoice.isEmpty()) {
+										continue;
+									} else {
+										while (true) {
+											for (Customer customer : suspectCustomers) {
+												if (customer.getId() == Long.parseLong(idChoice)) {
+													newInvoice.setCustomerId(customer.getId());
+													customerFound = true;
+													break;
+												}
+											}
+											// you are dumb
+											if (!customerFound) {
+												System.out.print("Enter the ID above: ");
+												continue;
+											}
+										}
+									}
+								}
+							}
+						}
+						// if something went wrong
+						if (!customerFound) {
+							continue;
+						}
+					}
+				} else {
+					addCustomer();
+					newInvoice.setCustomerId(customers.get(customers.size() - 1).getId());
+				}
+			}
+		} else {
+			// customer not required
+			newInvoice.setCustomerId(-1);
+		}
+		if (!(UserInputHandler.yesNoDialogue("Has shipping address? "))) {
 			newInvoice.setShippingAddressId(-1);
 		} else {
 //			addAddress();

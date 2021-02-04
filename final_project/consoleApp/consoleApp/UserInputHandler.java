@@ -52,4 +52,33 @@ public class UserInputHandler {
 		return returnValue;
 	}
 
+	/**
+	 * Methods returns true for 1 and false for 2
+	 * @param message
+	 * @return boolean
+	 */
+	public static boolean oneOrTwoDialogue(String message) {
+		System.out.print(message);
+		return Integer.valueOf(input.nextLine()) == 1 ? true : false;
+	}
+
+	public static boolean yesNoDialogue(String message) {
+		System.out.print(message);
+		return input.nextLine().toLowerCase().equals("y");
+	}
+	
+	/**
+	 * Returns true if the input can be parsed as a long.
+	 * @param input
+	 * @return
+	 */
+	public static boolean isLongInput(String input) {
+		try {
+			Long.valueOf(input.trim());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 }
