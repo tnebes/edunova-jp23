@@ -53,10 +53,13 @@ public class DataHandler {
 	public static void showInvoice(Invoice invoice) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(invoice.getId()).append(" ");
+		System.out.print(sb.toString());
+		sb.delete(0, sb.length());
 		if (invoice.getCustomerId() != -1) {
 			showCustomer(findCustomer(invoice.getCustomerId()));
+			sb.append(" ");
 		}
-		sb.append(" ").append(invoice.getDateOfCreation().toString());
+		sb.append(invoice.getDateOfCreation().toString());
 		System.out.print(sb.toString());
 	}
 
@@ -232,7 +235,7 @@ public class DataHandler {
 		} else {
 			newInvoice.setId(getId((byte) 0, userInput));
 		}
-		newInvoice.setDateOfCreation(new Date(System.currentTimeMillis()));
+		newInvoice.setDateOfCreation(new Date());
 		// TODO
 		newInvoice.setStatusId((byte) -1);
 		// TODO
