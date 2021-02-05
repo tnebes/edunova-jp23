@@ -1,21 +1,19 @@
 package consoleApp;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class DataHandler {
-	
+
 	static private ArrayList<Invoice> invoices = new ArrayList<>();
 	static private ArrayList<Customer> customers = new ArrayList<>();
 	static private ArrayList<Address> addresses = new ArrayList<>();
-	static private ArrayList<Article> articles = new ArrayList<>();	
-	
-	/* TODO
-	 * load file
-	 * if file loads
-	 * populate arraylist
-	 * print it out
+	static private ArrayList<Article> articles = new ArrayList<>();
+
+	/*
+	 * TODO load file if file loads populate arraylist print it out
 	 */
-	
+
 	public ArrayList<Invoice> getInvoices() {
 		return invoices;
 	}
@@ -51,7 +49,7 @@ public class DataHandler {
 	public static void addMessage() {
 		System.out.print("Entering data. Fields marked * are mandatory.\n");
 	}
-	
+
 	public static void showInvoice(Invoice invoice) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(invoice.getId()).append(" ");
@@ -59,7 +57,7 @@ public class DataHandler {
 		sb.append(" ").append(invoice.getDateOfCreation().toString());
 		System.out.print(sb.toString());
 	}
-	
+
 	private static void showCustomer(Customer customer) {
 		StringBuilder sb = new StringBuilder();
 		if (customer.isType() == Customer.NATURAL_PERSON) {
@@ -90,7 +88,7 @@ public class DataHandler {
 		sb.append(address.getCountry());
 		System.out.print(sb.toString());
 	}
-	
+
 	private static void showArticle(Article article) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(article.getId()).append(" ");
@@ -100,9 +98,9 @@ public class DataHandler {
 		sb.append(article.getWarehouseQuantity()).append(" ");
 		sb.append(article.getRetailPrice());
 		System.out.print(sb.toString());
-		
+
 	}
-	
+
 	private static Customer findCustomer(long id) {
 		for (Customer customer : customers) {
 			if (customer.getId() == id) {
@@ -126,21 +124,21 @@ public class DataHandler {
 			System.out.print("\n");
 		}
 	}
-	
+
 	public static void showAddresses() {
 		for (Address address : addresses) {
 			showAddress(address);
 			System.out.print("\n");
-		}		
+		}
 	}
 
 	public static void showArticles() {
 		for (Article article : articles) {
 			showArticle(article);
 			System.out.print("\n");
-		}		
+		}
 	}
-	
+
 	private static boolean invoiceIdIsUnique(long id) {
 		for (Invoice invoice : invoices) {
 			if (invoice.getId() == id) {
@@ -149,7 +147,7 @@ public class DataHandler {
 		}
 		return true;
 	}
-	
+
 	private static boolean customerIdIsUnique(long id) {
 		for (Customer customer : customers) {
 			if (customer.getId() == id) {
@@ -176,7 +174,7 @@ public class DataHandler {
 		}
 		return true;
 	}
-	
+
 	private static boolean idIsUnique(long id, byte type) {
 		// INVOICES 0
 		// CUSTOMERS 1
@@ -194,7 +192,6 @@ public class DataHandler {
 		}
 		return false;
 	}
-	
 
 	public static long getId(byte type) {
 		long id;
@@ -208,7 +205,7 @@ public class DataHandler {
 			}
 		}
 	}
-	
+
 	public static void addInvoice() {
 		Invoice newInvoice = new Invoice();
 		System.out.print("* Please enter unique invoice ID: ");
@@ -219,10 +216,29 @@ public class DataHandler {
 		// TODO
 		newInvoice.setTranscationTypeId((byte) -1);
 		// TODO customer id by searching through names or providing id
-		
+
 		// do we need a customer?
-		if(UserInputHandler.yesNoDialogue("Customer required? ")) {
-			boolean customerFound = false;
+		Customer tempCustomer = addInvoiceAddCustomer();
+		if (tempCustomer == null) {
+			newInvoice.setCustomerId(-1);
+		} else {
+			newInvoice.setCustomerId(tempCustomer.getId());
+			tempCustomer = null;
+		}
+
+		if (!(UserInputHandler.yesNoDialogue("Has shipping address? "))) {
+			newInvoice.setShippingAddressId(-1);
+		} else {
+//			addAddress();
+//			newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
+		}
+		invoices.add(newInvoice);
+		System.out.printf("Successfully added invoice ", newInvoice.getId());
+		showInvoice(newInvoice);
+	}
+
+	public static Customer addInvoiceAddCustomer() {
+		if (UserInputHandler.yesNoDialogue("Customer required? ")) {
 			while (true) {
 				if (UserInputHandler.oneOrTwoDialogue("1 - existing customer\n2 - new customer ")) {
 					// existing customer
@@ -242,9 +258,7 @@ public class DataHandler {
 								Customer invoiceCustomer = findCustomer(Long.parseLong(searchToken.trim()));
 								if (invoiceCustomer != null && invoiceCustomer.getId() != -1) {
 									// customer found
-									newInvoice.setCustomerId(invoiceCustomer.getId());
-									customerFound = true;
-									break;
+									return invoiceCustomer;
 								} else {
 									// no hit
 									System.out.print("No such customer.\n");
@@ -276,9 +290,7 @@ public class DataHandler {
 								// if there is only one
 								// get his id
 								else if (suspectCustomers.size() == 1) {
-									newInvoice.setCustomerId(suspectCustomers.get(0).getId());
-									customerFound = true;
-									break;
+									return suspectCustomers.get(0);
 								}
 								// if more than one
 								else {
@@ -294,102 +306,96 @@ public class DataHandler {
 										while (true) {
 											for (Customer customer : suspectCustomers) {
 												if (customer.getId() == Long.parseLong(idChoice)) {
-													newInvoice.setCustomerId(customer.getId());
-													customerFound = true;
-													break;
+													return customer;
 												}
 											}
-											// you are dumb
-											if (!customerFound) {
-												System.out.print("Enter the ID above: ");
-												continue;
-											}
+											// you are not blessed with perception
+											System.out.print("Enter the ID above: ");
+											continue;
 										}
 									}
 								}
 							}
 						}
 						// if something went wrong
-						if (!customerFound) {
-							continue;
-						}
+						continue;
 					}
-				} else {
+				}
+				// adding a new customer
+				else {
 					addCustomer();
-					newInvoice.setCustomerId(customers.get(customers.size() - 1).getId());
+					return customers.get(customers.size() - 1);
 				}
 			}
 		} else {
 			// customer not required
-			newInvoice.setCustomerId(-1);
+			return null;
 		}
-		if (!(UserInputHandler.yesNoDialogue("Has shipping address? "))) {
-			newInvoice.setShippingAddressId(-1);
-		} else {
-//			addAddress();
-//			newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
-		}
-		invoices.add(newInvoice);
-		System.out.printf("Successfully added invoice ", newInvoice.getId());
-		showInvoice(newInvoice);
 	}
 
 	public static void addCustomer() {
-		// TODO Auto-generated method stub
+		Customer newCustomer = new Customer();
+		newCustomer.setId(getId((byte) 1));
+		newCustomer.setDateOfCreation(new Date());
+		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - natural person\n 2 - legal person: "));
+		if (newCustomer.isType() == Customer.NATURAL_PERSON) {
+			addCustomerNaturalPerson(newCustomer);
+		}
+
+	}
+	
+	public static void addCustomerNaturalPerson(Customer editCustomer) {
 		
 	}
 
 	public static void addAddress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void addArticle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void changeInvoice() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void changeCustomer() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void changeAddress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void changeArticle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void deleteInvoice() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void deleteCustomer() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void deleteAddress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void deleteArticle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-
-	
-	
 }
