@@ -54,7 +54,7 @@ public class DataHandler {
 		StringBuilder sb = new StringBuilder();
 		sb.append(invoice.getId()).append(" ");
 		if (invoice.getCustomerId() != -1) {
-			showCustomer(findCustomer(invoice.getCustomerId()));			
+			showCustomer(findCustomer(invoice.getCustomerId()));
 		}
 		sb.append(" ").append(invoice.getDateOfCreation().toString());
 		System.out.print(sb.toString());
@@ -195,23 +195,43 @@ public class DataHandler {
 		return false;
 	}
 
-	public static long getId(byte type) {
-		long id;
+	public static long getId(byte type, long id) {
 		while (true) {
-			id = UserInputHandler.getIntegerInput(true);
 			if (idIsUnique(id, type)) {
 				return id;
 			} else {
-				System.out.print("ID not unique. Enter new id: ");
-				continue;
+				System.out.print("ID not unique. Enter new id or leave blank for automatic generation: ");
+				id = UserInputHandler.getIntegerInput(false);
+				if (id != 0) {
+					continue;
+				} else {
+					switch (type) {
+					case 0:
+						return IDCounter.getInvoiceCounter();
+					case 1:
+						return IDCounter.getCustomerCounter();
+					case 2:
+						return IDCounter.getAddressCounter();
+					case 3:
+						return IDCounter.getInvoiceCounter();
+					default:
+						System.out.print("Something went wrong.");
+						System.exit(1);
+					}
+				}
 			}
 		}
 	}
 
 	public static void addInvoice() {
 		Invoice newInvoice = new Invoice();
-		System.out.print("* Please enter unique invoice ID: ");
-		newInvoice.setId(getId((byte) 0));
+		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
+		long userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput == 0) {
+			newInvoice.setId(IDCounter.getInvoiceCounter());
+		} else {
+			newInvoice.setId(getId((byte) 0, userInput));
+		}
 		newInvoice.setDateOfCreation(new Date(System.currentTimeMillis()));
 		// TODO
 		newInvoice.setStatusId((byte) -1);
@@ -334,14 +354,21 @@ public class DataHandler {
 			return null;
 		}
 	}
-	
+
 	public static Customer getLastCustomer() {
 		return customers.get(customers.size() - 1);
 	}
 
 	public static void addCustomer() {
 		Customer newCustomer = new Customer();
-		newCustomer.setId(getId((byte) 1));
+		System.out.print("Enter unique ID for customer. Leave blank for automatic generation: ");
+		long userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput == 0) {
+			newCustomer.setId(IDCounter.getCustomerCounter());
+		} else {
+			userInput = getId((byte) 1, userInput);
+			newCustomer.setId(userInput);
+		}
 		newCustomer.setDateOfCreation(new Date());
 		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - natural person\n2 - legal person: "));
 		if (newCustomer.isType() == Customer.NATURAL_PERSON) {
@@ -352,7 +379,7 @@ public class DataHandler {
 		customerSetAddress(newCustomer);
 		customers.add(newCustomer);
 	}
-	
+
 	public static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
 		System.out.print("* First name: ");
 		naturalPersonCustomer.setFirstName(UserInputHandler.getStringInput(true));
@@ -363,14 +390,14 @@ public class DataHandler {
 		System.out.print("National ID number: ");
 		naturalPersonCustomer.setNationalIdNumber(UserInputHandler.getStringInput(false));
 	}
-	
+
 	public static void addCustomerLegalPerson(Customer legalPersonCustomer) {
 		System.out.print("* Name: ");
 		legalPersonCustomer.setName(UserInputHandler.getStringInput(true));
 		System.out.print("* VATID");
 		legalPersonCustomer.setVATID(UserInputHandler.getStringInput(true));
 	}
-	
+
 	public static void customerSetAddress(Customer customer) {
 		addBillingAddress();
 		customer.setBillingAddressId(getLastAddress().getId());
@@ -379,15 +406,13 @@ public class DataHandler {
 			customer.setShippingAddressId(getLastAddress().getId());
 		}
 	}
-	
+
 	public static Address getLastAddress() {
 		return addresses.get(addresses.size() - 1);
 	}
-	
-	
 
 	public static void addAddress() {
-		if (UserInputHandler.oneOrTwoDialogue("1 - shipping address\n2 - billing address: ")){
+		if (UserInputHandler.oneOrTwoDialogue("1 - shipping address\n2 - billing address: ")) {
 			addBillingAddress();
 		} else {
 			addShippingAddress();
@@ -400,7 +425,7 @@ public class DataHandler {
 
 	private static void addBillingAddress() {
 		addAddressType(Address.BILLING_ADDRESS);
-		
+
 	}
 
 	private static void addAddressType(boolean type) {
@@ -410,7 +435,7 @@ public class DataHandler {
 		if (userInput == 0) {
 			newAddress.setId(IDCounter.getAddressCounter());
 		} else {
-			newAddress.setId(userInput);
+			newAddress.setId(getId((byte) 2, userInput));
 		}
 		newAddress.setType(type);
 		System.out.print("* Enter street name: ");
