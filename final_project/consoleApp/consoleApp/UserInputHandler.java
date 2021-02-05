@@ -29,7 +29,7 @@ public class UserInputHandler {
 	}
 	
 	/**
-	 * Returns a long. Depending on isRequired, will demand that any number is returned.
+	 * Returns a long. Depending on isRequired, will demand that any number is returned. Returns null 
 	 * @param isRequired
 	 * @return long
 	 */

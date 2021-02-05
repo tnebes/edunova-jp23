@@ -2,8 +2,8 @@ package consoleApp;
 
 public class Address {
 
-	static public final boolean BILLING_ADDRESS = false;
 	static public final boolean SHIPPING_ADDRESS = true;
+	static public final boolean BILLING_ADDRESS = false;
 	
 	private long 		id;
 	private boolean	type;

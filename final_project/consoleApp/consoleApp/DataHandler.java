@@ -53,7 +53,9 @@ public class DataHandler {
 	public static void showInvoice(Invoice invoice) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(invoice.getId()).append(" ");
-		showCustomer(findCustomer(invoice.getCustomerId()));
+		if (invoice.getCustomerId() != -1) {
+			showCustomer(findCustomer(invoice.getCustomerId()));			
+		}
 		sb.append(" ").append(invoice.getDateOfCreation().toString());
 		System.out.print(sb.toString());
 	}
@@ -215,7 +217,6 @@ public class DataHandler {
 		newInvoice.setStatusId((byte) -1);
 		// TODO
 		newInvoice.setTranscationTypeId((byte) -1);
-		// TODO customer id by searching through names or providing id
 
 		// do we need a customer?
 		Customer tempCustomer = addInvoiceAddCustomer();
@@ -233,8 +234,9 @@ public class DataHandler {
 //			newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
 		}
 		invoices.add(newInvoice);
-		System.out.printf("Successfully added invoice ", newInvoice.getId());
+		System.out.printf("Successfully added invoice %d\n", newInvoice.getId());
 		showInvoice(newInvoice);
+		System.out.print("\n");
 	}
 
 	public static Customer addInvoiceAddCustomer() {
@@ -324,7 +326,7 @@ public class DataHandler {
 				// adding a new customer
 				else {
 					addCustomer();
-					return customers.get(customers.size() - 1);
+					return getLastCustomer();
 				}
 			}
 		} else {
@@ -332,25 +334,98 @@ public class DataHandler {
 			return null;
 		}
 	}
+	
+	public static Customer getLastCustomer() {
+		return customers.get(customers.size() - 1);
+	}
 
 	public static void addCustomer() {
 		Customer newCustomer = new Customer();
 		newCustomer.setId(getId((byte) 1));
 		newCustomer.setDateOfCreation(new Date());
-		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - natural person\n 2 - legal person: "));
+		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - natural person\n2 - legal person: "));
 		if (newCustomer.isType() == Customer.NATURAL_PERSON) {
 			addCustomerNaturalPerson(newCustomer);
+		} else {
+			addCustomerLegalPerson(newCustomer);
 		}
-
+		customerSetAddress(newCustomer);
+		customers.add(newCustomer);
 	}
 	
-	public static void addCustomerNaturalPerson(Customer editCustomer) {
+	public static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
+		System.out.print("* First name: ");
+		naturalPersonCustomer.setFirstName(UserInputHandler.getStringInput(true));
+		System.out.print("Middle name: ");
+		naturalPersonCustomer.setMiddleName(UserInputHandler.getStringInput(false));
+		System.out.print("* Last name: ");
+		naturalPersonCustomer.setLastName(UserInputHandler.getStringInput(true));
+		System.out.print("National ID number: ");
+		naturalPersonCustomer.setNationalIdNumber(UserInputHandler.getStringInput(false));
+	}
+	
+	public static void addCustomerLegalPerson(Customer legalPersonCustomer) {
+		System.out.print("* Name: ");
+		legalPersonCustomer.setName(UserInputHandler.getStringInput(true));
+		System.out.print("* VATID");
+		legalPersonCustomer.setVATID(UserInputHandler.getStringInput(true));
+	}
+	
+	public static void customerSetAddress(Customer customer) {
+		addBillingAddress();
+		customer.setBillingAddressId(getLastAddress().getId());
+		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? ")) {
+			addShippingAddress();
+			customer.setShippingAddressId(getLastAddress().getId());
+		}
+	}
+	
+	public static Address getLastAddress() {
+		return addresses.get(addresses.size() - 1);
+	}
+	
+	
+
+	public static void addAddress() {
+		if (UserInputHandler.oneOrTwoDialogue("1 - shipping address\n2 - billing address: ")){
+			addBillingAddress();
+		} else {
+			addShippingAddress();
+		}
+	}
+
+	private static void addShippingAddress() {
+		addAddressType(Address.SHIPPING_ADDRESS);
+	}
+
+	private static void addBillingAddress() {
+		addAddressType(Address.BILLING_ADDRESS);
 		
 	}
 
-	public static void addAddress() {
-		// TODO Auto-generated method stub
-
+	private static void addAddressType(boolean type) {
+		Address newAddress = new Address();
+		System.out.print("Enter unique ID for address. Leave blank for automatic generation: ");
+		long userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput == 0) {
+			newAddress.setId(IDCounter.getAddressCounter());
+		} else {
+			newAddress.setId(userInput);
+		}
+		newAddress.setType(type);
+		System.out.print("* Enter street name: ");
+		newAddress.setStreet(UserInputHandler.getStringInput(true));
+		System.out.print("Enter street number: ");
+		newAddress.setStreetNumber(UserInputHandler.getStringInput(false));
+		System.out.print("Enter street letter: ");
+		newAddress.setStreetLetter(UserInputHandler.getStringInput(false));
+		System.out.print("* Enter ZIP code: ");
+		newAddress.setZIPCode(UserInputHandler.getStringInput(true));
+		System.out.print("* Enter city name: ");
+		newAddress.setCity(UserInputHandler.getStringInput(true));
+		System.out.print("* Enter country name: ");
+		newAddress.setCountry(UserInputHandler.getStringInput(true));
+		addresses.add(newAddress);
 	}
 
 	public static void addArticle() {
