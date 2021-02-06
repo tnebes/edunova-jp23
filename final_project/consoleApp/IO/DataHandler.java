@@ -1,7 +1,12 @@
-package consoleApp;
+package IO;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import consoleApp.DataClasses.Address;
+import consoleApp.DataClasses.Article;
+import consoleApp.DataClasses.Customer;
+import consoleApp.DataClasses.Invoice;
 
 public class DataHandler {
 

@@ -1,4 +1,4 @@
-package consoleApp;
+package consoleApp.DataClasses;
 
 public class Address {
 

@@ -1,11 +1,10 @@
-package consoleApp;
+package consoleApp.DataClasses;
 
-public class Status {
-	
+public class TransactionType {
+
 	private byte id;
 	private String name;
 	private String description;
-	private String descriptionLong;
 	
 	public byte getId() {
 		return id;
@@ -25,13 +24,7 @@ public class Status {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getDescriptionLong() {
-		return descriptionLong;
-	}
-	public void setDescriptionLong(String descriptionLong) {
-		this.descriptionLong = descriptionLong;
-	}
 	
 	
-
+	
 }

@@ -1,5 +1,8 @@
 package consoleApp;
 
+import IO.DataHandler;
+import IO.UserInputHandler;
+
 public class UI {
 
 	// Menu strings.

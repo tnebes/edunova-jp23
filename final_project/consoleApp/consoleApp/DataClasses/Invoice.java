@@ -1,18 +1,18 @@
-package consoleApp;
+package consoleApp.DataClasses;
 
 import java.util.Date;
 
 public class Invoice {
 	
-	private long 	id;
-	private Date 	dateOfCreation;
+	private long 	id; // not null
+	private Date 	dateOfCreation; // not null 
 	private long 	customerId;
-	private byte 	transcationTypeId;
-	private byte 	statusId;
+	private byte 	transcationTypeId; // not null
+	private byte 	statusId; // not null
 	private byte 	invoiceDiscountPercent;
 	private float 	subtotal;
 	private float 	amountDue;
-	private float	amountPaid;
+	private float	amountPaid; // not null
 	private long 	shippingAddressId;
 	
 	public long getId() {
