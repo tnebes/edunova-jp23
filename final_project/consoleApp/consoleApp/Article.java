@@ -2,13 +2,15 @@ package consoleApp;
 
 public class Article {
 
-	private long id;
-	private String warehouseLocation;
-	private long warehouseQuantity;
-	private float wholesalePrice;
+	static public final byte STANDARD_TAX_RATE = 25;
+	
+	private long id; // not null
+	private String warehouseLocation; // not null
+	private long warehouseQuantity; // not null
+	private float wholesalePrice; // not null
 	private float retailPrice;
 	private byte taxRate;
-	private String shortName;
+	private String shortName; // not null
 	private String longName;
 	private String shortDescription;
 	private String longDescription;

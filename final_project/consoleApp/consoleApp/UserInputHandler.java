@@ -7,7 +7,7 @@ public class UserInputHandler {
 	static Scanner input = new Scanner(System.in);
 	
 	/**
-	 * Returns a string. Depending on isRequired, will demand that a not-empty string is returned.
+	 * Returns a string. Depending on isRequired, will demand that a not-empty string is returned. Returns String
 	 * @param isRequired
 	 * @return String
 	 */
@@ -29,7 +29,7 @@ public class UserInputHandler {
 	}
 	
 	/**
-	 * Returns a long. Depending on isRequired, will demand that any number is returned. Returns null 
+	 * Returns a long. Depending on isRequired, will demand that any number is returned. Returns long. 
 	 * @param isRequired
 	 * @return long
 	 */
@@ -43,6 +43,30 @@ public class UserInputHandler {
 			}
 			try {
 				returnValue = Long.valueOf(userInput.trim());
+				break;
+			} catch (NumberFormatException e) {
+				System.out.print("A number must be entered.\n");
+				continue;
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
+	 * Returns a double. Depending on isRequired, will demand that any number is returned. Returns double.
+	 * @param isRequired
+	 * @return
+	 */
+	static public double getDoubleInput(boolean isRequired) {
+		String userInput;
+		Double returnValue;
+		while (true) {
+			userInput = input.nextLine();
+			if (!isRequired && userInput.isEmpty()) {
+				return 0.0;
+			}
+			try {
+				returnValue = Double.valueOf(userInput.trim());
 				break;
 			} catch (NumberFormatException e) {
 				System.out.print("A number must be entered.\n");

@@ -5,13 +5,16 @@ import java.util.Date;
 
 public class DataHandler {
 
+	static private double DOUBLE_EPSILON = 10e-14;
+	static private float FLOAT_EPSILON = 10e-7f;
+
 	static private ArrayList<Invoice> invoices = new ArrayList<>();
 	static private ArrayList<Customer> customers = new ArrayList<>();
 	static private ArrayList<Address> addresses = new ArrayList<>();
 	static private ArrayList<Article> articles = new ArrayList<>();
 
 	/*
-	 * TODO load file if file loads populate arraylist print it out
+	 * TODO load file. if file loads populate arraylist print it out
 	 */
 
 	public ArrayList<Invoice> getInvoices() {
@@ -103,7 +106,6 @@ public class DataHandler {
 		sb.append(article.getWarehouseQuantity()).append(" ");
 		sb.append(article.getRetailPrice());
 		System.out.print(sb.toString());
-
 	}
 
 	private static Customer findCustomer(long id) {
@@ -198,7 +200,7 @@ public class DataHandler {
 		return false;
 	}
 
-	public static long getId(byte type, long id) {
+	public static long enterId(byte type, long id) {
 		while (true) {
 			if (idIsUnique(id, type)) {
 				return id;
@@ -228,13 +230,7 @@ public class DataHandler {
 
 	public static void addInvoice() {
 		Invoice newInvoice = new Invoice();
-		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
-		long userInput = UserInputHandler.getIntegerInput(false);
-		if (userInput == 0) {
-			newInvoice.setId(IDCounter.getInvoiceCounter());
-		} else {
-			newInvoice.setId(getId((byte) 0, userInput));
-		}
+		assignIDInvoice(newInvoice);
 		newInvoice.setDateOfCreation(new Date());
 		// TODO
 		newInvoice.setStatusId((byte) -1);
@@ -262,6 +258,21 @@ public class DataHandler {
 		System.out.print("\n");
 	}
 
+	private static void assignIDInvoice(Invoice invoice) {
+		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
+		long userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput == 0) {
+			invoice.setId(IDCounter.getInvoiceCounter());
+		} else {
+			invoice.setId(enterId((byte) 0, userInput));
+		}
+	}
+
+	/**
+	 * This is incredibly bad
+	 * 
+	 * @return badness
+	 */
 	public static Customer addInvoiceAddCustomer() {
 		if (UserInputHandler.yesNoDialogue("Customer required? ")) {
 			while (true) {
@@ -364,14 +375,7 @@ public class DataHandler {
 
 	public static void addCustomer() {
 		Customer newCustomer = new Customer();
-		System.out.print("Enter unique ID for customer. Leave blank for automatic generation: ");
-		long userInput = UserInputHandler.getIntegerInput(false);
-		if (userInput == 0) {
-			newCustomer.setId(IDCounter.getCustomerCounter());
-		} else {
-			userInput = getId((byte) 1, userInput);
-			newCustomer.setId(userInput);
-		}
+		assignIDCustomer(newCustomer);
 		newCustomer.setDateOfCreation(new Date());
 		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - natural person\n2 - legal person: "));
 		if (newCustomer.isType() == Customer.NATURAL_PERSON) {
@@ -383,7 +387,18 @@ public class DataHandler {
 		customers.add(newCustomer);
 	}
 
-	public static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
+	private static void assignIDCustomer(Customer customer) {
+		System.out.print("Enter unique ID for customer. Leave blank for automatic generation: ");
+		long userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput == 0) {
+			customer.setId(IDCounter.getCustomerCounter());
+		} else {
+			userInput = enterId((byte) 1, userInput);
+			customer.setId(userInput);
+		}
+	}
+
+	private static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
 		System.out.print("* First name: ");
 		naturalPersonCustomer.setFirstName(UserInputHandler.getStringInput(true));
 		System.out.print("Middle name: ");
@@ -394,14 +409,14 @@ public class DataHandler {
 		naturalPersonCustomer.setNationalIdNumber(UserInputHandler.getStringInput(false));
 	}
 
-	public static void addCustomerLegalPerson(Customer legalPersonCustomer) {
+	private static void addCustomerLegalPerson(Customer legalPersonCustomer) {
 		System.out.print("* Name: ");
 		legalPersonCustomer.setName(UserInputHandler.getStringInput(true));
 		System.out.print("* VATID");
 		legalPersonCustomer.setVATID(UserInputHandler.getStringInput(true));
 	}
 
-	public static void customerSetAddress(Customer customer) {
+	private static void customerSetAddress(Customer customer) {
 		addBillingAddress();
 		customer.setBillingAddressId(getLastAddress().getId());
 		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? ")) {
@@ -428,7 +443,6 @@ public class DataHandler {
 
 	private static void addBillingAddress() {
 		addAddressType(Address.BILLING_ADDRESS);
-
 	}
 
 	private static void addAddressType(boolean type) {
@@ -438,7 +452,7 @@ public class DataHandler {
 		if (userInput == 0) {
 			newAddress.setId(IDCounter.getAddressCounter());
 		} else {
-			newAddress.setId(getId((byte) 2, userInput));
+			newAddress.setId(enterId((byte) 2, userInput));
 		}
 		newAddress.setType(type);
 		System.out.print("* Enter street name: ");
@@ -457,8 +471,100 @@ public class DataHandler {
 	}
 
 	public static void addArticle() {
-		// TODO Auto-generated method stub
+		Article newArticle = new Article();
+		assignArticleID(newArticle);
+		assignArticleNames(newArticle);
+		assignArticleWarehouseLocation(newArticle);
+		assignArticlePrices(newArticle);
+		articles.add(newArticle);
+	}
 
+	private static void assignArticleNames(Article article) {
+		assignArticleShortName(article);
+		assignArticleLongName(article);
+		assignArticleShortDescription(article);
+		assignArticleLongDescription(article);
+		assignArticleQuantity(article);
+	}
+
+	private static void assignArticleQuantity(Article article) {
+		System.out.print("Enter the amount of articles in the warehouse. Leave blank for 0: ");
+		article.setWarehouseQuantity(UserInputHandler.getIntegerInput(false));
+	}
+
+	private static void assignArticleShortName(Article article) {
+		System.out.print("* Article short name: ");
+		article.setShortName(UserInputHandler.getStringInput(true));
+	}
+
+	private static void assignArticleLongName(Article article) {
+		System.out.print("Article long name: ");
+		article.setShortName(UserInputHandler.getStringInput(false));
+	}
+
+	private static void assignArticleShortDescription(Article article) {
+		System.out.print("Article short description: ");
+		article.setShortName(UserInputHandler.getStringInput(false));
+	}
+
+	private static void assignArticleLongDescription(Article article) {
+		System.out.print("Article long description: ");
+		article.setShortName(UserInputHandler.getStringInput(false));
+	}
+
+	private static void assignArticlePrices(Article article) {
+		System.out.printf(
+				"Enter tax rate without %% for article. Leave blank for automatic application of %d%% tax rate: ",
+				Article.STANDARD_TAX_RATE);
+		byte userIntInput = (byte) UserInputHandler.getIntegerInput(false);
+		if (userIntInput == 0) {
+			article.setTaxRate(Article.STANDARD_TAX_RATE);
+		} else {
+			article.setTaxRate(userIntInput);
+		}
+		System.out.print(
+				"Enter wholesale price.\nEnter blank to enter retail price. Wholesale price will be calculated automatically. Enter wholesale price: ");
+		float userInput = (float) UserInputHandler.getDoubleInput(false);
+		if (userInput <= DataHandler.FLOAT_EPSILON) {
+			enterArticleRetailPrice(article);
+			calculateWholesalePrice(article);
+		} else {
+			enterArticleWholesalePrice(article);
+			calculateArticleRetailPrice(article);
+		}
+	}
+
+	private static void calculateArticleRetailPrice(Article article) {
+		article.setRetailPrice((float) (article.getWholesalePrice() * (article.getTaxRate() / 100.0 + 1)));
+	}
+
+	private static void calculateWholesalePrice(Article article) {
+		article.setWholesalePrice((float) (article.getRetailPrice() / (article.getTaxRate() / 100.0 + 1)));
+	}
+
+	private static void enterArticleWholesalePrice(Article article) {
+		System.out.print("* Enter wholesale price: ");
+		article.setRetailPrice((float) UserInputHandler.getDoubleInput(true));
+	}
+
+	private static void enterArticleRetailPrice(Article article) {
+		System.out.print("* Enter retail price: ");
+		article.setRetailPrice((float) UserInputHandler.getDoubleInput(true));
+	}
+
+	private static void assignArticleWarehouseLocation(Article article) {
+		System.out.print("* Article warehouse location: ");
+		article.setWarehouseLocation(UserInputHandler.getStringInput(true));
+	}
+
+	private static void assignArticleID(Article article) {
+		System.out.print("Enter article ID. Leave blank for automatic generation: ");
+		long userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput == 0) {
+			article.setId(IDCounter.getArticleCounter());
+		} else {
+			article.setId(enterId((byte) 3, userInput));
+		}
 	}
 
 	public static void changeInvoice() {
