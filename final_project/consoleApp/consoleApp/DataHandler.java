@@ -477,6 +477,8 @@ public class DataHandler {
 		assignArticleWarehouseLocation(newArticle);
 		assignArticlePrices(newArticle);
 		articles.add(newArticle);
+		System.out.print("Successfully added article ");
+		showArticle(getLastArticle());
 	}
 
 	private static void assignArticleNames(Article article) {
@@ -522,10 +524,8 @@ public class DataHandler {
 		} else {
 			article.setTaxRate(userIntInput);
 		}
-		System.out.print(
-				"Enter wholesale price.\nEnter blank to enter retail price. Wholesale price will be calculated automatically. Enter wholesale price: ");
-		float userInput = (float) UserInputHandler.getDoubleInput(false);
-		if (userInput <= DataHandler.FLOAT_EPSILON) {
+		boolean userInput = UserInputHandler.oneOrTwoDialogue("1 - enter retail price\n2 - enter wholesale price: ");
+		if (userInput) {
 			enterArticleRetailPrice(article);
 			calculateWholesalePrice(article);
 		} else {
@@ -544,7 +544,7 @@ public class DataHandler {
 
 	private static void enterArticleWholesalePrice(Article article) {
 		System.out.print("* Enter wholesale price: ");
-		article.setRetailPrice((float) UserInputHandler.getDoubleInput(true));
+		article.setWholesalePrice((float) UserInputHandler.getDoubleInput(true));
 	}
 
 	private static void enterArticleRetailPrice(Article article) {
@@ -565,6 +565,10 @@ public class DataHandler {
 		} else {
 			article.setId(enterId((byte) 3, userInput));
 		}
+	}
+	
+	public static Article getLastArticle() {
+		return articles.get(articles.size() - 1);
 	}
 
 	public static void changeInvoice() {
