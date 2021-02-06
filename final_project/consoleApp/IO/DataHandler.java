@@ -160,6 +160,10 @@ public class DataHandler {
 	}
 
 	public static void showInvoices() {
+		if (invoices.size() == 0) {
+			System.out.print("No invoices in the database.\n");
+			return;
+		}
 		for (Invoice invoice : invoices) {
 			showInvoice(invoice);
 			System.out.print("\n");
@@ -167,6 +171,10 @@ public class DataHandler {
 	}
 
 	public static void showCustomers() {
+		if (customers.size() == 0) {
+			System.out.print("No customers in the database.\n");
+			return;
+		}
 		for (Customer customer : customers) {
 			showCustomer(customer);
 			System.out.print("\n");
@@ -174,6 +182,10 @@ public class DataHandler {
 	}
 
 	public static void showAddresses() {
+		if (addresses.size() == 0) {
+			System.out.print("No addresses in the database.\n");
+			return;
+		}
 		for (Address address : addresses) {
 			showAddress(address);
 			System.out.print("\n");
@@ -181,6 +193,10 @@ public class DataHandler {
 	}
 
 	public static void showArticles() {
+		if (articles.size() == 0) {
+			System.out.print("No articles in the database.\n");
+			return;
+		}
 		for (Article article : articles) {
 			showArticle(article);
 			System.out.print("\n");
@@ -287,7 +303,7 @@ public class DataHandler {
 			tempCustomer = null;
 		}
 
-		if (!(UserInputHandler.yesNoDialogue("Has shipping address? "))) {
+		if (!(UserInputHandler.yesNoDialogue("Has shipping address? y/n"))) {
 			newInvoice.setShippingAddressId(-1);
 		} else {
 //			addAddress();
@@ -315,7 +331,7 @@ public class DataHandler {
 	 * @return badness
 	 */
 	public static Customer addInvoiceAddCustomer() {
-		if (UserInputHandler.yesNoDialogue("Customer required? ")) {
+		if (UserInputHandler.yesNoDialogue("Customer required? y/n")) {
 			while (true) {
 				if (UserInputHandler.oneOrTwoDialogue("1 - existing customer\n2 - new customer ")) {
 					// existing customer
@@ -449,7 +465,7 @@ public class DataHandler {
 	private static void customerSetAddress(Customer customer) {
 		addBillingAddress();
 		customer.setBillingAddressId(getLastAddress().getId());
-		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? ")) {
+		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? y/n")) {
 			addShippingAddress();
 			customer.setShippingAddressId(getLastAddress().getId());
 		}
@@ -635,7 +651,7 @@ public class DataHandler {
 		while (true) {
 			showInvoices();
 			System.out.print("Enter ID to delete an invoice. Leave blank to exit: ");
-			Long userInput = UserInputHandler.getIntegerInput(false);
+			long userInput = UserInputHandler.getIntegerInput(false);
 			if (userInput == 0) {
 				// badness due to not-so-good implementation of getIntegerInput
 				if (getInvoice(0) != null) {
@@ -661,12 +677,71 @@ public class DataHandler {
 	}
 
 	public static void deleteCustomer() {
-		// TODO Auto-generated method stub
-
+		// TODO add a check for whether the customer is associated with invoices.
+		// If invoices are linked with the customer, ask the user if he wishes to delete all the invoices associated
+		// with the customer
+		if (customers.size() == 0) {
+			System.out.print("No customers in database.\n");
+			return;
+		}
+		while (true) {
+			showCustomers();
+			System.out.print("Enter ID to delete an customer. Leave blank to exit: ");
+			long userInput = UserInputHandler.getIntegerInput(false);
+			// badness due to not-so-good implementation of getIntegerInput
+			if (getCustomer(0) != null) {
+				if (UserInputHandler.yesNoDialogue("Delete customer 0? y/n ")) {
+					customers.remove(getCustomer(0));
+					System.out.print("Successfully removed invoice 0\n");
+					return;
+				} else {
+					return;
+				}
+			}
+			if (getCustomer(userInput) != null) {
+				customers.remove(getCustomer(userInput));
+				System.out.printf("Successfully removed customer %d\n", userInput);
+				return;
+			} else {
+				System.out.print("No such customer.\n");
+				continue;
+			}
+		}
 	}
 
 	public static void deleteAddress() {
-		// TODO Auto-generated method stub
+		// TODO add a check if the address is associated with customer or invoice. If it is
+		// let the user decide whether he wants to purge the customers and invoices
+		// associated with the address
+
+		if (addresses.size() == 0) {
+			System.out.print("No addresses in database.\n");
+			return;
+		}
+		while (true) {
+			showAddresses();
+			System.out.print("Enter ID to delete an address. Leave blank to exit: ");
+			long userInput = UserInputHandler.getIntegerInput(false);
+			// badness due to not-so-good implementation of getIntegerInput
+			if (getCustomer(0) != null) {
+				if (UserInputHandler.yesNoDialogue("Delete customer 0? y/n ")) {
+					customers.remove(getCustomer(0));
+					System.out.print("Successfully removed invoice 0\n");
+					return;
+				} else {
+					return;
+				}
+			}
+			if (getCustomer(userInput) != null) {
+				customers.remove(getCustomer(userInput));
+				System.out.printf("Successfully removed customer %d\n", userInput);
+				return;
+			} else {
+				System.out.print("No such customer.\n");
+				continue;
+			}
+		}
+
 
 	}
 
