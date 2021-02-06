@@ -299,13 +299,14 @@ public class DataHandler {
 	}
 
 	private static void assignIDInvoice(Invoice invoice) {
-		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
-		long userInput = UserInputHandler.getIntegerInput(false);
-		if (userInput == 0) {
-			invoice.setId(IDCounter.getInvoiceCounter());
-		} else {
-			invoice.setId(enterId((byte) 0, userInput));
-		}
+//		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
+//		long userInput = UserInputHandler.getIntegerInput(false);
+//		if (userInput == 0) {
+//			invoice.setId(IDCounter.getInvoiceCounter());
+//		} else {
+//			invoice.setId(enterId((byte) 0, userInput));
+//		}
+		invoice.setId(IDCounter.getInvoiceCounter());
 	}
 
 	/**
@@ -416,14 +417,15 @@ public class DataHandler {
 	}
 
 	private static void assignIDCustomer(Customer customer) {
-		System.out.print("Enter unique ID for customer. Leave blank for automatic generation: ");
-		long userInput = UserInputHandler.getIntegerInput(false);
-		if (userInput == 0) {
-			customer.setId(IDCounter.getCustomerCounter());
-		} else {
-			userInput = enterId((byte) 1, userInput);
-			customer.setId(userInput);
-		}
+//		System.out.print("Enter unique ID for customer. Leave blank for automatic generation: ");
+//		long userInput = UserInputHandler.getIntegerInput(false);
+//		if (userInput == 0) {
+//			customer.setId(IDCounter.getCustomerCounter());
+//		} else {
+//			userInput = enterId((byte) 1, userInput);
+//			customer.setId(userInput);
+//		}
+		customer.setId(IDCounter.getCustomerCounter());
 	}
 
 	private static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
@@ -475,13 +477,7 @@ public class DataHandler {
 
 	private static void addAddressType(boolean type) {
 		Address newAddress = new Address();
-		System.out.print("Enter unique ID for address. Leave blank for automatic generation: ");
-		long userInput = UserInputHandler.getIntegerInput(false);
-		if (userInput == 0) {
-			newAddress.setId(IDCounter.getAddressCounter());
-		} else {
-			newAddress.setId(enterId((byte) 2, userInput));
-		}
+		setAddressId(newAddress);
 		newAddress.setType(type);
 		System.out.print("* Enter street name: ");
 		newAddress.setStreet(UserInputHandler.getStringInput(true));
@@ -496,6 +492,17 @@ public class DataHandler {
 		System.out.print("* Enter country name: ");
 		newAddress.setCountry(UserInputHandler.getStringInput(true));
 		addresses.add(newAddress);
+	}
+
+	private static void setAddressId(Address address) {
+//		System.out.print("Enter unique ID for address. Leave blank for automatic generation: ");
+//		long userInput = UserInputHandler.getIntegerInput(false);
+//		if (userInput == 0) {
+//			address.setId(IDCounter.getAddressCounter());
+//		} else {
+//			address.setId(enterId((byte) 2, userInput));
+//		}
+		address.setId(IDCounter.getAddressCounter());		
 	}
 
 	public static void addArticle() {
@@ -586,13 +593,14 @@ public class DataHandler {
 	}
 
 	private static void assignArticleID(Article article) {
-		System.out.print("Enter article ID. Leave blank for automatic generation: ");
-		long userInput = UserInputHandler.getIntegerInput(false);
-		if (userInput == 0) {
-			article.setId(IDCounter.getArticleCounter());
-		} else {
-			article.setId(enterId((byte) 3, userInput));
-		}
+//		System.out.print("Enter article ID. Leave blank for automatic generation: ");
+//		long userInput = UserInputHandler.getIntegerInput(false);
+//		if (userInput == 0) {
+//			article.setId(IDCounter.getArticleCounter());
+//		} else {
+//			article.setId(enterId((byte) 3, userInput));
+//		}
+		article.setId(IDCounter.getArticleCounter());
 	}
 	
 	public static Article getLastArticle() {
