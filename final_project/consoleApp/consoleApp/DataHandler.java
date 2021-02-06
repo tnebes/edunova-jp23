@@ -72,11 +72,12 @@ public class DataHandler {
 			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getNationalIdNumber()).append(" ");
 			sb.append(customer.getFirstName()).append(" ");
-			sb.append(customer.getMiddleName()).append(" ");
+			if (!customer.getMiddleName().isBlank()) {
+				sb.append(customer.getMiddleName()).append(" ");	
+			}
 			sb.append(customer.getLastName()).append(" ");
 			System.out.print(sb.toString());
 		} else {
-			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getName()).append(" ");
 			sb.append(customer.getVATID());
@@ -100,7 +101,9 @@ public class DataHandler {
 	private static void showArticle(Article article) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(article.getId()).append(" ");
-		sb.append(article.getLongName()).append(" ");
+		if (!article.getLongName().isBlank()) {
+			sb.append(article.getLongName()).append(" ");			
+		}
 		sb.append(article.getShortName()).append(" ");
 		sb.append(article.getWarehouseLocation()).append(" ");
 		sb.append(article.getWarehouseQuantity()).append(" ");
@@ -255,7 +258,6 @@ public class DataHandler {
 		invoices.add(newInvoice);
 		System.out.printf("Successfully added invoice %d\n", newInvoice.getId());
 		showInvoice(newInvoice);
-		System.out.print("\n");
 	}
 
 	private static void assignIDInvoice(Invoice invoice) {

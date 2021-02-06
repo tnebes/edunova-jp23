@@ -15,6 +15,7 @@ public class UI {
 		System.out.printf("%s\n\n", notification);
 		int userChoice;
 		do {
+			System.out.print("\n");
 			for (int i = 0; i < mainMenuChoices.length; i++) {
 				// i + 1 for proper user choice
 				System.out.printf("%d - %s\n", i + 1, mainMenuChoices[i]);
@@ -46,6 +47,7 @@ public class UI {
 			System.exit(1);
 		}
 		do {
+			System.out.print("\n");
 			for (int i = 0; i < genericManipulation.length; i++) {
 				// i - 1 required for proper rendering of options.
 				System.out.printf("%d - %s %s\n", i + 1, genericManipulation[i], mainMenuChoices[previousMenu - 1]);

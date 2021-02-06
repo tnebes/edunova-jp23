@@ -83,7 +83,14 @@ public class UserInputHandler {
 	 */
 	public static boolean oneOrTwoDialogue(String message) {
 		System.out.print(message);
-		return Integer.valueOf(input.nextLine()) == 1 ? true : false;
+		while (true) {
+			try {
+				return Integer.valueOf(input.nextLine()) == 1 ? true : false;
+			} catch (NumberFormatException e) {
+				System.out.print("Please enter 1 or 2: ");
+			}
+		}
+
 	}
 
 	public static boolean yesNoDialogue(String message) {
