@@ -2,6 +2,12 @@ package IO;
 
 import java.util.Scanner;
 
+/**
+ * 
+ * @author tnebes
+ * @date 6 February 2021
+ */
+
 public class UserInputHandler {
 	
 	static Scanner input = new Scanner(System.in);

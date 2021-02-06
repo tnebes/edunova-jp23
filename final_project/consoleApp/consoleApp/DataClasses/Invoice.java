@@ -2,6 +2,12 @@ package consoleApp.DataClasses;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author tnebes
+ * @date 6 February 2021
+ */
+
 public class Invoice {
 	
 	private long 	id; // not null

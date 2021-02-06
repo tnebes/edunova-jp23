@@ -3,6 +3,12 @@ package consoleApp;
 import IO.DataHandler;
 import IO.UserInputHandler;
 
+/**
+ * 
+ * @author tnebes
+ * @date 6 February 2021
+ */
+
 public class UI {
 
 	// Menu strings.

@@ -1,5 +1,11 @@
 package consoleApp;
 
+/**
+ * 
+ * @author tnebes
+ * @date 6 February 2021
+ */
+
 public class Main {
 
 	public Main() {

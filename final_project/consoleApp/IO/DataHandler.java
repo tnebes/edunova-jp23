@@ -8,6 +8,12 @@ import consoleApp.DataClasses.Article;
 import consoleApp.DataClasses.Customer;
 import consoleApp.DataClasses.Invoice;
 
+/**
+ * 
+ * @author tnebes
+ * @date 6 February 2021
+ */
+
 public class DataHandler {
 
 	static private double DOUBLE_EPSILON = 10e-14;
@@ -64,7 +70,7 @@ public class DataHandler {
 		System.out.print(sb.toString());
 		sb.delete(0, sb.length());
 		if (invoice.getCustomerId() != -1) {
-			showCustomer(findCustomer(invoice.getCustomerId()));
+			showCustomer(getCustomer(invoice.getCustomerId()));
 			sb.append(" ");
 		}
 		sb.append(invoice.getDateOfCreation().toString());
@@ -116,13 +122,40 @@ public class DataHandler {
 		System.out.print(sb.toString());
 	}
 
-	private static Customer findCustomer(long id) {
+	private static Customer getCustomer(long id) {
 		for (Customer customer : customers) {
 			if (customer.getId() == id) {
 				return customer;
 			}
 		}
 		System.out.printf("Customer with id %d not found!\n", id);
+		return null;
+	}
+	
+	private static ArrayList<Customer> getCustomer(String token) {
+		ArrayList<Customer> suspectCustomers = new ArrayList<>();
+		for (Customer customer : customers) {
+			if (customer.getFirstName().toLowerCase().contains(token.toLowerCase())) {
+				suspectCustomers.add(customer);
+				continue;
+			} else if (customer.getMiddleName().toLowerCase().contains(token.toLowerCase())) {
+				suspectCustomers.add(customer);
+				continue;
+			} else if (customer.getLastName().toLowerCase().contains(token.toLowerCase())) {
+				suspectCustomers.add(customer);
+				continue;
+			}
+		}
+		return suspectCustomers;
+	}
+	
+	private static Invoice getInvoice(long id) {
+		for (Invoice invoice : invoices) {
+			if (invoice.getId() == id) {
+				return invoice;
+			}
+		}
+		System.out.print("No such invoice.\n");
 		return null;
 	}
 
@@ -298,7 +331,7 @@ public class DataHandler {
 							}
 							// if it is an id
 							if (UserInputHandler.isLongInput(searchToken)) {
-								Customer invoiceCustomer = findCustomer(Long.parseLong(searchToken.trim()));
+								Customer invoiceCustomer = getCustomer(Long.parseLong(searchToken.trim()));
 								if (invoiceCustomer != null && invoiceCustomer.getId() != -1) {
 									// customer found
 									return invoiceCustomer;
@@ -311,19 +344,7 @@ public class DataHandler {
 							} else {
 								// if it a string
 								// search all names and report them
-								ArrayList<Customer> suspectCustomers = new ArrayList<>();
-								for (Customer customer : customers) {
-									if (customer.getFirstName().toLowerCase().contains(searchToken.toLowerCase())) {
-										suspectCustomers.add(customer);
-										continue;
-									} else if (customer.getMiddleName().toLowerCase().contains(searchToken.toLowerCase())) {
-										suspectCustomers.add(customer);
-										continue;
-									} else if (customer.getLastName().toLowerCase().contains(searchToken.toLowerCase())) {
-										suspectCustomers.add(customer);
-										continue;
-									}
-								}
+								ArrayList<Customer> suspectCustomers = getCustomer(searchToken);
 								// if none
 								// restart search
 								if (suspectCustomers.size() == 0) {
@@ -599,8 +620,36 @@ public class DataHandler {
 	}
 
 	public static void deleteInvoice() {
-		// TODO Auto-generated method stub
-
+		if (invoices.size() == 0) {
+			System.out.print("No invoices in database.\n");
+			return;
+		}
+		while (true) {
+			showInvoices();
+			System.out.print("Enter ID to delete an invoice. Leave blank to exit: ");
+			Long userInput = UserInputHandler.getIntegerInput(false);
+			if (userInput == 0) {
+				// badness due to not-so-good implementation of getIntegerInput
+				if (getInvoice(0) != null) {
+					if (UserInputHandler.yesNoDialogue("Delete invoice 0? y/n ")) {
+						invoices.remove(getInvoice(0));
+						System.out.print("Successfully removed invoice 0\n");
+						return;
+					} else {
+						return;
+					}
+				}
+			} else {
+				if (getInvoice(userInput) != null) {
+					invoices.remove(getInvoice(userInput));
+					System.out.printf("Successfully removed invoice %d\n", userInput);
+					return;
+				} else {
+					System.out.print("No such invoice.\n");
+					continue;
+				}
+			}
+		}
 	}
 
 	public static void deleteCustomer() {
