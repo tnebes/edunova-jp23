@@ -1,5 +1,9 @@
 package IO;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class IDCounter {
 
 	public static long invoiceCounter;
@@ -7,41 +11,72 @@ public class IDCounter {
 	public static long addressCounter;
 	public static long articleCounter;
 	
-
+	private static ArrayList<Long> counters = new ArrayList<>();
 	
 	public static void initialiseCounters() {
-		invoiceCounter = 0;
-		customerCounter = 0;
-		addressCounter = 0;
-		articleCounter = 0;
+		try {
+			String counters = DataIO.getDataCountersFileData();
+			Scanner stringReader = new Scanner(counters);
+			invoiceCounter = stringReader.nextLong();
+			customerCounter = stringReader.nextLong();
+			addressCounter = stringReader.nextLong();
+			articleCounter = stringReader.nextLong();		
+			stringReader.close();
+			
+		} catch (Exception e) {
+			System.out.print(e);
+			System.out.print("\nID counters reset to 0 due to error.\n");
+			invoiceCounter =  0;
+			customerCounter = 0;
+			addressCounter = 0;
+			articleCounter = 0;
+			sendCountersToWrite();			
+		}
+
 	}
 
-
-
+	public static void sendCountersToWrite() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(invoiceCounter).append(" ");
+		sb.append(customerCounter).append(" ");
+		sb.append(addressCounter).append(" ");
+		sb.append(addressCounter).append(" ");
+		try {
+			DataIO.writeDataCountersFile(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+	
 	public static long getInvoiceCounter() {
-		return invoiceCounter++;
+		invoiceCounter++;
+		sendCountersToWrite();
+		return invoiceCounter;
 	}
 
 
 
 	public static long getCustomerCounter() {
-		return customerCounter++;
+		customerCounter++;
+		sendCountersToWrite();
+		return customerCounter;
 	}
 
 
 
 	public static long getAddressCounter() {
-		return addressCounter++;
+		addressCounter++;
+		sendCountersToWrite();
+		return addressCounter;
 	}
 
 
 
 	public static long getArticleCounter() {
-		return articleCounter++;
+		articleCounter++;
+		sendCountersToWrite();
+		return articleCounter;
 	}
-	
-	
-	
-	
 	
 }

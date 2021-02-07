@@ -1,5 +1,6 @@
 package IO;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,9 +25,11 @@ public class DataHandler {
 	static private ArrayList<Address> addresses = new ArrayList<>();
 	static private ArrayList<Article> articles = new ArrayList<>();
 
-	public static void initialiseData() {
-		// TODO Auto-generated method stub
-		
+	public static void initialiseData() throws FileNotFoundException {
+		invoices = DataIO.getDataInvoicesFileData();
+		customers = DataIO.getDataCustomersFileData();
+		addresses = DataIO.getDataAddressesFileData();
+		articles = DataIO.getDataArticlesFileData();		
 	}
 
 	public ArrayList<Invoice> getInvoices() {
@@ -34,7 +37,7 @@ public class DataHandler {
 	}
 
 	public void setInvoices(ArrayList<Invoice> invoices) {
-		this.invoices = invoices;
+		DataHandler.invoices = invoices;
 	}
 
 	public ArrayList<Customer> getCustomers() {
@@ -42,7 +45,7 @@ public class DataHandler {
 	}
 
 	public void setCustomers(ArrayList<Customer> customers) {
-		this.customers = customers;
+		DataHandler.customers = customers;
 	}
 
 	public ArrayList<Address> getAddresses() {
@@ -50,7 +53,7 @@ public class DataHandler {
 	}
 
 	public void setAddresses(ArrayList<Address> addresses) {
-		this.addresses = addresses;
+		DataHandler.addresses = addresses;
 	}
 
 	public ArrayList<Article> getArticles() {
@@ -58,7 +61,7 @@ public class DataHandler {
 	}
 
 	public void setArticles(ArrayList<Article> articles) {
-		this.articles = articles;
+		DataHandler.articles = articles;
 	}
 
 	public static void addMessage() {
@@ -287,6 +290,7 @@ public class DataHandler {
 	}
 
 	public static void addInvoice() {
+		addMessage();
 		Invoice newInvoice = new Invoice();
 		assignIDInvoice(newInvoice);
 		newInvoice.setDateOfCreation(new Date());
@@ -420,6 +424,7 @@ public class DataHandler {
 	}
 
 	public static void addCustomer() {
+		addMessage();
 		Customer newCustomer = new Customer();
 		assignIDCustomer(newCustomer);
 		newCustomer.setDateOfCreation(new Date());
@@ -477,6 +482,7 @@ public class DataHandler {
 	}
 
 	public static void addAddress() {
+		addMessage();
 		if (UserInputHandler.oneOrTwoDialogue("1 - shipping address\n2 - billing address: ")) {
 			addBillingAddress();
 		} else {
@@ -523,6 +529,7 @@ public class DataHandler {
 	}
 
 	public static void addArticle() {
+		addMessage();
 		Article newArticle = new Article();
 		assignArticleID(newArticle);
 		assignArticleNames(newArticle);
