@@ -1,7 +1,6 @@
 package IO;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class IDCounter {
@@ -10,8 +9,6 @@ public class IDCounter {
 	public static long customerCounter;
 	public static long addressCounter;
 	public static long articleCounter;
-	
-	private static ArrayList<Long> counters = new ArrayList<>();
 	
 	public static void initialiseCounters() {
 		try {

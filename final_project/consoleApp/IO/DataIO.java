@@ -1,6 +1,5 @@
 package IO;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import consoleApp.DataClasses.Address;
 import consoleApp.DataClasses.Article;
 import consoleApp.DataClasses.Customer;
 import consoleApp.DataClasses.Invoice;
+import dataHandler.Controller;
 
 /**
  * 
@@ -106,7 +106,7 @@ public class DataIO {
 		// if folder there, check files and create if neccessary
 		createNewDataFiles();
 		IDCounter.initialiseCounters();
-		DataHandler.initialiseData();
+		Controller.initialiseData();
 		
 		System.out.print("\n");
 	}

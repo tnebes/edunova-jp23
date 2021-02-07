@@ -1,0 +1,135 @@
+package dataHandler;
+
+import IO.IDCounter;
+import IO.UserInputHandler;
+import consoleApp.DataClasses.Address;
+
+public class AddressHandler {
+
+	static void showAddress(Address address) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(address.getId()).append(" ");
+		sb.append(address.isType() == Address.BILLING_ADDRESS ? "billing address" : "shipping address").append(" ");
+		sb.append(address.getStreet()).append(" ");
+		sb.append(address.getStreetNumber()).append(" ");
+		sb.append(address.getStreetLetter()).append(" ");
+		sb.append(address.getCity()).append(" ");
+		sb.append(address.getZIPCode()).append(" ");
+		sb.append(address.getCountry());
+		System.out.print(sb.toString());
+	}
+
+	public static void showAddresses() {
+		if (Controller.addresses.size() == 0) {
+			System.out.print("No addresses in the database.\n");
+			return;
+		}
+		for (Address address : Controller.addresses) {
+			showAddress(address);
+			System.out.print("\n");
+		}
+	}
+
+	static boolean addressIdIsUnique(long id) {
+		for (Address address : Controller.addresses) {
+			if (address.getId() == id) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static Address getLastAddress() {
+		return Controller.addresses.get(Controller.addresses.size() - 1);
+	}
+
+	public static void addAddress() {
+		Controller.addMessage();
+		if (UserInputHandler.oneOrTwoDialogue("1 - shipping address\n2 - billing address: ")) {
+			addBillingAddress();
+		} else {
+			addShippingAddress();
+		}
+	}
+
+	static void addShippingAddress() {
+		addAddressType(Address.SHIPPING_ADDRESS);
+	}
+
+	static void addBillingAddress() {
+		addAddressType(Address.BILLING_ADDRESS);
+	}
+
+	private static void addAddressType(boolean type) {
+		Address newAddress = new Address();
+		setAddressId(newAddress);
+		newAddress.setType(type);
+		System.out.print("* Enter street name: ");
+		newAddress.setStreet(UserInputHandler.getStringInput(true));
+		System.out.print("Enter street number: ");
+		newAddress.setStreetNumber(UserInputHandler.getStringInput(false));
+		System.out.print("Enter street letter: ");
+		newAddress.setStreetLetter(UserInputHandler.getStringInput(false));
+		System.out.print("* Enter ZIP code: ");
+		newAddress.setZIPCode(UserInputHandler.getStringInput(true));
+		System.out.print("* Enter city name: ");
+		newAddress.setCity(UserInputHandler.getStringInput(true));
+		System.out.print("* Enter country name: ");
+		newAddress.setCountry(UserInputHandler.getStringInput(true));
+		Controller.addresses.add(newAddress);
+	}
+
+	static void setAddressId(Address address) {
+		// System.out.print("Enter unique ID for address. Leave blank for automatic
+		// generation: ");
+		// long userInput = UserInputHandler.getIntegerInput(false);
+		// if (userInput == 0) {
+		// address.setId(IDCounter.getAddressCounter());
+		// } else {
+		// address.setId(enterId((byte) 2, userInput));
+		// }
+		address.setId(IDCounter.getAddressCounter());
+	}
+
+	public static void changeAddress() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static void deleteAddress() {
+		// TODO add a check if the address is associated with customer or invoice. If it
+		// is
+		// let the user decide whether he wants to purge the customers and invoices
+		// associated with the address
+
+		if (Controller.addresses.size() == 0) {
+			System.out.print("No addresses in database.\n");
+			return;
+		}
+		while (true) {
+			showAddresses();
+			System.out.print("Enter ID to delete an address. Leave blank to exit: ");
+			long userInput = UserInputHandler.getIntegerInput(false);
+			// badness due to not-so-good implementation of getIntegerInput
+			if (CustomerHandler.getCustomer(0) != null) {
+				if (UserInputHandler.yesNoDialogue("Delete customer 0? y/n ")) {
+					Controller.customers.remove(CustomerHandler.getCustomer(0));
+					System.out.print("Successfully removed invoice 0\n");
+					return;
+				} else {
+					return;
+				}
+			}
+			if (CustomerHandler.getCustomer(userInput) != null) {
+				Controller.customers.remove(CustomerHandler.getCustomer(userInput));
+				System.out.printf("Successfully removed customer %d\n", userInput);
+				return;
+			} else {
+				System.out.print("No such customer.\n");
+				continue;
+			}
+		}
+
+	}
+
+}

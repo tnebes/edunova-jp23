@@ -1,7 +1,10 @@
 package consoleApp;
 
-import IO.DataHandler;
 import IO.UserInputHandler;
+import dataHandler.AddressHandler;
+import dataHandler.ArticleHandler;
+import dataHandler.CustomerHandler;
+import dataHandler.InvoiceHandler;
 
 /**
  * 
@@ -72,76 +75,76 @@ public class UI {
 			case 1:
 				// if invoices
 				if (previousMenu == 1) {
-					DataHandler.showInvoices();
+					InvoiceHandler.showInvoices();
 				}
 				// if customers
 				else if (previousMenu == 2) {
-					DataHandler.showCustomers();
+					CustomerHandler.showCustomers();
 				}
 				// if addresses
 				else if (previousMenu == 3) {
-					DataHandler.showAddresses();
+					AddressHandler.showAddresses();
 				}
 				// if articles
 				else if (previousMenu == 4) {
-					DataHandler.showArticles();
+					ArticleHandler.showArticles();
 				}
 				break;
 			// add
 			case 2:
 				// if invoices
 				if (previousMenu == 1) {
-					DataHandler.addInvoice();
+					InvoiceHandler.addInvoice();
 				}
 				// if customers
 				else if (previousMenu == 2) {
-					DataHandler.addCustomer();
+					CustomerHandler.addCustomer();
 				}
 				// if addresses
 				else if (previousMenu == 3) {
-					DataHandler.addAddress();
+					AddressHandler.addAddress();
 				}
 				// if articles
 				else if (previousMenu == 4) {
-					DataHandler.addArticle();
+					ArticleHandler.addArticle();
 				}
 				break;
 			// change
 			case 3:
 				// if invoices
 				if (previousMenu == 1) {
-					DataHandler.changeInvoice();
+					InvoiceHandler.changeInvoice();
 				}
 				// if customers
 				else if (previousMenu == 2) {
-					DataHandler.changeCustomer();
+					CustomerHandler.changeCustomer();
 				}
 				// if addresses
 				else if (previousMenu == 3) {
-					DataHandler.changeAddress();
+					AddressHandler.changeAddress();
 				}
 				// if articles
 				else if (previousMenu == 4) {
-					DataHandler.changeArticle();
+					ArticleHandler.changeArticle();
 				}
 				break;
 			// delete
 			case 4:
 				// if invoices
 				if (previousMenu == 1) {
-					DataHandler.deleteInvoice();
+					InvoiceHandler.deleteInvoice();
 				}
 				// if customers
 				else if (previousMenu == 2) {
-					DataHandler.deleteCustomer();
+					CustomerHandler.deleteCustomer();
 				}
 				// if addresses
 				else if (previousMenu == 3) {
-					DataHandler.deleteAddress();
+					AddressHandler.deleteAddress();
 				}
 				// if articles
 				else if (previousMenu == 4) {
-					DataHandler.deleteArticle();
+					ArticleHandler.deleteArticle();
 				}
 				break;
 			case 5:
