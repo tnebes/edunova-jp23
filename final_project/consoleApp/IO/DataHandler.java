@@ -24,9 +24,10 @@ public class DataHandler {
 	static private ArrayList<Address> addresses = new ArrayList<>();
 	static private ArrayList<Article> articles = new ArrayList<>();
 
-	/*
-	 * TODO load file. if file loads populate arraylist print it out
-	 */
+	public static void initialiseData() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public ArrayList<Invoice> getInvoices() {
 		return invoices;
@@ -749,5 +750,7 @@ public class DataHandler {
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 }

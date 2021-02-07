@@ -10,7 +10,6 @@ public class IDCounter {
 
 	
 	public static void initialiseCounters() {
-		// TODO insert loading from file here.
 		invoiceCounter = 0;
 		customerCounter = 0;
 		addressCounter = 0;
