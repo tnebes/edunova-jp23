@@ -13,11 +13,11 @@ learning/
 *.md~
 *.swp
 *.iml
-.gitignore~
 *.class
 *.log
 *.sql~
 *.bak
 *.classpath
 *.project
+*.jar
 
