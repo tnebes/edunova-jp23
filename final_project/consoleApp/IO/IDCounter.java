@@ -20,7 +20,7 @@ public class IDCounter {
 			stringReader.close();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			System.out.print("\nID counters reset to 0 due to error.\n");
 			invoiceCounter = 0;
 			customerCounter = 0;
