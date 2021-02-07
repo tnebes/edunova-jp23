@@ -1,14 +1,14 @@
 package dataHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.w3c.dom.UserDataHandler;
+
 import IO.IDCounter;
 import IO.UserInputHandler;
-import consoleApp.DataClasses.Article;
-import consoleApp.DataClasses.Customer;
-import consoleApp.DataClasses.Invoice;
+import dataClasses.Customer;
+import dataClasses.Invoice;
 
 public class InvoiceHandler {
 
@@ -32,7 +32,7 @@ public class InvoiceHandler {
 		}
 
 		if (!(UserInputHandler.yesNoDialogue("Has shipping address? y/n"))) {
-			newInvoice.setShippingAddressId(-1);
+			newInvoice.setShippingAddressId(0);
 		} else {
 			// addAddress();
 			// newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
@@ -40,13 +40,7 @@ public class InvoiceHandler {
 		Controller.invoices.add(newInvoice);
 		System.out.printf("Successfully added invoice ");
 		showInvoice(getLastInvoice());
-		try {
-			IO.DataIO.writeDataInvoicesFile(Controller.invoices);
-		} catch (IOException e) {
-			System.out.print("Unable to write invoices to file.\n");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		IO.DataIO.writeDataInvoicesFile(Controller.invoices);
 	}
 
 	/**
@@ -189,8 +183,54 @@ public class InvoiceHandler {
 	}
 
 	public static void changeInvoice() {
-		// TODO Auto-generated method stub
+		Invoice newInvoice;
+		showInvoices();
+		while (true) {
+			System.out.print("Enter invoice ID to change it. Leave blank to cancel: ");
+			long userInput = UserInputHandler.getIntegerInput(false);
+			if (userInput == 0) {
+				return;
+			}
+			if (getInvoice(userInput) == null) {
+				System.out.print("No such invoice.\n");
+				continue;
+			} else {
+				changeInvoiceAttributes(getInvoice(userInput));
+			}
+		}
 
+	}
+
+	private static void changeInvoiceAttributes(Invoice newInvoice) {
+		long userInput;
+		System.out.printf("Customer is %s. Enter new id. Leave blank to skip: ",
+				CustomerHandler.getCustomer(newInvoice.getId()).toString());
+		userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput != 0) {
+			// TODO add check whether customer exists
+			newInvoice.setCustomerId(userInput);
+		}
+		// TODO add transaction and status id.
+		// and other data fields as they appear.
+		if (newInvoice.getShippingAddressId() == 0) {
+			System.out.print("No shipping address. Enter new shipping address. Leave blank to skip: ");
+			userInput = UserInputHandler.getIntegerInput(false);
+			if (userInput != 0) {
+				// TODO check if shipping address exists
+				newInvoice.setShippingAddressId(userInput);
+			}
+		}
+		// TODO add a check here
+		if (newInvoice.getShippingAddressId() == -1) {
+			System.out.print("Invoice has no shipping address. Enter new shipping ID or leave blank to skip: ");
+		} else {
+			System.out.printf("Shipping address is %s. Enter new id. Leave blank to skip: ",
+					AddressHandler.getAddress(newInvoice.getShippingAddressId()).toString());
+		}
+		userInput = UserInputHandler.getIntegerInput(false);
+		if (userInput != 0) {
+			newInvoice.setShippingAddressId(userInput);
+		}
 	}
 
 	public static void deleteInvoice() {
@@ -208,6 +248,7 @@ public class InvoiceHandler {
 			if (getInvoice(userInput) != null) {
 				Controller.invoices.remove(getInvoice(userInput));
 				System.out.printf("Successfully removed invoice %d\n", userInput);
+				IO.DataIO.writeDataInvoicesFile(Controller.invoices);
 				return;
 			} else {
 				System.out.print("No such invoice.\n");

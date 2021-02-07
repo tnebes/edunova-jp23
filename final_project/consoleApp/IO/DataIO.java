@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import com.google.gson.Gson;
 
-import consoleApp.DataClasses.Address;
-import consoleApp.DataClasses.Article;
-import consoleApp.DataClasses.Customer;
-import consoleApp.DataClasses.Invoice;
+import dataClasses.Address;
+import dataClasses.Article;
+import dataClasses.Customer;
+import dataClasses.Invoice;
 import dataHandler.Controller;
 
 /**
@@ -157,46 +157,79 @@ public class DataIO {
 		return returnValue;
 	}
 	
-	public static void writeDataInvoicesFile(ArrayList<Invoice> invoices) throws IOException {
-		FileWriter fw = new FileWriter(dataInvoicesFilePath.toFile());
-		for (Invoice invoice : invoices) {
-			fw.write(new Gson().toJson(invoice));
-			fw.write("\n");
+	public static void writeDataInvoicesFile(ArrayList<Invoice> invoices) {
+		try {
+			FileWriter fw = new FileWriter(dataInvoicesFilePath.toFile());
+			for (Invoice invoice : invoices) {
+				fw.write(new Gson().toJson(invoice));
+				fw.write("\n");
+			}
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.print("Unable to write invoices to file.\n");
+			System.exit(1);
 		}
-		fw.close();
+
 	}
 	
-	public static void writeDataCustomersFile(ArrayList<Customer> customers) throws IOException {
-		FileWriter fw = new FileWriter(dataCustomersFilePath.toFile());
-		for (Customer customer : customers) {
-			fw.write(new Gson().toJson(customer));
-			fw.write("\n");
+	public static void writeDataCustomersFile(ArrayList<Customer> customers) {
+		try {
+			FileWriter fw = new FileWriter(dataCustomersFilePath.toFile());
+			for (Customer customer : customers) {
+				fw.write(new Gson().toJson(customer));
+				fw.write("\n");
+			}
+			fw.close();			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.print("Unable to write customers to file.\n");
+			System.exit(1);
 		}
-		fw.close();
+
 	}
 	
-	public static void writeDataAddressesFile(ArrayList<Address> addresses) throws IOException {
-		FileWriter fw = new FileWriter(dataAddressesFilePath.toFile());
-		for (Address address : addresses) {
-			fw.write(new Gson().toJson(address));
-			fw.write("\n");
+	public static void writeDataAddressesFile(ArrayList<Address> addresses) {
+		try {
+			FileWriter fw = new FileWriter(dataAddressesFilePath.toFile());
+			for (Address address : addresses) {
+				fw.write(new Gson().toJson(address));
+				fw.write("\n");
+			}
+			fw.close();			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.print("Unable to write addresses to file.\n");
+			System.exit(1);
 		}
-		fw.close();
+
 	}
 	
-	public static void writeDataArticlesFile(ArrayList<Article> articles) throws IOException {
-		FileWriter fw = new FileWriter(dataArticlesFilePath.toFile());
-		for (Article article : articles) {
-			fw.write(new Gson().toJson(article));
-			fw.write("\n");
+	public static void writeDataArticlesFile(ArrayList<Article> articles) {
+		try {
+			FileWriter fw = new FileWriter(dataArticlesFilePath.toFile());
+			for (Article article : articles) {
+				fw.write(new Gson().toJson(article));
+				fw.write("\n");
+			}
+			fw.close();			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.print("Unable to write articles to file.\n");
+			System.exit(1);
 		}
-		fw.close();
 	}
 	
-	public static void writeDataCountersFile(String data) throws IOException {
-		FileWriter fw = new FileWriter(dataCountersFilePath.toFile());
-		fw.write(data);
-		fw.close();
+	public static void writeDataCountersFile(String data) {
+		try {
+			FileWriter fw = new FileWriter(dataCountersFilePath.toFile());
+			fw.write(data);
+			fw.close();			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.print("Unable to write counters to file.\n");
+			System.exit(1);
+		}
 	}
 	
 }

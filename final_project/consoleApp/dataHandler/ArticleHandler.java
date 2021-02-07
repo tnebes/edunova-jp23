@@ -1,11 +1,8 @@
 package dataHandler;
 
-import java.io.IOException;
-
 import IO.IDCounter;
 import IO.UserInputHandler;
-import consoleApp.DataClasses.Article;
-import consoleApp.DataClasses.Invoice;
+import dataClasses.Article;
 
 public class ArticleHandler {
 
@@ -20,13 +17,7 @@ public class ArticleHandler {
 		System.out.print("Successfully added article ");
 		showArticle(getLastArticle());
 		System.out.print("\n");
-		try {
-			IO.DataIO.writeDataArticlesFile(Controller.articles);
-		} catch (IOException e) {
-			System.out.print("Unable to write articles to file.\n");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		IO.DataIO.writeDataArticlesFile(Controller.articles);
 	}
 
 	static boolean articleIdIsUnique(long id) {

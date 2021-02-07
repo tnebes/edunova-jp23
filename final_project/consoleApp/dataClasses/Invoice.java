@@ -1,4 +1,4 @@
-package consoleApp.DataClasses;
+package dataClasses;
 
 import java.util.Date;
 
@@ -80,6 +80,14 @@ public class Invoice {
 	}
 	public void setShippingAddressId(long shippingAddressId) {
 		this.shippingAddressId = shippingAddressId;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(id).append(" ");
+		sb.append(dateOfCreation.toString()).append(" ");
+		return sb.toString();
 	}
 	
 	

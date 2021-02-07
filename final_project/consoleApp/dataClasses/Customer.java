@@ -1,4 +1,4 @@
-package consoleApp.DataClasses;
+package dataClasses;
 
 import java.util.Date;
 
@@ -86,7 +86,17 @@ public class Customer {
 		this.shippingAddressId = shippingAddressId;
 	}
 	
-	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(id).append(" ");
+		if (type == NATURAL_PERSON) {
+			sb.append(firstName).append(" ").append(lastName).append(" ");
+		} else {
+			sb.append(name).append(" ");
+		}
+		return sb.toString();
+	}
 	
 	
 }

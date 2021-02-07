@@ -1,10 +1,8 @@
 package dataHandler;
 
-import java.io.IOException;
-
 import IO.IDCounter;
 import IO.UserInputHandler;
-import consoleApp.DataClasses.Address;
+import dataClasses.Address;
 
 public class AddressHandler {
 
@@ -37,13 +35,7 @@ public class AddressHandler {
 		System.out.print("Successfully added address ");
 		showAddress(getLastAddress());
 		System.out.print("\n");
-		try {
-			IO.DataIO.writeDataAddressesFile(Controller.addresses);
-		} catch (IOException e) {
-			System.out.print("Unable to write Addresses to file.\n");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		IO.DataIO.writeDataAddressesFile(Controller.addresses);
 	}
 
 	static void addShippingAddress() {
@@ -86,6 +78,13 @@ public class AddressHandler {
 		sb.append(address.getZIPCode()).append(" ");
 		sb.append(address.getCountry());
 		System.out.print(sb.toString());
+	}
+	
+	public static Object getAddress(long addressID) {
+		if (Controller.addresses.get((int) addressID) != null) {
+			return Controller.addresses.get((int) addressID);
+		}
+		return null;
 	}
 
 	public static Address getLastAddress() {
@@ -135,7 +134,6 @@ public class AddressHandler {
 				continue;
 			}
 		}
-
 	}
-
+	
 }

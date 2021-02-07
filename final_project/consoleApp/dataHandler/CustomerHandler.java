@@ -1,12 +1,11 @@
 package dataHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import IO.IDCounter;
 import IO.UserInputHandler;
-import consoleApp.DataClasses.Customer;
+import dataClasses.Customer;
 
 public class CustomerHandler {
 
@@ -25,13 +24,7 @@ public class CustomerHandler {
 		Controller.customers.add(newCustomer);
 		System.out.print("Successfully added customer ");
 		showCustomer(getLastCustomer());
-		try {
-			IO.DataIO.writeDataCustomersFile(Controller.customers);
-		} catch (IOException e) {
-			System.out.print("Unable to write customers to file.\n");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		IO.DataIO.writeDataCustomersFile(Controller.customers);
 	}
 
 	static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
@@ -48,7 +41,7 @@ public class CustomerHandler {
 	static void addCustomerLegalPerson(Customer legalPersonCustomer) {
 		System.out.print("* Name: ");
 		legalPersonCustomer.setName(UserInputHandler.getStringInput(true));
-		System.out.print("* VATID");
+		System.out.print("* VATID: ");
 		legalPersonCustomer.setVATID(UserInputHandler.getStringInput(true));
 	}
 
@@ -68,7 +61,7 @@ public class CustomerHandler {
 	static void customerSetAddress(Customer customer) {
 		AddressHandler.addBillingAddress();
 		customer.setBillingAddressId(AddressHandler.getLastAddress().getId());
-		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? y/n")) {
+		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? y/n ")) {
 			AddressHandler.addShippingAddress();
 			customer.setShippingAddressId(AddressHandler.getLastAddress().getId());
 		}
@@ -111,6 +104,9 @@ public class CustomerHandler {
 	}
 
 	static void showCustomer(Customer customer) {
+		if (customer == null) {
+			return;
+		}
 		StringBuilder sb = new StringBuilder();
 		if (customer.isType() == Customer.NATURAL_PERSON) {
 			sb.append(customer.getId()).append(" ");

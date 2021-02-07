@@ -1,4 +1,4 @@
-package consoleApp.DataClasses;
+package dataClasses;
 
 public class TransactionType {
 

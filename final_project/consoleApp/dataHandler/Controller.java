@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import IO.DataIO;
 import IO.IDCounter;
 import IO.UserInputHandler;
-import consoleApp.DataClasses.Address;
-import consoleApp.DataClasses.Article;
-import consoleApp.DataClasses.Customer;
-import consoleApp.DataClasses.Invoice;
+import dataClasses.Address;
+import dataClasses.Article;
+import dataClasses.Customer;
+import dataClasses.Invoice;
 
 /**
  * 

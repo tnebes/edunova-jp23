@@ -1,6 +1,5 @@
 package IO;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class IDCounter {
@@ -9,7 +8,7 @@ public class IDCounter {
 	public static long customerCounter;
 	public static long addressCounter;
 	public static long articleCounter;
-	
+
 	public static void initialiseCounters() {
 		try {
 			String counters = DataIO.getDataCountersFileData();
@@ -17,17 +16,17 @@ public class IDCounter {
 			invoiceCounter = stringReader.nextLong();
 			customerCounter = stringReader.nextLong();
 			addressCounter = stringReader.nextLong();
-			articleCounter = stringReader.nextLong();		
+			articleCounter = stringReader.nextLong();
 			stringReader.close();
-			
+
 		} catch (Exception e) {
-			System.out.print(e);
+			e.printStackTrace();
 			System.out.print("\nID counters reset to 0 due to error.\n");
-			invoiceCounter =  0;
+			invoiceCounter = 0;
 			customerCounter = 0;
 			addressCounter = 0;
 			articleCounter = 0;
-			sendCountersToWrite();			
+			sendCountersToWrite();
 		}
 
 	}
@@ -38,21 +37,15 @@ public class IDCounter {
 		sb.append(customerCounter).append(" ");
 		sb.append(addressCounter).append(" ");
 		sb.append(addressCounter).append(" ");
-		try {
-			DataIO.writeDataCountersFile(sb.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		DataIO.writeDataCountersFile(sb.toString());
+
 	}
-	
+
 	public static long getInvoiceCounter() {
 		invoiceCounter++;
 		sendCountersToWrite();
 		return invoiceCounter;
 	}
-
-
 
 	public static long getCustomerCounter() {
 		customerCounter++;
@@ -60,20 +53,16 @@ public class IDCounter {
 		return customerCounter;
 	}
 
-
-
 	public static long getAddressCounter() {
 		addressCounter++;
 		sendCountersToWrite();
 		return addressCounter;
 	}
 
-
-
 	public static long getArticleCounter() {
 		articleCounter++;
 		sendCountersToWrite();
 		return articleCounter;
 	}
-	
+
 }
