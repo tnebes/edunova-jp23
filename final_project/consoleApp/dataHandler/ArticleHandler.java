@@ -1,43 +1,13 @@
 package dataHandler;
 
+import java.io.IOException;
+
 import IO.IDCounter;
 import IO.UserInputHandler;
 import consoleApp.DataClasses.Article;
+import consoleApp.DataClasses.Invoice;
 
 public class ArticleHandler {
-
-	static void showArticle(Article article) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(article.getId()).append(" ");
-		if (!article.getLongName().isBlank()) {
-			sb.append(article.getLongName()).append(" ");
-		}
-		sb.append(article.getShortName()).append(" ");
-		sb.append(article.getWarehouseLocation()).append(" ");
-		sb.append(article.getWarehouseQuantity()).append(" ");
-		sb.append(article.getRetailPrice());
-		System.out.print(sb.toString());
-	}
-
-	public static void showArticles() {
-		if (Controller.articles.size() == 0) {
-			System.out.print("No articles in the database.\n");
-			return;
-		}
-		for (Article article : Controller.articles) {
-			showArticle(article);
-			System.out.print("\n");
-		}
-	}
-
-	static boolean articleIdIsUnique(long id) {
-		for (Article article : Controller.articles) {
-			if (article.getId() == id) {
-				return false;
-			}
-		}
-		return true;
-	}
 
 	public static void addArticle() {
 		Controller.addMessage();
@@ -49,6 +19,22 @@ public class ArticleHandler {
 		Controller.articles.add(newArticle);
 		System.out.print("Successfully added article ");
 		showArticle(getLastArticle());
+		try {
+			IO.DataIO.writeDataArticlesFile(Controller.articles);
+		} catch (IOException e) {
+			System.out.print("Unable to write articles to file.\n");
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+
+	static boolean articleIdIsUnique(long id) {
+		for (Article article : Controller.articles) {
+			if (article.getId() == id) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static void assignArticleNames(Article article) {
@@ -104,6 +90,17 @@ public class ArticleHandler {
 		}
 	}
 
+	static void assignArticleID(Article article) {
+		// System.out.print("Enter article ID. Leave blank for automatic generation: ");
+		// long userInput = UserInputHandler.getIntegerInput(false);
+		// if (userInput == 0) {
+		// article.setId(IDCounter.getArticleCounter());
+		// } else {
+		// article.setId(enterId((byte) 3, userInput));
+		// }
+		article.setId(IDCounter.getArticleCounter());
+	}
+
 	private static void calculateArticleRetailPrice(Article article) {
 		article.setRetailPrice((float) (article.getWholesalePrice() * (article.getTaxRate() / 100.0 + 1)));
 	}
@@ -127,15 +124,38 @@ public class ArticleHandler {
 		article.setWarehouseLocation(UserInputHandler.getStringInput(true));
 	}
 
-	static void assignArticleID(Article article) {
-		// System.out.print("Enter article ID. Leave blank for automatic generation: ");
-		// long userInput = UserInputHandler.getIntegerInput(false);
-		// if (userInput == 0) {
-		// article.setId(IDCounter.getArticleCounter());
-		// } else {
-		// article.setId(enterId((byte) 3, userInput));
-		// }
-		article.setId(IDCounter.getArticleCounter());
+	static void showArticle(Article article) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(article.getId()).append(" ");
+		if (!article.getLongName().isBlank()) {
+			sb.append(article.getLongName()).append(" ");
+		}
+		sb.append(article.getShortName()).append(" ");
+		sb.append(article.getWarehouseLocation()).append(" ");
+		sb.append(article.getWarehouseQuantity()).append(" ");
+		sb.append(article.getRetailPrice());
+		System.out.print(sb.toString());
+	}
+
+	public static void showArticles() {
+		if (Controller.articles.size() == 0) {
+			System.out.print("No articles in the database.\n");
+			return;
+		}
+		for (Article article : Controller.articles) {
+			showArticle(article);
+			System.out.print("\n");
+		}
+	}
+	
+	private static Article getArticle(long id) {
+		for (Article article : Controller.articles) {
+			if (article.getId() == id) {
+				return article;
+			}
+		}
+		System.out.print("No such invoice.\n");
+		return null;
 	}
 
 	public static Article getLastArticle() {
@@ -148,7 +168,39 @@ public class ArticleHandler {
 	}
 
 	public static void deleteArticle() {
-		// TODO Auto-generated method stub
+		// TODO add a check if the article is associated with an invoice. If it
+		// is
+		// let the user decide whether he wants to purge the invoices
+		// associated with the article.
+		// WARNING. This is a bad idea.
+		
+		if (Controller.articles.size() == 0) {
+			System.out.print("No articles in database.\n");
+			return;
+		}
+		while (true) {
+			showArticles();
+			System.out.print("Enter ID to delete an article. Leave blank to exit: ");
+			long userInput = UserInputHandler.getIntegerInput(false);
+			// badness due to not-so-good implementation of getIntegerInput
+			if (getArticle(0) != null) {
+				if (UserInputHandler.yesNoDialogue("Delete article 0? y/n ")) {
+					Controller.articles.remove(getArticle(0));
+					System.out.print("Successfully removed article 0\n");
+					return;
+				} else {
+					return;
+				}
+			}
+			if (getArticle(userInput) != null) {
+				Controller.articles.remove(getArticle(userInput));
+				System.out.printf("Successfully removed article %d\n", userInput);
+				return;
+			} else {
+				System.out.print("No such article.\n");
+				continue;
+			}
+		}
 
 	}
 

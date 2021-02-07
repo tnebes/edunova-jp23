@@ -1,5 +1,6 @@
 package dataHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,40 +10,6 @@ import consoleApp.DataClasses.Customer;
 import consoleApp.DataClasses.Invoice;
 
 public class InvoiceHandler {
-
-	public static void showInvoice(Invoice invoice) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(invoice.getId()).append(" ");
-		System.out.print(sb.toString());
-		sb.delete(0, sb.length());
-		if (invoice.getCustomerId() != -1) {
-			CustomerHandler.showCustomer(CustomerHandler.getCustomer(invoice.getCustomerId()));
-			sb.append(" ");
-		}
-		sb.append(invoice.getDateOfCreation().toString());
-		System.out.print(sb.toString());
-	}
-
-	private static Invoice getInvoice(long id) {
-		for (Invoice invoice : Controller.invoices) {
-			if (invoice.getId() == id) {
-				return invoice;
-			}
-		}
-		System.out.print("No such invoice.\n");
-		return null;
-	}
-
-	public static void showInvoices() {
-		if (Controller.invoices.size() == 0) {
-			System.out.print("No invoices in the database.\n");
-			return;
-		}
-		for (Invoice invoice : Controller.invoices) {
-			showInvoice(invoice);
-			System.out.print("\n");
-		}
-	}
 
 	public static void addInvoice() {
 			Controller.addMessage();
@@ -72,17 +39,13 @@ public class InvoiceHandler {
 			Controller.invoices.add(newInvoice);
 			System.out.printf("Successfully added invoice %d\n", newInvoice.getId());
 			showInvoice(newInvoice);
-		}
-
-	private static void assignIDInvoice(Invoice invoice) {
-	//		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
-	//		long userInput = UserInputHandler.getIntegerInput(false);
-	//		if (userInput == 0) {
-	//			invoice.setId(IDCounter.getInvoiceCounter());
-	//		} else {
-	//			invoice.setId(enterId((byte) 0, userInput));
-	//		}
-			invoice.setId(IDCounter.getInvoiceCounter());
+			try {
+				IO.DataIO.writeDataInvoicesFile(Controller.invoices);
+			} catch (IOException e) {
+				System.out.print("Unable to write invoices to file.\n");
+				e.printStackTrace();
+				System.exit(1);
+			}
 		}
 
 	/**
@@ -171,6 +134,51 @@ public class InvoiceHandler {
 		} else {
 			// customer not required
 			return null;
+		}
+	}
+
+	private static void assignIDInvoice(Invoice invoice) {
+	//		System.out.print("Please enter unique invoice ID. Leave blank for automatic generation: ");
+	//		long userInput = UserInputHandler.getIntegerInput(false);
+	//		if (userInput == 0) {
+	//			invoice.setId(IDCounter.getInvoiceCounter());
+	//		} else {
+	//			invoice.setId(enterId((byte) 0, userInput));
+	//		}
+			invoice.setId(IDCounter.getInvoiceCounter());
+		}
+
+	private static Invoice getInvoice(long id) {
+		for (Invoice invoice : Controller.invoices) {
+			if (invoice.getId() == id) {
+				return invoice;
+			}
+		}
+		System.out.print("No such invoice.\n");
+		return null;
+	}
+
+	public static void showInvoice(Invoice invoice) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(invoice.getId()).append(" ");
+		System.out.print(sb.toString());
+		sb.delete(0, sb.length());
+		if (invoice.getCustomerId() != -1) {
+			CustomerHandler.showCustomer(CustomerHandler.getCustomer(invoice.getCustomerId()));
+			sb.append(" ");
+		}
+		sb.append(invoice.getDateOfCreation().toString());
+		System.out.print(sb.toString());
+	}
+
+	public static void showInvoices() {
+		if (Controller.invoices.size() == 0) {
+			System.out.print("No invoices in the database.\n");
+			return;
+		}
+		for (Invoice invoice : Controller.invoices) {
+			showInvoice(invoice);
+			System.out.print("\n");
 		}
 	}
 

@@ -1,47 +1,12 @@
 package dataHandler;
 
+import java.io.IOException;
+
 import IO.IDCounter;
 import IO.UserInputHandler;
 import consoleApp.DataClasses.Address;
 
 public class AddressHandler {
-
-	static void showAddress(Address address) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(address.getId()).append(" ");
-		sb.append(address.isType() == Address.BILLING_ADDRESS ? "billing address" : "shipping address").append(" ");
-		sb.append(address.getStreet()).append(" ");
-		sb.append(address.getStreetNumber()).append(" ");
-		sb.append(address.getStreetLetter()).append(" ");
-		sb.append(address.getCity()).append(" ");
-		sb.append(address.getZIPCode()).append(" ");
-		sb.append(address.getCountry());
-		System.out.print(sb.toString());
-	}
-
-	public static void showAddresses() {
-		if (Controller.addresses.size() == 0) {
-			System.out.print("No addresses in the database.\n");
-			return;
-		}
-		for (Address address : Controller.addresses) {
-			showAddress(address);
-			System.out.print("\n");
-		}
-	}
-
-	static boolean addressIdIsUnique(long id) {
-		for (Address address : Controller.addresses) {
-			if (address.getId() == id) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static Address getLastAddress() {
-		return Controller.addresses.get(Controller.addresses.size() - 1);
-	}
 
 	public static void addAddress() {
 		Controller.addMessage();
@@ -50,14 +15,6 @@ public class AddressHandler {
 		} else {
 			addShippingAddress();
 		}
-	}
-
-	static void addShippingAddress() {
-		addAddressType(Address.SHIPPING_ADDRESS);
-	}
-
-	static void addBillingAddress() {
-		addAddressType(Address.BILLING_ADDRESS);
 	}
 
 	private static void addAddressType(boolean type) {
@@ -77,6 +34,23 @@ public class AddressHandler {
 		System.out.print("* Enter country name: ");
 		newAddress.setCountry(UserInputHandler.getStringInput(true));
 		Controller.addresses.add(newAddress);
+		System.out.print("Successfully added address ");
+		showAddress(getLastAddress());
+		try {
+			IO.DataIO.writeDataAddressesFile(Controller.addresses);
+		} catch (IOException e) {
+			System.out.print("Unable to write Addresses to file.\n");
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+
+	static void addShippingAddress() {
+		addAddressType(Address.SHIPPING_ADDRESS);
+	}
+
+	static void addBillingAddress() {
+		addAddressType(Address.BILLING_ADDRESS);
 	}
 
 	static void setAddressId(Address address) {
@@ -89,6 +63,43 @@ public class AddressHandler {
 		// address.setId(enterId((byte) 2, userInput));
 		// }
 		address.setId(IDCounter.getAddressCounter());
+	}
+
+	static boolean addressIdIsUnique(long id) {
+		for (Address address : Controller.addresses) {
+			if (address.getId() == id) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	static void showAddress(Address address) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(address.getId()).append(" ");
+		sb.append(address.isType() == Address.BILLING_ADDRESS ? "billing address" : "shipping address").append(" ");
+		sb.append(address.getStreet()).append(" ");
+		sb.append(address.getStreetNumber()).append(" ");
+		sb.append(address.getStreetLetter()).append(" ");
+		sb.append(address.getCity()).append(" ");
+		sb.append(address.getZIPCode()).append(" ");
+		sb.append(address.getCountry());
+		System.out.print(sb.toString());
+	}
+
+	public static Address getLastAddress() {
+		return Controller.addresses.get(Controller.addresses.size() - 1);
+	}
+
+	public static void showAddresses() {
+		if (Controller.addresses.size() == 0) {
+			System.out.print("No addresses in the database.\n");
+			return;
+		}
+		for (Address address : Controller.addresses) {
+			showAddress(address);
+			System.out.print("\n");
+		}
 	}
 
 	public static void changeAddress() {

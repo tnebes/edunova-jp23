@@ -64,6 +64,7 @@ public class UI {
 				// i - 1 required for proper rendering of options.
 				System.out.printf("%d - %s %s\n", i + 1, genericManipulation[i], mainMenuChoices[previousMenu - 1]);
 			}
+			System.out.print("\nChoice: ");
 			userInput = (int) UserInputHandler.getIntegerInput(true);
 			if (userInput <= 0 || userInput > genericManipulation.length) {
 				System.out.printf("Input must be from 1 to %d\n", genericManipulation.length);
