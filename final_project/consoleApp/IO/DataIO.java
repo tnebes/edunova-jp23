@@ -94,7 +94,6 @@ public class DataIO {
 		pathList.add(dataInvoicesFilePath);
 		pathList.add(dataCustomersFilePath);
 		pathList.add(dataAddressesFilePath);
-		pathList.add(dataAddressesFilePath);
 		pathList.add(dataArticlesFilePath);
 		pathList.add(dataCountersFilePath);
 

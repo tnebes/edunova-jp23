@@ -36,6 +36,7 @@ public class AddressHandler {
 		Controller.addresses.add(newAddress);
 		System.out.print("Successfully added address ");
 		showAddress(getLastAddress());
+		System.out.print("\n");
 		try {
 			IO.DataIO.writeDataAddressesFile(Controller.addresses);
 		} catch (IOException e) {

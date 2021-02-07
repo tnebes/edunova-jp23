@@ -19,6 +19,7 @@ public class ArticleHandler {
 		Controller.articles.add(newArticle);
 		System.out.print("Successfully added article ");
 		showArticle(getLastArticle());
+		System.out.print("\n");
 		try {
 			IO.DataIO.writeDataArticlesFile(Controller.articles);
 		} catch (IOException e) {
