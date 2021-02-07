@@ -1,5 +1,7 @@
 package consoleApp;
 
+import java.io.IOException;
+
 /**
  * 
  * @author tnebes
@@ -8,13 +10,14 @@ package consoleApp;
 
 public class Main {
 
-	public Main() {
+	public Main() throws IOException {
+		IO.DataIO.initialise();
 		while(true) {
 			UI.mainMenu();
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new Main();
 	}
 	
