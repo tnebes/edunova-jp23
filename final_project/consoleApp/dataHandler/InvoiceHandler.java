@@ -203,16 +203,6 @@ public class InvoiceHandler {
 			System.out.print("Enter ID to delete an invoice. Leave blank to exit: ");
 			long userInput = UserInputHandler.getIntegerInput(false);
 			if (userInput == 0) {
-				// badness due to not-so-good implementation of getIntegerInput
-				if (getInvoice(0) != null) {
-					if (UserInputHandler.yesNoDialogue("Delete invoice 0? y/n ")) {
-						Controller.invoices.remove(getInvoice(0));
-						System.out.print("Successfully removed invoice 0\n");
-						return;
-					} else {
-						return;
-					}
-				}
 				return;
 			}
 			if (getInvoice(userInput) != null) {

@@ -58,17 +58,17 @@ public class ArticleHandler {
 
 	static void assignArticleLongName(Article article) {
 		System.out.print("Article long name: ");
-		article.setShortName(UserInputHandler.getStringInput(false));
+		article.setLongName(UserInputHandler.getStringInput(false));
 	}
 
 	private static void assignArticleShortDescription(Article article) {
 		System.out.print("Article short description: ");
-		article.setShortName(UserInputHandler.getStringInput(false));
+		article.setShortDescription(UserInputHandler.getStringInput(false));
 	}
 
 	static void assignArticleLongDescription(Article article) {
 		System.out.print("Article long description: ");
-		article.setShortName(UserInputHandler.getStringInput(false));
+		article.setLongDescription(UserInputHandler.getStringInput(false));
 	}
 
 	static void assignArticlePrices(Article article) {
@@ -128,7 +128,7 @@ public class ArticleHandler {
 	static void showArticle(Article article) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(article.getId()).append(" ");
-		if (!article.getLongName().isBlank()) {
+		if (!(article.getLongName() == null) || !article.getLongName().isBlank()) {
 			sb.append(article.getLongName()).append(" ");
 		}
 		sb.append(article.getShortName()).append(" ");
@@ -148,7 +148,7 @@ public class ArticleHandler {
 			System.out.print("\n");
 		}
 	}
-	
+
 	private static Article getArticle(long id) {
 		for (Article article : Controller.articles) {
 			if (article.getId() == id) {
@@ -174,7 +174,7 @@ public class ArticleHandler {
 		// let the user decide whether he wants to purge the invoices
 		// associated with the article.
 		// WARNING. This is a bad idea.
-		
+
 		if (Controller.articles.size() == 0) {
 			System.out.print("No articles in database.\n");
 			return;
@@ -184,14 +184,8 @@ public class ArticleHandler {
 			System.out.print("Enter ID to delete an article. Leave blank to exit: ");
 			long userInput = UserInputHandler.getIntegerInput(false);
 			// badness due to not-so-good implementation of getIntegerInput
-			if (getArticle(0) != null) {
-				if (UserInputHandler.yesNoDialogue("Delete article 0? y/n ")) {
-					Controller.articles.remove(getArticle(0));
-					System.out.print("Successfully removed article 0\n");
-					return;
-				} else {
-					return;
-				}
+			if (userInput == 0) {
+				return;
 			}
 			if (getArticle(userInput) != null) {
 				Controller.articles.remove(getArticle(userInput));

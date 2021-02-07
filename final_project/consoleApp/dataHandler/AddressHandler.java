@@ -123,14 +123,8 @@ public class AddressHandler {
 			System.out.print("Enter ID to delete an address. Leave blank to exit: ");
 			long userInput = UserInputHandler.getIntegerInput(false);
 			// badness due to not-so-good implementation of getIntegerInput
-			if (CustomerHandler.getCustomer(0) != null) {
-				if (UserInputHandler.yesNoDialogue("Delete customer 0? y/n ")) {
-					Controller.customers.remove(CustomerHandler.getCustomer(0));
-					System.out.print("Successfully removed invoice 0\n");
-					return;
-				} else {
-					return;
-				}
+			if (userInput == 0) {
+				return;
 			}
 			if (CustomerHandler.getCustomer(userInput) != null) {
 				Controller.customers.remove(CustomerHandler.getCustomer(userInput));

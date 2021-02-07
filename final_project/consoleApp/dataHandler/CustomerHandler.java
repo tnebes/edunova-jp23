@@ -163,14 +163,8 @@ public class CustomerHandler {
 			System.out.print("Enter ID to delete an customer. Leave blank to exit: ");
 			long userInput = UserInputHandler.getIntegerInput(false);
 			// badness due to not-so-good implementation of getIntegerInput
-			if (getCustomer(0) != null) {
-				if (UserInputHandler.yesNoDialogue("Delete customer 0? y/n ")) {
-					Controller.customers.remove(getCustomer(0));
-					System.out.print("Successfully removed invoice 0\n");
-					return;
-				} else {
-					return;
-				}
+			if (userInput == 0) {
+				return;
 			}
 			if (getCustomer(userInput) != null) {
 				Controller.customers.remove(getCustomer(userInput));
