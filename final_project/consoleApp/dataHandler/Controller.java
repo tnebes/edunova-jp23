@@ -22,10 +22,10 @@ public class Controller {
 	static private double DOUBLE_EPSILON = 10e-14;
 	static private float FLOAT_EPSILON = 10e-7f;
 
-	static ArrayList<Invoice> invoices = new ArrayList<>();
-	static ArrayList<Customer> customers = new ArrayList<>();
-	static ArrayList<Address> addresses = new ArrayList<>();
-	static ArrayList<Article> articles = new ArrayList<>();
+	static private ArrayList<Invoice> invoices = new ArrayList<>();
+	static private ArrayList<Customer> customers = new ArrayList<>();
+	static private ArrayList<Address> addresses = new ArrayList<>();
+	static private ArrayList<Article> articles = new ArrayList<>();
 
 	public static void initialiseData() throws FileNotFoundException {
 		invoices = DataIO.getDataInvoicesFileData();
@@ -34,35 +34,35 @@ public class Controller {
 		articles = DataIO.getDataArticlesFileData();
 	}
 
-	public ArrayList<Invoice> getInvoices() {
+	public static ArrayList<Invoice> getInvoices() {
 		return invoices;
 	}
 
-	public void setInvoices(ArrayList<Invoice> invoices) {
+	public static void setInvoices(ArrayList<Invoice> invoices) {
 		Controller.invoices = invoices;
 	}
 
-	public ArrayList<Customer> getCustomers() {
+	public static ArrayList<Customer> getCustomers() {
 		return customers;
 	}
 
-	public void setCustomers(ArrayList<Customer> customers) {
+	public static void setCustomers(ArrayList<Customer> customers) {
 		Controller.customers = customers;
 	}
 
-	public ArrayList<Address> getAddresses() {
+	public static ArrayList<Address> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(ArrayList<Address> addresses) {
+	public static void setAddresses(ArrayList<Address> addresses) {
 		Controller.addresses = addresses;
 	}
 
-	public ArrayList<Article> getArticles() {
+	public static ArrayList<Article> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(ArrayList<Article> articles) {
+	public static void setArticles(ArrayList<Article> articles) {
 		Controller.articles = articles;
 	}
 

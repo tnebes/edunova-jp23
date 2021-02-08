@@ -13,15 +13,15 @@ public class ArticleHandler {
 		assignArticleNames(newArticle);
 		assignArticleWarehouseLocation(newArticle);
 		assignArticlePrices(newArticle);
-		Controller.articles.add(newArticle);
+		Controller.getArticles().add(newArticle);
 		System.out.print("Successfully added article ");
 		showArticle(getLastArticle());
 		System.out.print("\n");
-		IO.DataIO.writeDataArticlesFile(Controller.articles);
+		IO.DataIO.writeDataArticlesFile(Controller.getArticles());
 	}
 
 	static boolean articleIdIsUnique(long id) {
-		for (Article article : Controller.articles) {
+		for (Article article : Controller.getArticles()) {
 			if (article.getId() == id) {
 				return false;
 			}
@@ -130,18 +130,18 @@ public class ArticleHandler {
 	}
 
 	public static void showArticles() {
-		if (Controller.articles.size() == 0) {
+		if (Controller.getArticles().size() == 0) {
 			System.out.print("No articles in the database.\n");
 			return;
 		}
-		for (Article article : Controller.articles) {
+		for (Article article : Controller.getArticles()) {
 			showArticle(article);
 			System.out.print("\n");
 		}
 	}
 
 	private static Article getArticle(long id) {
-		for (Article article : Controller.articles) {
+		for (Article article : Controller.getArticles()) {
 			if (article.getId() == id) {
 				return article;
 			}
@@ -151,7 +151,7 @@ public class ArticleHandler {
 	}
 
 	public static Article getLastArticle() {
-		return Controller.articles.get(Controller.articles.size() - 1);
+		return Controller.getArticles().get(Controller.getArticles().size() - 1);
 	}
 
 	public static void changeArticle() {
@@ -166,7 +166,7 @@ public class ArticleHandler {
 		// associated with the article.
 		// WARNING. This is a bad idea.
 
-		if (Controller.articles.size() == 0) {
+		if (Controller.getArticles().size() == 0) {
 			System.out.print("No articles in database.\n");
 			return;
 		}
@@ -179,7 +179,7 @@ public class ArticleHandler {
 				return;
 			}
 			if (getArticle(userInput) != null) {
-				Controller.articles.remove(getArticle(userInput));
+				Controller.getArticles().remove(getArticle(userInput));
 				System.out.printf("Successfully removed article %d\n", userInput);
 				return;
 			} else {

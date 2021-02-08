@@ -31,11 +31,11 @@ public class AddressHandler {
 		newAddress.setCity(UserInputHandler.getStringInput(true));
 		System.out.print("* Enter country name: ");
 		newAddress.setCountry(UserInputHandler.getStringInput(true));
-		Controller.addresses.add(newAddress);
+		Controller.getAddresses().add(newAddress);
 		System.out.print("Successfully added address ");
 		showAddress(getLastAddress());
 		System.out.print("\n");
-		IO.DataIO.writeDataAddressesFile(Controller.addresses);
+		IO.DataIO.writeDataAddressesFile(Controller.getAddresses());
 	}
 
 	static void addShippingAddress() {
@@ -59,7 +59,7 @@ public class AddressHandler {
 	}
 
 	static boolean addressIdIsUnique(long id) {
-		for (Address address : Controller.addresses) {
+		for (Address address : Controller.getAddresses()) {
 			if (address.getId() == id) {
 				return false;
 			}
@@ -81,22 +81,22 @@ public class AddressHandler {
 	}
 	
 	public static Object getAddress(long addressID) {
-		if (Controller.addresses.get((int) addressID) != null) {
-			return Controller.addresses.get((int) addressID);
+		if (Controller.getAddresses().get((int) addressID) != null) {
+			return Controller.getAddresses().get((int) addressID);
 		}
 		return null;
 	}
 
 	public static Address getLastAddress() {
-		return Controller.addresses.get(Controller.addresses.size() - 1);
+		return Controller.getAddresses().get(Controller.getAddresses().size() - 1);
 	}
 
 	public static void showAddresses() {
-		if (Controller.addresses.size() == 0) {
+		if (Controller.getAddresses().size() == 0) {
 			System.out.print("No addresses in the database.\n");
 			return;
 		}
-		for (Address address : Controller.addresses) {
+		for (Address address : Controller.getAddresses()) {
 			showAddress(address);
 			System.out.print("\n");
 		}
@@ -113,7 +113,7 @@ public class AddressHandler {
 		// let the user decide whether he wants to purge the customers and invoices
 		// associated with the address
 
-		if (Controller.addresses.size() == 0) {
+		if (Controller.getAddresses().size() == 0) {
 			System.out.print("No addresses in database.\n");
 			return;
 		}
@@ -125,12 +125,12 @@ public class AddressHandler {
 			if (userInput == 0) {
 				return;
 			}
-			if (CustomerHandler.getCustomer(userInput) != null) {
-				Controller.customers.remove(CustomerHandler.getCustomer(userInput));
-				System.out.printf("Successfully removed customer %d\n", userInput);
+			if (AddressHandler.getAddress(userInput) != null) {
+				Controller.getAddresses().remove(AddressHandler.getAddress(userInput));
+				System.out.printf("Successfully removed address %d\n", userInput);
 				return;
 			} else {
-				System.out.print("No such customer.\n");
+				System.out.print("No such address.\n");
 				continue;
 			}
 		}

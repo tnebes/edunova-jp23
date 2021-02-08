@@ -21,10 +21,10 @@ public class CustomerHandler {
 			addCustomerLegalPerson(newCustomer);
 		}
 		customerSetAddress(newCustomer);
-		Controller.customers.add(newCustomer);
+		Controller.getCustomers().add(newCustomer);
 		System.out.print("Successfully added customer ");
 		showCustomer(getLastCustomer());
-		IO.DataIO.writeDataCustomersFile(Controller.customers);
+		IO.DataIO.writeDataCustomersFile(Controller.getCustomers());
 	}
 
 	static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
@@ -68,7 +68,7 @@ public class CustomerHandler {
 	}
 
 	static boolean customerIdIsUnique(long id) {
-		for (Customer customer : Controller.customers) {
+		for (Customer customer : Controller.getCustomers()) {
 			if (customer.getId() == id) {
 				return false;
 			}
@@ -77,7 +77,7 @@ public class CustomerHandler {
 	}
 
 	static Customer getCustomer(long id) {
-		for (Customer customer : Controller.customers) {
+		for (Customer customer : Controller.getCustomers()) {
 			if (customer.getId() == id) {
 				return customer;
 			}
@@ -88,7 +88,7 @@ public class CustomerHandler {
 
 	static ArrayList<Customer> getCustomer(String token) {
 		ArrayList<Customer> suspectCustomers = new ArrayList<>();
-		for (Customer customer : Controller.customers) {
+		for (Customer customer : Controller.getCustomers()) {
 			if (customer.getFirstName().toLowerCase().contains(token.toLowerCase())) {
 				suspectCustomers.add(customer);
 				continue;
@@ -126,31 +126,158 @@ public class CustomerHandler {
 	}
 
 	public static void showCustomers() {
-		if (Controller.customers.size() == 0) {
+		if (Controller.getCustomers().size() == 0) {
 			System.out.print("No customers in the database.\n");
 			return;
 		}
-		for (Customer customer : Controller.customers) {
+		for (Customer customer : Controller.getCustomers()) {
 			showCustomer(customer);
 			System.out.print("\n");
 		}
 	}
 
 	public static Customer getLastCustomer() {
-		return Controller.customers.get(Controller.customers.size() - 1);
+		return Controller.getCustomers().get(Controller.getCustomers().size() - 1);
+	}
+
+	public static boolean checkCustomerAssociatedWithInvoice(long id) {
+		// checking if the customer is associated with any invoice.
+		boolean customerAssociatedWithInvoice = false;
+		// TODO terrible idea because the id is long and the array is long.
+		int[] associatedInvoicesID = new int[Controller.getInvoices().size()];
+		int associatedInvoicesIDIndex = 0;
+		for (dataClasses.Invoice invoice : Controller.getInvoices()) {
+			if (invoice.getId() == id) {
+				customerAssociatedWithInvoice = true;
+				associatedInvoicesID[(int) associatedInvoicesIDIndex++] = (int) invoice.getId();
+			}
+		}
+		if (customerAssociatedWithInvoice) {
+			System.out.printf("Cannot change customer with id %d because he is associated with invoices ", id);
+			for (long associatedInvoiceID : associatedInvoicesID) {
+				System.out.printf("%d ", associatedInvoiceID);
+			}
+			System.out.print("\n");
+			return true;
+		}
+		return false;
 	}
 
 	public static void changeCustomer() {
-		// TODO Auto-generated method stub
+		showCustomers();
+		long userInput;
+		while (true) {
+			System.out.print("Enter customer ID to change it. Leave blank to cancel: ");
+			userInput = UserInputHandler.getIntegerInput(false);
+			if (userInput == 0) {
+				return;
+			} else {
+				if (Controller.getCustomers().get((int) userInput) != null) {
+					changeCustomerAttributes(Controller.getCustomers().get((int) userInput));
 
+					IO.DataIO.writeDataCustomersFile(Controller.getCustomers());
+				} else {
+					System.out.print("Customer does not exist.\n");
+					continue;
+				}
+			}
+		}
+	}
+
+	private static void changeCustomerAttributes(Customer customer) {
+		System.out.printf("Customer type is %s. Change to %s? y/n ",
+				customer.isType() == Customer.NATURAL_PERSON ? "natural person" : "legal person",
+				!(customer.isType() == Customer.NATURAL_PERSON) ? "natural person" : "legal person");
+		if (UserInputHandler.yesNoDialogue("")) {
+			customer.setType(!customer.isType());
+		}
+		if (customer.isType() == Customer.NATURAL_PERSON) {
+			changeNaturalPersonCustomerAttributes(customer);
+		} else {
+			changeLegalPersonCustomerAttributes(customer);
+		}
+		long userInput;
+		while (true) {
+			System.out.printf("* Customer billing address is %s. Enter new ID or leave blank to skip: ",
+					AddressHandler.getAddress(customer.getBillingAddressId()).toString());
+			userInput = UserInputHandler.getIntegerInput(false);
+			if (userInput != 0) {
+				if (AddressHandler.getAddress((int) userInput) != null) {
+					customer.setBillingAddressId(userInput);
+					break;
+				} else {
+					continue;
+				}
+			}
+		}
+		if (customer.getShippingAddressId() == 0) {
+			System.out.print("Customer has no shipping address. Enter new ID or leave blank to skip: ");
+			customer.setShippingAddressId(UserInputHandler.getIntegerInput(false));
+		} else {
+			System.out.printf("Customer shipping address is %s. Enter new ID or leave blank to skip: ",
+					AddressHandler.getAddress(customer.getShippingAddressId()).toString());
+			customer.setShippingAddressId(UserInputHandler.getIntegerInput(false));
+		}
+	}
+
+	private static void changeNaturalPersonCustomerAttributes(Customer customer) {
+		String userInput;
+		if (customer.getFirstName() != null) {
+			System.out.printf("* First name is %s. Enter new name or leave blank to skip: ", customer.getFirstName());
+			userInput = UserInputHandler.getStringInput(false);
+			customer.setFirstName(userInput);
+		} else {
+			System.out.print("* No first name. Enter a new name:");
+			customer.setFirstName(UserInputHandler.getStringInput(true));
+		}
+		if (customer.getMiddleName() != null) {
+			System.out.printf("Middle name is %s. Enter new name or leave blank to skip: ", customer.getMiddleName());
+			userInput = UserInputHandler.getStringInput(false);
+			customer.setMiddleName(userInput);
+		} else {
+			System.out.print("No middle name. Enter a new middle name or leave blank to skip: ");
+			customer.setMiddleName(UserInputHandler.getStringInput(false));
+		}
+		if (customer.getLastName() != null) {
+			System.out.printf("* Last name is %s. Enter new name or leave blank to skip: ", customer.getLastName());
+			userInput = UserInputHandler.getStringInput(false);
+			customer.setLastName(userInput);
+		} else {
+			System.out.print("* No Last name. Enter a new last name:");
+			customer.setLastName(UserInputHandler.getStringInput(true));
+		}
+		if (customer.getNationalIdNumber() != null) {
+			System.out.printf("National ID number is %s. Enter new ID number or leave blank to skip: ",
+					customer.getNationalIdNumber());
+			customer.setNationalIdNumber(UserInputHandler.getStringInput(false));
+		} else {
+			System.out.print("No national ID number. Enter new ID number or leave blank to skip: ");
+			customer.setNationalIdNumber(UserInputHandler.getStringInput(false));
+		}
+	}
+
+	private static void changeLegalPersonCustomerAttributes(Customer customer) {
+		String userInput;
+		if (customer.getName() != null) {
+			System.out.printf("* Name is %s. Enter new name or leave blank to skip: ", customer.getName());
+			userInput = UserInputHandler.getStringInput(false);
+			if (!userInput.isBlank()) {
+				customer.setName(userInput);
+			}
+		} else {
+			System.out.print("* Enter name: ");
+			customer.setName(UserInputHandler.getStringInput(true));
+		}
+		userInput = UserInputHandler.getStringInput(false);
+		System.out.print("* VATID is %s. Enter new VATID or leave blank to skip: ");
+		if (!userInput.isBlank()) {
+			customer.setVATID(userInput);
+		}
 	}
 
 	public static void deleteCustomer() {
 		// TODO add a check for whether the customer is associated with invoices.
-		// If invoices are linked with the customer, ask the user if he wishes to delete
-		// all the invoices associated
-		// with the customer
-		if (Controller.customers.size() == 0) {
+		if (Controller.getCustomers().size() == 0) {
 			System.out.print("No customers in database.\n");
 			return;
 		}
@@ -163,7 +290,11 @@ public class CustomerHandler {
 				return;
 			}
 			if (getCustomer(userInput) != null) {
-				Controller.customers.remove(getCustomer(userInput));
+				if (checkCustomerAssociatedWithInvoice(userInput)) {
+					System.out.print("Cannot delete customer. Delete or change invoices first.\n");
+					return;
+				}
+				Controller.getCustomers().remove(getCustomer(userInput));
 				System.out.printf("Successfully removed customer %d\n", userInput);
 				return;
 			} else {

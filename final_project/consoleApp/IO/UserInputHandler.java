@@ -99,6 +99,11 @@ public class UserInputHandler {
 
 	}
 
+	/**
+	 * Returns true if the user enters "y" or "Y"
+	 * @param message
+	 * @return true for y false for everything else
+	 */
 	public static boolean yesNoDialogue(String message) {
 		System.out.print(message);
 		return input.nextLine().toLowerCase().equals("y");
