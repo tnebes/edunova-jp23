@@ -17,7 +17,7 @@ public class ArticleHandler {
 		System.out.print("Successfully added article ");
 		showArticle(getLastArticle());
 		System.out.print("\n");
-		IO.DataIO.writeDataArticlesFile(Controller.getArticles());
+		IO.DataIO.writeDataToFiles();
 	}
 
 	@Deprecated
@@ -157,16 +157,9 @@ public class ArticleHandler {
 
 	public static void changeArticle() {
 		// TODO Auto-generated method stub
-
 	}
 
 	public static void deleteArticle() {
-		// TODO add a check if the article is associated with an invoice. If it
-		// is
-		// let the user decide whether he wants to purge the invoices
-		// associated with the article.
-		// WARNING. This is a bad idea.
-
 		if (Controller.getArticles().size() == 0) {
 			System.out.print("No articles in database.\n");
 			return;
@@ -182,6 +175,7 @@ public class ArticleHandler {
 			if (getArticle(userInput) != null) {
 				Controller.getArticles().remove(getArticle(userInput));
 				System.out.printf("Successfully removed article %d\n", userInput);
+				IO.DataIO.writeDataToFiles();
 				return;
 			} else {
 				System.out.print("No such article.\n");

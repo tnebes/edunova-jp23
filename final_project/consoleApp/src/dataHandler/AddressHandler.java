@@ -35,7 +35,7 @@ public class AddressHandler {
 		System.out.print("Successfully added address ");
 		showAddress(getLastAddress());
 		System.out.print("\n");
-		IO.DataIO.writeDataAddressesFile(Controller.getAddresses());
+		IO.DataIO.writeDataToFiles();
 	}
 
 	static void addShippingAddress() {
@@ -109,11 +109,6 @@ public class AddressHandler {
 	}
 
 	public static void deleteAddress() {
-		// TODO add a check if the address is associated with customer or invoice. If it
-		// is
-		// let the user decide whether he wants to purge the customers and invoices
-		// associated with the address
-
 		if (Controller.getAddresses().size() == 0) {
 			System.out.print("No addresses in database.\n");
 			return;

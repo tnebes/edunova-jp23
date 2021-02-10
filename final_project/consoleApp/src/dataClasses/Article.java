@@ -10,10 +10,10 @@ public class Article {
 	private float 		wholesalePrice; // not null
 	private float 		retailPrice;
 	private byte 		taxRate;
-	private String 	shortName; // not null
-	private String 	longName;
-	private String 	shortDescription;
-	private String 	longDescription;
+	private String 		shortName; // not null
+	private String 		longName;
+	private String 		shortDescription;
+	private String 		longDescription;
 	
 	public long getId() {
 		return id;

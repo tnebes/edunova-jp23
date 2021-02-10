@@ -25,19 +25,19 @@ public class DataIO {
 
 	private static final boolean DEBUG = true;
 
-	private static String dataDirStringPath = "./data/";
-	private static String dataInvoiceFileStringPath = "invoices.json";
-	private static String dataCustomerFileStringPath = "customers.json";
-	private static String dataAddressesFileStringPath = "addresses.json";
-	private static String dataArticlesFileStringPath = "articles.json";
-	private static String dataCountersStringPath = "counters.txt";
+	private static final String dataDirStringPath = "./data/";
+	private static final String dataInvoiceFileStringPath = "invoices.json";
+	private static final String dataCustomerFileStringPath = "customers.json";
+	private static final String dataAddressesFileStringPath = "addresses.json";
+	private static final String dataArticlesFileStringPath = "articles.json";
+	private static final String dataCountersStringPath = "counters.txt";
 
-	private static Path dataDirPath = Paths.get(dataDirStringPath);
-	private static Path dataInvoicesFilePath = Paths.get(dataDirStringPath, dataInvoiceFileStringPath);
-	private static Path dataCustomersFilePath = Paths.get(dataDirStringPath, dataCustomerFileStringPath);
-	private static Path dataAddressesFilePath = Paths.get(dataDirStringPath, dataAddressesFileStringPath);
-	private static Path dataArticlesFilePath = Paths.get(dataDirStringPath, dataArticlesFileStringPath);
-	private static Path dataCountersFilePath = Paths.get(dataDirStringPath, dataCountersStringPath);
+	private static final Path dataDirPath = Paths.get(dataDirStringPath);
+	private static final Path dataInvoicesFilePath = Paths.get(dataDirStringPath, dataInvoiceFileStringPath);
+	private static final Path dataCustomersFilePath = Paths.get(dataDirStringPath, dataCustomerFileStringPath);
+	private static final Path dataAddressesFilePath = Paths.get(dataDirStringPath, dataAddressesFileStringPath);
+	private static final Path dataArticlesFilePath = Paths.get(dataDirStringPath, dataArticlesFileStringPath);
+	private static final Path dataCountersFilePath = Paths.get(dataDirStringPath, dataCountersStringPath);
 
 	private static ArrayList<Path> pathList = new ArrayList<>();
 	
@@ -159,8 +159,18 @@ public class DataIO {
 		reader.close();
 		return returnValue;
 	}
+
+	/**
+	 * Writes the dataclasses to json files. Does not write the counters.
+	 */
+	public static void writeDataToFiles() {
+		writeDataInvoicesFile(Controller.getInvoices());
+		writeDataAddressesFile(Controller.getAddresses());
+		writeDataArticlesFile(Controller.getArticles());
+		writeDataCustomersFile(Controller.getCustomers());
+	}
 	
-	public static void writeDataInvoicesFile(ArrayList<Invoice> invoices) {
+	private static void writeDataInvoicesFile(ArrayList<Invoice> invoices) {
 		try {
 			FileWriter fw = new FileWriter(dataInvoicesFilePath.toFile());
 			for (Invoice invoice : invoices) {
@@ -176,7 +186,7 @@ public class DataIO {
 
 	}
 	
-	public static void writeDataCustomersFile(ArrayList<Customer> customers) {
+	private static void writeDataCustomersFile(ArrayList<Customer> customers) {
 		try {
 			FileWriter fw = new FileWriter(dataCustomersFilePath.toFile());
 			for (Customer customer : customers) {
@@ -189,10 +199,9 @@ public class DataIO {
 			System.out.print("Unable to write customers to file.\n");
 			System.exit(1);
 		}
-
 	}
 	
-	public static void writeDataAddressesFile(ArrayList<Address> addresses) {
+	private static void writeDataAddressesFile(ArrayList<Address> addresses) {
 		try {
 			FileWriter fw = new FileWriter(dataAddressesFilePath.toFile());
 			for (Address address : addresses) {
@@ -208,7 +217,7 @@ public class DataIO {
 
 	}
 	
-	public static void writeDataArticlesFile(ArrayList<Article> articles) {
+	private static void writeDataArticlesFile(ArrayList<Article> articles) {
 		try {
 			FileWriter fw = new FileWriter(dataArticlesFilePath.toFile());
 			for (Article article : articles) {

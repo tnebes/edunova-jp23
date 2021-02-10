@@ -24,7 +24,7 @@ public class CustomerHandler {
 		Controller.getCustomers().add(newCustomer);
 		System.out.print("Successfully added customer ");
 		showCustomer(getLastCustomer());
-		IO.DataIO.writeDataCustomersFile(Controller.getCustomers());
+		IO.DataIO.writeDataToFiles();
 	}
 
 	static void addCustomerNaturalPerson(Customer naturalPersonCustomer) {
@@ -187,7 +187,7 @@ public class CustomerHandler {
 				if (Controller.getCustomers().get((int) userInput) != null) {
 					changeCustomerAttributes(Controller.getCustomers().get((int) userInput));
 
-					IO.DataIO.writeDataCustomersFile(Controller.getCustomers());
+					IO.DataIO.writeDataToFiles();
 				} else {
 					System.out.print("Customer does not exist.\n");
 					continue;
@@ -309,6 +309,8 @@ public class CustomerHandler {
 				}
 				Controller.getCustomers().remove(getCustomer(userInput));
 				System.out.printf("Successfully removed customer %d\n", userInput);
+
+				IO.DataIO.writeDataToFiles();
 				return;
 			} else {
 				System.out.print("No such customer.\n");

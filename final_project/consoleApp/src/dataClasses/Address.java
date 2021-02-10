@@ -7,15 +7,15 @@ public class Address {
 	static public final boolean SHIPPING_ADDRESS = true;
 	static public final boolean BILLING_ADDRESS = false;
 	
-	private long 						id;
+	private long 					id;
 	private boolean					type;
 	private String 					city;
-	private String						ZIPCode;
-	private String						street;
-	private String						streetNumber;
-	private String						streetLetter;
-	private String						country;
-	private ArrayList<Customer>	customers;
+	private String					ZIPCode;
+	private String					street;
+	private String					streetNumber;
+	private String					streetLetter;
+	private String					country;
+	private ArrayList<Customer>		customers;
 	private ArrayList<Invoice>		invoices;
 	
 	public long getId() {

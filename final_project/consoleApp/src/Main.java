@@ -1,5 +1,3 @@
-package consoleApp;
-
 import java.io.IOException;
 
 /**

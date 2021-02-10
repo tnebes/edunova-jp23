@@ -40,7 +40,7 @@ public class InvoiceHandler {
 		Controller.getInvoices().add(newInvoice);
 		System.out.printf("Successfully added invoice ");
 		showInvoice(getLastInvoice());
-		IO.DataIO.writeDataInvoicesFile(Controller.getInvoices());
+		IO.DataIO.writeDataToFiles();
 	}
 
 	/**
@@ -195,6 +195,7 @@ public class InvoiceHandler {
 				continue;
 			} else {
 				changeInvoiceAttributes(getInvoice(userInput));
+				IO.DataIO.writeDataToFiles();
 			}
 		}
 	}
@@ -204,7 +205,7 @@ public class InvoiceHandler {
 		// TODO add transaction and status id.
 		// and other data fields as they appear.
 		changeInvoiceAddress(newInvoice);
-		IO.DataIO.writeDataInvoicesFile(Controller.getInvoices());
+		IO.DataIO.writeDataToFiles();
 	}
 	
 	public static void changeInvoiceCustomer(Invoice invoice) {
@@ -266,9 +267,11 @@ public class InvoiceHandler {
 				return;
 			}
 			if (getInvoice(userInput) != null) {
-				Controller.getInvoices().remove(getInvoice(userInput));
+				Invoice invoiceToBeDeleted = getInvoice(userInput);
+				Controller.getInvoices().remove(invoiceToBeDeleted);
 				System.out.printf("Successfully removed invoice %d\n", userInput);
-				IO.DataIO.writeDataInvoicesFile(Controller.getInvoices());
+
+				IO.DataIO.writeDataToFiles();
 				return;
 			} else {
 				System.out.print("No such invoice.\n");
