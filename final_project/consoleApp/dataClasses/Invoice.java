@@ -10,16 +10,16 @@ import java.util.Date;
 
 public class Invoice {
 	
-	private long 	id; // not null
-	private Date 	dateOfCreation; // not null 
-	private long 	customerId;
-	private byte 	transcationTypeId; // not null
-	private byte 	statusId; // not null
-	private byte 	invoiceDiscountPercent;
-	private float 	subtotal;
-	private float 	amountDue;
-	private float	amountPaid; // not null
-	private long 	shippingAddressId;
+	private long 				id; // not null
+	private Date 				dateOfCreation; // not null 
+	private Customer			customer;
+	private TransactionType transcationType; // not null
+	private Status				status; // not null
+	private byte 				invoiceDiscountPercent;
+	private float 				subtotal;
+	private float 				amountDue;
+	private float				amountPaid; // not null
+	private Address			shippingAddress;
 	
 	public long getId() {
 		return id;
@@ -33,23 +33,23 @@ public class Invoice {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public long getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
-	public byte getTranscationTypeId() {
-		return transcationTypeId;
+	public TransactionType getTranscationTypeId() {
+		return transcationType;
 	}
-	public void setTranscationTypeId(byte transcationTypeId) {
-		this.transcationTypeId = transcationTypeId;
+	public void setTranscationType(TransactionType transcationType) {
+		this.transcationType = transcationType;
 	}
-	public byte getStatusId() {
-		return statusId;
+	public Status getStatus() {
+		return status;
 	}
-	public void setStatusId(byte statusId) {
-		this.statusId = statusId;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	public byte getInvoiceDiscountPercent() {
 		return invoiceDiscountPercent;
@@ -75,11 +75,11 @@ public class Invoice {
 	public void setAmountPaid(float amountPaid) {
 		this.amountPaid = amountPaid;
 	}
-	public long getShippingAddressId() {
-		return shippingAddressId;
+	public Address getShippingAddress() {
+		return shippingAddress;
 	}
-	public void setShippingAddressId(long shippingAddressId) {
-		this.shippingAddressId = shippingAddressId;
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 	
 	@Override

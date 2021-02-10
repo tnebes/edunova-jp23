@@ -4,16 +4,16 @@ public class Article {
 
 	static public final byte STANDARD_TAX_RATE = 25;
 	
-	private long id; // not null
-	private String warehouseLocation; // not null
-	private long warehouseQuantity; // not null
-	private float wholesalePrice; // not null
-	private float retailPrice;
-	private byte taxRate;
-	private String shortName; // not null
-	private String longName;
-	private String shortDescription;
-	private String longDescription;
+	private long 		id; // not null
+	private String		warehouseLocation; // not null
+	private long 		warehouseQuantity; // not null
+	private float 		wholesalePrice; // not null
+	private float 		retailPrice;
+	private byte 		taxRate;
+	private String 	shortName; // not null
+	private String 	longName;
+	private String 	shortDescription;
+	private String 	longDescription;
 	
 	public long getId() {
 		return id;

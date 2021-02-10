@@ -40,6 +40,8 @@ public class DataIO {
 	private static Path dataCountersFilePath = Paths.get(dataDirStringPath, dataCountersStringPath);
 
 	private static ArrayList<Path> pathList = new ArrayList<>();
+	
+	private static Gson gson;
 
 	/**
 	 * Creates the data folder. If successful, true. If fail, false.
@@ -91,6 +93,7 @@ public class DataIO {
 	 */
 	public static void initialise() throws IOException {
 		System.out.print("Initialising...\n");
+		gson = new Gson();
 		pathList.add(dataInvoicesFilePath);
 		pathList.add(dataCustomersFilePath);
 		pathList.add(dataAddressesFilePath);
@@ -114,7 +117,7 @@ public class DataIO {
 		Scanner reader = new Scanner(dataInvoicesFilePath.toFile());
 		ArrayList<Invoice> returnList = new ArrayList<>();
 		while (reader.hasNextLine()) {
-			returnList.add(new Gson().fromJson(reader.nextLine(), Invoice.class));
+			returnList.add(gson.fromJson(reader.nextLine(), Invoice.class));
 		}
 		reader.close();
 		return returnList;
@@ -124,7 +127,7 @@ public class DataIO {
 		Scanner reader = new Scanner(dataCustomersFilePath.toFile());
 		ArrayList<Customer> returnList = new ArrayList<>();
 		while (reader.hasNextLine()) {
-			returnList.add(new Gson().fromJson(reader.nextLine(), Customer.class));
+			returnList.add(gson.fromJson(reader.nextLine(), Customer.class));
 		}
 		reader.close();
 		return returnList;
@@ -134,7 +137,7 @@ public class DataIO {
 		Scanner reader = new Scanner(dataAddressesFilePath.toFile());
 		ArrayList<Address> returnList = new ArrayList<>();
 		while (reader.hasNextLine()) {
-			returnList.add(new Gson().fromJson(reader.nextLine(), Address.class));
+			returnList.add(gson.fromJson(reader.nextLine(), Address.class));
 		}
 		reader.close();
 		return returnList;
@@ -144,7 +147,7 @@ public class DataIO {
 		Scanner reader = new Scanner(dataArticlesFilePath.toFile());
 		ArrayList<Article> returnList = new ArrayList<>();
 		while (reader.hasNextLine()) {
-			returnList.add(new Gson().fromJson(reader.nextLine(), Article.class));
+			returnList.add(gson.fromJson(reader.nextLine(), Article.class));
 		}
 		reader.close();
 		return returnList;
@@ -161,7 +164,7 @@ public class DataIO {
 		try {
 			FileWriter fw = new FileWriter(dataInvoicesFilePath.toFile());
 			for (Invoice invoice : invoices) {
-				fw.write(new Gson().toJson(invoice));
+				fw.write(gson.toJson(invoice));
 				fw.write("\n");
 			}
 			fw.close();
@@ -177,7 +180,7 @@ public class DataIO {
 		try {
 			FileWriter fw = new FileWriter(dataCustomersFilePath.toFile());
 			for (Customer customer : customers) {
-				fw.write(new Gson().toJson(customer));
+				fw.write(gson.toJson(customer));
 				fw.write("\n");
 			}
 			fw.close();			
@@ -193,7 +196,7 @@ public class DataIO {
 		try {
 			FileWriter fw = new FileWriter(dataAddressesFilePath.toFile());
 			for (Address address : addresses) {
-				fw.write(new Gson().toJson(address));
+				fw.write(gson.toJson(address));
 				fw.write("\n");
 			}
 			fw.close();			
@@ -209,7 +212,7 @@ public class DataIO {
 		try {
 			FileWriter fw = new FileWriter(dataArticlesFilePath.toFile());
 			for (Article article : articles) {
-				fw.write(new Gson().toJson(article));
+				fw.write(gson.toJson(article));
 				fw.write("\n");
 			}
 			fw.close();			

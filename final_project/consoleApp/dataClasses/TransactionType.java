@@ -1,10 +1,13 @@
 package dataClasses;
 
+import java.util.ArrayList;
+
 public class TransactionType {
 
-	private byte id;
-	private String name;
-	private String description;
+	private byte 						id;
+	private String 					name;
+	private String 					description;
+	private ArrayList<Invoice> 	invoices;
 	
 	public byte getId() {
 		return id;
@@ -23,6 +26,12 @@ public class TransactionType {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public ArrayList<Invoice> getInvoices() {
+		return invoices;
+	}
+	public void setInvoices(ArrayList<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 	
 	

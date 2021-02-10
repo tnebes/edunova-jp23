@@ -6,17 +6,17 @@ public class Customer {
 
 	static public final boolean NATURAL_PERSON = true;
 	static public final boolean LEGAL_PERSON = false;
-	private long id;
-	private boolean type;
-	private Date dateOfCreation;
-	private String VATID;
-	private String nationalIdNumber;
-	private String name;
-	private String firstName;
-	private String middleName;
-	private String lastName;
-	private long billingAddressId;
-	private long shippingAddressId;
+	private long 		id;
+	private boolean 	type;
+	private Date 		dateOfCreation;
+	private String 	VATID;
+	private String 	nationalIdNumber;
+	private String 	name;
+	private String 	firstName;
+	private String 	middleName;
+	private String 	lastName;
+	private Address	billingAddress;
+	private Address 	shippingAddress;
 	
 	
 	public long getId() {
@@ -73,17 +73,17 @@ public class Customer {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public long getBillingAddressId() {
-		return billingAddressId;
+	public Address getBillingAddress() {
+		return billingAddress;
 	}
-	public void setBillingAddressId(long billingAddressId) {
-		this.billingAddressId = billingAddressId;
+	public void setBillingAddress(Address billingAddress) {
+		this.billingAddress = billingAddress;
 	}
-	public long getShippingAddressId() {
-		return shippingAddressId;
+	public Address getShippingAddress() {
+		return shippingAddress;
 	}
-	public void setShippingAddressId(long shippingAddressId) {
-		this.shippingAddressId = shippingAddressId;
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 	
 	@Override

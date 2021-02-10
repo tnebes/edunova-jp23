@@ -20,6 +20,7 @@ public class ArticleHandler {
 		IO.DataIO.writeDataArticlesFile(Controller.getArticles());
 	}
 
+	@Deprecated
 	static boolean articleIdIsUnique(long id) {
 		for (Article article : Controller.getArticles()) {
 			if (article.getId() == id) {
@@ -146,7 +147,7 @@ public class ArticleHandler {
 				return article;
 			}
 		}
-		System.out.print("No such invoice.\n");
+		System.out.print("No such article.\n");
 		return null;
 	}
 

@@ -60,13 +60,14 @@ public class CustomerHandler {
 
 	static void customerSetAddress(Customer customer) {
 		AddressHandler.addBillingAddress();
-		customer.setBillingAddressId(AddressHandler.getLastAddress().getId());
+		customer.setBillingAddress(AddressHandler.getLastAddress());
 		if (UserInputHandler.yesNoDialogue("Customer requires separate shipping address? y/n ")) {
 			AddressHandler.addShippingAddress();
-			customer.setShippingAddressId(AddressHandler.getLastAddress().getId());
+			customer.setShippingAddress(AddressHandler.getLastAddress());
 		}
 	}
 
+	@Deprecated
 	static boolean customerIdIsUnique(long id) {
 		for (Customer customer : Controller.getCustomers()) {
 			if (customer.getId() == id) {
@@ -76,10 +77,20 @@ public class CustomerHandler {
 		return true;
 	}
 
+	static Customer getCustomer(Customer customer) {
+		for (Customer suspectCustomer : Controller.getCustomers()) {
+			if (suspectCustomer == customer) {
+				return suspectCustomer;
+			}
+		}
+		System.out.printf("Customer with id %d not found!\n", customer.getId());
+		return null;
+	}
+	
 	static Customer getCustomer(long id) {
-		for (Customer customer : Controller.getCustomers()) {
-			if (customer.getId() == id) {
-				return customer;
+		for (Customer suspectCustomer : Controller.getCustomers()) {
+			if (suspectCustomer.getId() == id) {
+				return suspectCustomer;
 			}
 		}
 		System.out.printf("Customer with id %d not found!\n", id);
@@ -140,22 +151,23 @@ public class CustomerHandler {
 		return Controller.getCustomers().get(Controller.getCustomers().size() - 1);
 	}
 
-	public static boolean checkCustomerAssociatedWithInvoice(long id) {
+	// TODO make this work with objects. get the array of customers from invoice instead.
+	public static boolean checkCustomerAssociatedWithInvoice(dataClasses.Invoice suspectInvoice) {
 		// checking if the customer is associated with any invoice.
 		boolean customerAssociatedWithInvoice = false;
 		// TODO terrible idea because the id is long and the array is long.
-		int[] associatedInvoicesID = new int[Controller.getInvoices().size()];
+		dataClasses.Invoice[] associatedInvoicesID = new dataClasses.Invoice[Controller.getInvoices().size()];
 		int associatedInvoicesIDIndex = 0;
 		for (dataClasses.Invoice invoice : Controller.getInvoices()) {
-			if (invoice.getId() == id) {
+			if (invoice == suspectInvoice) {
 				customerAssociatedWithInvoice = true;
-				associatedInvoicesID[(int) associatedInvoicesIDIndex++] = (int) invoice.getId();
+				associatedInvoicesID[associatedInvoicesIDIndex++] = invoice;
 			}
 		}
 		if (customerAssociatedWithInvoice) {
-			System.out.printf("Cannot change customer with id %d because he is associated with invoices ", id);
-			for (long associatedInvoiceID : associatedInvoicesID) {
-				System.out.printf("%d ", associatedInvoiceID);
+			System.out.printf("Cannot change customer with id %d because he is associated with invoices ", suspectInvoice.getId());
+			for (dataClasses.Invoice associatedInvoiceID : associatedInvoicesID) {
+				System.out.printf("%d ", associatedInvoiceID.getId());
 			}
 			System.out.print("\n");
 			return true;
@@ -199,24 +211,25 @@ public class CustomerHandler {
 		long userInput;
 		while (true) {
 			System.out.printf("* Customer billing address is %s. Enter new ID or leave blank to skip: ",
-					AddressHandler.getAddress(customer.getBillingAddressId()).toString());
+					AddressHandler.getAddress(customer.getBillingAddress().getId()).toString());
 			userInput = UserInputHandler.getIntegerInput(false);
 			if (userInput != 0) {
-				if (AddressHandler.getAddress((int) userInput) != null) {
-					customer.setBillingAddressId(userInput);
+				dataClasses.Address returnAddress = AddressHandler.getAddress((int) userInput);
+				if (returnAddress != null) {
+					customer.setBillingAddress(AddressHandler.getAddress((int) userInput));
 					break;
 				} else {
 					continue;
 				}
 			}
 		}
-		if (customer.getShippingAddressId() == 0) {
+		if (customer.getShippingAddress() == null) {
 			System.out.print("Customer has no shipping address. Enter new ID or leave blank to skip: ");
-			customer.setShippingAddressId(UserInputHandler.getIntegerInput(false));
+			customer.setShippingAddress(AddressHandler.getAddress(UserInputHandler.getIntegerInput(false)));
 		} else {
 			System.out.printf("Customer shipping address is %s. Enter new ID or leave blank to skip: ",
-					AddressHandler.getAddress(customer.getShippingAddressId()).toString());
-			customer.setShippingAddressId(UserInputHandler.getIntegerInput(false));
+					AddressHandler.getAddress(customer.getShippingAddress().getId()));
+			customer.setShippingAddress(AddressHandler.getAddress(UserInputHandler.getIntegerInput(false)));
 		}
 	}
 
@@ -290,7 +303,7 @@ public class CustomerHandler {
 				return;
 			}
 			if (getCustomer(userInput) != null) {
-				if (checkCustomerAssociatedWithInvoice(userInput)) {
+				if (checkCustomerAssociatedWithInvoice(InvoiceHandler.getInvoice(userInput))) {
 					System.out.print("Cannot delete customer. Delete or change invoices first.\n");
 					return;
 				}

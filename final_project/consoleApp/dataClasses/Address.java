@@ -1,18 +1,22 @@
 package dataClasses;
 
+import java.util.ArrayList;
+
 public class Address {
 
 	static public final boolean SHIPPING_ADDRESS = true;
 	static public final boolean BILLING_ADDRESS = false;
 	
-	private long 		id;
-	private boolean	type;
-	private String 	city;
-	private String		ZIPCode;
-	private String		street;
-	private String		streetNumber;
-	private String		streetLetter;
-	private String		country;
+	private long 						id;
+	private boolean					type;
+	private String 					city;
+	private String						ZIPCode;
+	private String						street;
+	private String						streetNumber;
+	private String						streetLetter;
+	private String						country;
+	private ArrayList<Customer>	customers;
+	private ArrayList<Invoice>		invoices;
 	
 	public long getId() {
 		return id;
@@ -61,6 +65,18 @@ public class Address {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+	public void setCustomers(ArrayList<Customer> customers) {
+		this.customers = customers;
+	}
+	public ArrayList<Invoice> getInvoices() {
+		return invoices;
+	}
+	public void setInvoices(ArrayList<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 	
 	

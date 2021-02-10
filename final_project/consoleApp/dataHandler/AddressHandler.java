@@ -58,6 +58,7 @@ public class AddressHandler {
 		address.setId(IDCounter.getAddressCounter());
 	}
 
+	@Deprecated
 	static boolean addressIdIsUnique(long id) {
 		for (Address address : Controller.getAddresses()) {
 			if (address.getId() == id) {
@@ -80,7 +81,7 @@ public class AddressHandler {
 		System.out.print(sb.toString());
 	}
 	
-	public static Object getAddress(long addressID) {
+	public static Address getAddress(long addressID) {
 		if (Controller.getAddresses().get((int) addressID) != null) {
 			return Controller.getAddresses().get((int) addressID);
 		}

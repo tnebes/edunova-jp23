@@ -18,24 +18,24 @@ public class InvoiceHandler {
 		assignIDInvoice(newInvoice);
 		newInvoice.setDateOfCreation(new Date());
 		// TODO
-		newInvoice.setStatusId((byte) -1);
+		newInvoice.setStatus(null);
 		// TODO
-		newInvoice.setTranscationTypeId((byte) -1);
+		newInvoice.setTranscationType(null);
 
 		// do we need a customer?
 		Customer tempCustomer = addInvoiceAddCustomer();
 		if (tempCustomer == null) {
-			newInvoice.setCustomerId(-1);
+			newInvoice.setCustomer(null);
 		} else {
-			newInvoice.setCustomerId(tempCustomer.getId());
+			newInvoice.setCustomer(tempCustomer);
 			tempCustomer = null;
 		}
 
 		if (!(UserInputHandler.yesNoDialogue("Has shipping address? y/n"))) {
-			newInvoice.setShippingAddressId(0);
+			newInvoice.setShippingAddress(null);
 		} else {
-			// addAddress();
-			// newInvoice.setShippingAddressId(addresses.get(addresses.size() - 1).getId());
+			AddressHandler.addAddress();
+			newInvoice.setShippingAddress(Controller.getAddresses().get(Controller.getAddresses().size() - 1));
 		}
 		Controller.getInvoices().add(newInvoice);
 		System.out.printf("Successfully added invoice ");
@@ -67,7 +67,7 @@ public class InvoiceHandler {
 							// if it is an id
 							if (UserInputHandler.isLongInput(searchToken)) {
 								Customer invoiceCustomer = CustomerHandler.getCustomer(Long.parseLong(searchToken.trim()));
-								if (invoiceCustomer != null && invoiceCustomer.getId() != -1) {
+								if (invoiceCustomer != null) {
 									// customer found
 									return invoiceCustomer;
 								} else {
@@ -148,7 +148,7 @@ public class InvoiceHandler {
 		return Controller.getInvoices().get(Controller.getInvoices().size() - 1);
 	}
 
-	private static Invoice getInvoice(long id) {
+	static Invoice getInvoice(long id) {
 		for (Invoice invoice : Controller.getInvoices()) {
 			if (invoice.getId() == id) {
 				return invoice;
@@ -163,8 +163,8 @@ public class InvoiceHandler {
 		sb.append(invoice.getId()).append(" ");
 		System.out.print(sb.toString());
 		sb.delete(0, sb.length());
-		if (invoice.getCustomerId() != -1) {
-			CustomerHandler.showCustomer(CustomerHandler.getCustomer(invoice.getCustomerId()));
+		if (invoice.getCustomer() != null) {
+			CustomerHandler.showCustomer(CustomerHandler.getCustomer(invoice.getCustomer()));
 			sb.append(" ");
 		}
 		sb.append(invoice.getDateOfCreation().toString());
@@ -197,7 +197,6 @@ public class InvoiceHandler {
 				changeInvoiceAttributes(getInvoice(userInput));
 			}
 		}
-
 	}
 
 	private static void changeInvoiceAttributes(Invoice newInvoice) {
@@ -216,7 +215,7 @@ public class InvoiceHandler {
 			userInput = UserInputHandler.getIntegerInput(false);
 			if (userInput != 0) {
 				if (Controller.getCustomers().get((int) userInput) != null) {
-					invoice.setCustomerId(userInput);
+					invoice.setCustomer(CustomerHandler.getCustomer(userInput));
 					return;
 				} else {
 					System.out.printf("Customer with id %d does not exist.\n", userInput);
@@ -229,12 +228,13 @@ public class InvoiceHandler {
 	private static void changeInvoiceAddress(Invoice newInvoice) {
 		long userInput;
 		while (true) {
-			if (newInvoice.getShippingAddressId() == 0 || newInvoice.getShippingAddressId() == -1) {
+			if (newInvoice.getShippingAddress() == null) {
 				System.out.print("No shipping address. Enter new shipping address. Leave blank to skip: ");
 				userInput = UserInputHandler.getIntegerInput(false);
 				if (userInput != 0) {
-					if (Controller.getAddresses().get((int) userInput) != null) {
-						newInvoice.setShippingAddressId(userInput);
+					dataClasses.Address suspectAddress = Controller.getAddresses().get((int) userInput); 
+					if (suspectAddress != null) {
+						newInvoice.setShippingAddress(suspectAddress);
 						return;
 					} else {
 						System.out.printf("Address with id %d does not exist.\n", userInput);
@@ -243,11 +243,11 @@ public class InvoiceHandler {
 				}
 			} else {
 				System.out.printf("Shipping address is %s. Enter new id. Leave blank to skip: ",
-						AddressHandler.getAddress(newInvoice.getShippingAddressId()).toString());
+						newInvoice.getShippingAddress().toString());
 			}
 			userInput = UserInputHandler.getIntegerInput(false);
 			if (userInput != 0) {
-				newInvoice.setShippingAddressId(userInput);
+				newInvoice.setShippingAddress(AddressHandler.getAddress(userInput));
 				return;
 			}
 		}
@@ -277,6 +277,7 @@ public class InvoiceHandler {
 		}
 	}
 
+	@Deprecated
 	static boolean invoiceIdIsUnique(long id) {
 		for (Invoice invoice : Controller.getInvoices()) {
 			if (invoice.getId() == id) {
