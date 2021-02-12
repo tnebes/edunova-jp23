@@ -1,11 +1,13 @@
 package dataHandler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
 import IO.IDCounter;
 import IO.UserInputHandler;
 import dataClasses.Customer;
+import dataClasses.Invoice;
 
 public class CustomerHandler {
 
@@ -151,23 +153,29 @@ public class CustomerHandler {
 		return Controller.getCustomers().get(Controller.getCustomers().size() - 1);
 	}
 
-	// TODO make this work with objects. get the array of customers from invoice instead.
-	public static boolean checkCustomerAssociatedWithInvoice(dataClasses.Invoice suspectInvoice) {
+	public static ArrayList<Invoice> customerAssociatedWithInvoices(Customer customer) {
 		// checking if the customer is associated with any invoice.
-		boolean customerAssociatedWithInvoice = false;
-		// TODO terrible idea because the id is long and the array is long.
-		dataClasses.Invoice[] associatedInvoicesID = new dataClasses.Invoice[Controller.getInvoices().size()];
-		int associatedInvoicesIDIndex = 0;
+		ArrayList<Invoice> associatedInvoices = new ArrayList<>();
 		for (dataClasses.Invoice invoice : Controller.getInvoices()) {
-			if (invoice == suspectInvoice) {
-				customerAssociatedWithInvoice = true;
-				associatedInvoicesID[associatedInvoicesIDIndex++] = invoice;
+			if (invoice.getCustomer() == customer) {
+				associatedInvoices.add(invoice);
 			}
 		}
-		if (customerAssociatedWithInvoice) {
-			System.out.printf("Cannot change customer with id %d because he is associated with invoices ", suspectInvoice.getId());
-			for (dataClasses.Invoice associatedInvoiceID : associatedInvoicesID) {
-				System.out.printf("%d ", associatedInvoiceID.getId());
+		return associatedInvoices;
+	}
+
+	/**
+	 * Method checks whether the customer is found in any invoices. If it is, returns false. Else returns true.
+	 * @param customer
+	 * @return true if can be deleted.
+	 */
+	public static boolean customerCanBeDeleted(Customer customer) {
+		ArrayList<Invoice> invoices = customerAssociatedWithInvoices(customer);
+		if (invoices.size() != 0) {
+			System.out.printf("Cannot change customer with id %d because he is associated with invoices ",
+					customer.getId());
+			for (dataClasses.Invoice invoice : invoices) {
+				System.out.printf("%d ", invoice.getId());
 			}
 			System.out.print("\n");
 			return true;
@@ -225,12 +233,11 @@ public class CustomerHandler {
 		}
 		if (customer.getShippingAddress() == null) {
 			System.out.print("Customer has no shipping address. Enter new ID or leave blank to skip: ");
-			customer.setShippingAddress(AddressHandler.getAddress(UserInputHandler.getIntegerInput(false)));
 		} else {
 			System.out.printf("Customer shipping address is %s. Enter new ID or leave blank to skip: ",
 					AddressHandler.getAddress(customer.getShippingAddress().getId()));
-			customer.setShippingAddress(AddressHandler.getAddress(UserInputHandler.getIntegerInput(false)));
 		}
+		customer.setShippingAddress(AddressHandler.getAddress(UserInputHandler.getIntegerInput(false)));
 	}
 
 	private static void changeNaturalPersonCustomerAttributes(Customer customer) {
@@ -262,11 +269,10 @@ public class CustomerHandler {
 		if (customer.getNationalIdNumber() != null) {
 			System.out.printf("National ID number is %s. Enter new ID number or leave blank to skip: ",
 					customer.getNationalIdNumber());
-			customer.setNationalIdNumber(UserInputHandler.getStringInput(false));
 		} else {
 			System.out.print("No national ID number. Enter new ID number or leave blank to skip: ");
-			customer.setNationalIdNumber(UserInputHandler.getStringInput(false));
 		}
+		customer.setNationalIdNumber(UserInputHandler.getStringInput(false));
 	}
 
 	private static void changeLegalPersonCustomerAttributes(Customer customer) {
@@ -289,7 +295,6 @@ public class CustomerHandler {
 	}
 
 	public static void deleteCustomer() {
-		// TODO add a check for whether the customer is associated with invoices.
 		if (Controller.getCustomers().size() == 0) {
 			System.out.print("No customers in database.\n");
 			return;
@@ -302,14 +307,16 @@ public class CustomerHandler {
 			if (userInput == 0) {
 				return;
 			}
-			if (getCustomer(userInput) != null) {
-				if (checkCustomerAssociatedWithInvoice(InvoiceHandler.getInvoice(userInput))) {
+			Customer toBeDeletedCustomer = getCustomer(userInput);
+			if (toBeDeletedCustomer != null) {
+				if (customerCanBeDeleted(toBeDeletedCustomer)) {
 					System.out.print("Cannot delete customer. Delete or change invoices first.\n");
 					return;
 				}
-				Controller.getCustomers().remove(getCustomer(userInput));
+				Customer deletedCustomer = getCustomer(userInput);
+				Controller.getCustomers().remove(deletedCustomer);
 				System.out.printf("Successfully removed customer %d\n", userInput);
-
+				AddressHandler.purgeFromAddressesCustomer(deletedCustomer);
 				IO.DataIO.writeDataToFiles();
 				return;
 			} else {

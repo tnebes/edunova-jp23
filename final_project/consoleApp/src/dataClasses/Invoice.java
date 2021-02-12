@@ -13,7 +13,7 @@ public class Invoice {
 	private long 				id; // not null
 	private Date 				dateOfCreation; // not null 
 	private Customer			customer;
-	private TransactionType transcationType; // not null
+	private TransactionType 	transcationType; // not null
 	private Status				status; // not null
 	private byte 				invoiceDiscountPercent;
 	private float 				subtotal;

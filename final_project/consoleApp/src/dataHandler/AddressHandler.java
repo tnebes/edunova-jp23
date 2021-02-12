@@ -3,6 +3,9 @@ package dataHandler;
 import IO.IDCounter;
 import IO.UserInputHandler;
 import dataClasses.Address;
+import dataClasses.Customer;
+
+import java.util.ArrayList;
 
 public class AddressHandler {
 
@@ -131,5 +134,14 @@ public class AddressHandler {
 			}
 		}
 	}
-	
+
+	public static void purgeFromAddressesCustomer(Customer deletedCustomer) {
+		ArrayList<Address> addresses = Controller.getAddresses();
+		if (addresses.remove(deletedCustomer)) {
+			System.out.printf("Purged %s from addresses.\n", deletedCustomer.toString());
+		} else {
+			System.out.printf("Customer %s has not been purged from addresses.\n", deletedCustomer.toString());
+		}
+		IO.DataIO.writeDataToFiles();
+	}
 }

@@ -75,7 +75,5 @@ public class Article {
 	public void setLongDescription(String longDescription) {
 		this.longDescription = longDescription;
 	}
-	
-	
-	
+
 }

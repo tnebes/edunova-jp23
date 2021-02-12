@@ -28,7 +28,6 @@ public class InvoiceHandler {
 			newInvoice.setCustomer(null);
 		} else {
 			newInvoice.setCustomer(tempCustomer);
-			tempCustomer = null;
 		}
 
 		if (!(UserInputHandler.yesNoDialogue("Has shipping address? y/n"))) {
@@ -93,25 +92,12 @@ public class InvoiceHandler {
 								}
 								// if more than one
 								else {
-									for (Customer customer : suspectCustomers) {
-										CustomerHandler.showCustomer(customer);
-										System.out.print("\n");
-									}
-									System.out.print("Enter one of the IDs above. Leave blank to retry: ");
-									String idChoice = UserInputHandler.getStringInput(false);
-									if (idChoice.isEmpty()) {
+									Customer suspectCustomer = selectCustomerFromCustomers(suspectCustomers);
+									if (suspectCustomer == null) {
 										continue;
-									} else {
-										while (true) {
-											for (Customer customer : suspectCustomers) {
-												if (customer.getId() == Long.parseLong(idChoice)) {
-													return customer;
-												}
-											}
-											// you are not blessed with perception
-											System.out.print("Enter the ID above: ");
-											continue;
-										}
+									}
+									else {
+										return suspectCustomer;
 									}
 								}
 							}
@@ -129,6 +115,31 @@ public class InvoiceHandler {
 		} else {
 			// customer not required
 			return null;
+		}
+	}
+
+	private static Customer selectCustomerFromCustomers(ArrayList<Customer> suspectCustomers) {
+		while (true) {
+			for (Customer customer : suspectCustomers) {
+				CustomerHandler.showCustomer(customer);
+				System.out.print("\n");
+			}
+			System.out.print("Enter one of the IDs above. Leave blank to retry: ");
+			String idChoice = UserInputHandler.getStringInput(false);
+			if (idChoice.isEmpty()) {
+				continue;
+			} else {
+				while (true) {
+					for (Customer customer : suspectCustomers) {
+						if (customer.getId() == Long.parseLong(idChoice)) {
+							return customer;
+						}
+					}
+					// you are not blessed with perception
+					System.out.print("Enter the ID above: ");
+					continue;
+				}
+			}
 		}
 	}
 
@@ -164,7 +175,7 @@ public class InvoiceHandler {
 		System.out.print(sb.toString());
 		sb.delete(0, sb.length());
 		if (invoice.getCustomer() != null) {
-			CustomerHandler.showCustomer(CustomerHandler.getCustomer(invoice.getCustomer()));
+			CustomerHandler.showCustomer(invoice.getCustomer());
 			sb.append(" ");
 		}
 		sb.append(invoice.getDateOfCreation().toString());
