@@ -7,6 +7,7 @@ learning/
 /**/materials/
 /**/sql_DDL_DML.pdf
 .settings/
+*/data/
 
 *.java~
 *.un~

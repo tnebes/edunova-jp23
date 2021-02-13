@@ -31,6 +31,7 @@ public class DataIO {
 	private static final String dataAddressesFileStringPath = "addresses.json";
 	private static final String dataArticlesFileStringPath = "articles.json";
 	private static final String dataCountersStringPath = "counters.txt";
+	private static final String SQLConnectionStringPath = "MYSQL.txt";
 
 	private static final Path dataDirPath = Paths.get(dataDirStringPath);
 	private static final Path dataInvoicesFilePath = Paths.get(dataDirStringPath, dataInvoiceFileStringPath);
@@ -38,6 +39,7 @@ public class DataIO {
 	private static final Path dataAddressesFilePath = Paths.get(dataDirStringPath, dataAddressesFileStringPath);
 	private static final Path dataArticlesFilePath = Paths.get(dataDirStringPath, dataArticlesFileStringPath);
 	private static final Path dataCountersFilePath = Paths.get(dataDirStringPath, dataCountersStringPath);
+	private static final Path SQLConnectionStringFilePath = Paths.get(dataDirStringPath, SQLConnectionStringPath);
 
 	private static ArrayList<Path> pathList = new ArrayList<>();
 	
@@ -99,6 +101,7 @@ public class DataIO {
 		pathList.add(dataAddressesFilePath);
 		pathList.add(dataArticlesFilePath);
 		pathList.add(dataCountersFilePath);
+		pathList.add(SQLConnectionStringFilePath);
 
 		// if folder created, files needed.
 		if (createDataFolder()) {
@@ -158,6 +161,15 @@ public class DataIO {
 		String returnValue = reader.nextLine();
 		reader.close();
 		return returnValue;
+	}
+
+	public static String getSQLConnectionData() throws FileNotFoundException {
+		Scanner reader = new Scanner(SQLConnectionStringFilePath.toFile());
+		StringBuilder sb = new StringBuilder();
+		while (reader.hasNext()) {
+			sb.append(reader.next()).append(" ");
+		}
+		return sb.toString();
 	}
 
 	/**

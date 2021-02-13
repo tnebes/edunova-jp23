@@ -10,6 +10,7 @@ public class Main {
 
 	public Main() throws IOException {
 		IO.DataIO.initialise();
+		IO.SQLCommunicator.initialise();
 		while(true) {
 			UI.mainMenu();
 		}
