@@ -3,8 +3,6 @@ package dataHandler;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.w3c.dom.UserDataHandler;
-
 import IO.IDCounter;
 import IO.UserInputHandler;
 import dataClasses.Customer;
@@ -28,6 +26,8 @@ public class InvoiceHandler {
 			newInvoice.setCustomer(null);
 		} else {
 			newInvoice.setCustomer(tempCustomer);
+			// TODO WTF
+			tempCustomer.getInvoicesIDs().add(newInvoice.getId());
 		}
 
 		if (!(UserInputHandler.yesNoDialogue("Has shipping address? y/n"))) {

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Address {
 
-	static public final boolean SHIPPING_ADDRESS = true;
-	static public final boolean BILLING_ADDRESS = false;
+	static public final boolean SHIPPING_ADDRESS = false;
+	static public final boolean BILLING_ADDRESS = true;
 	
 	private long 					id;
 	private boolean					type;
@@ -15,9 +15,25 @@ public class Address {
 	private String					streetNumber;
 	private String					streetLetter;
 	private String					country;
-	private ArrayList<Customer>		customers;
-	private ArrayList<Invoice>		invoices;
-	
+
+	private ArrayList<Long> 		customerIDs;
+	private ArrayList<Long> 		invoiceIDs;
+
+	public Address(long id, boolean type, String city, String ZIPCode, String street, String streetNumber, String streetLetter, String country) {
+		this.id = id;
+		this.type = type;
+		this.city = city;
+		this.ZIPCode = ZIPCode;
+		this.street = street;
+		this.streetNumber = streetNumber;
+		this.streetLetter = streetLetter;
+		this.country = country;
+	}
+
+	public Address() {
+
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -66,17 +82,17 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public ArrayList<Customer> getCustomers() {
-		return customers;
+	public ArrayList<Long> getCustomerIDs() {
+		return customerIDs;
 	}
-	public void setCustomers(ArrayList<Customer> customers) {
-		this.customers = customers;
+	public void setCustomerIDs(ArrayList<Long> customerIDs) {
+		this.customerIDs = customerIDs;
 	}
-	public ArrayList<Invoice> getInvoices() {
-		return invoices;
+	public ArrayList<Long> getInvoiceIDs() {
+		return invoiceIDs;
 	}
-	public void setInvoices(ArrayList<Invoice> invoices) {
-		this.invoices = invoices;
+	public void setInvoiceIDs(ArrayList<Long> invoiceIDs) {
+		this.invoiceIDs = invoiceIDs;
 	}
 	
 	

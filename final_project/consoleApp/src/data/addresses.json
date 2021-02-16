@@ -1,3 +1,10 @@
-{"id":1,"type":true,"city":"Osijek","ZIPCode":"1235412","street":"Test","streetNumber":"123","streetLetter":"","country":"Croatia"}
+{"id":1,"type":true,"city":"Osijek","ZIPCode":"1235412","street":"Test","streetNumber":"123","country":"Croatia"}
 {"id":2,"type":true,"city":"Cepin","ZIPCode":"5857","street":"Testerova","streetNumber":"123","streetLetter":"a","country":"Croatia"}
 {"id":3,"type":false,"city":"Cepin","ZIPCode":"34454","street":"Osjecka","streetNumber":"12","streetLetter":"a","country":"Croatia"}
+{"id":4,"type":true,"city":"Gorani","ZIPCode":"86785","street":"trjigv","streetNumber":"354","streetLetter":"","country":"Croatia"}
+{"id":5,"type":true,"city":"sidjfgio","ZIPCode":"djfgoij","street":"dsfjgo","streetNumber":"ksdfjgois","streetLetter":"ksdfjgoijsfd","country":"osidfjg"}
+{"id":6,"type":true,"city":"ksdfjgoi","ZIPCode":"isdjfgio","street":"sdifgjo","streetNumber":"kdfjgo","streetLetter":"idjfgioj","country":"dfjgo"}
+{"id":7,"type":true,"city":"dsgsertg","ZIPCode":"sdfgserg","street":"sdrfgser","streetNumber":"dfgveg","streetLetter":"dfvserg","country":"dfgvsertg"}
+{"id":8,"type":true,"city":"iosadfjiosfjd","ZIPCode":"sdfhguisfg","street":"sidsjgp","streetNumber":"sdkfgjsidfjg","streetLetter":"sdfhguishdf","country":"dfjgoisj"}
+{"id":9,"type":true,"city":"dxzfgdrtf","ZIPCode":"gbhfghy","street":"aeiou","streetNumber":"sssss","streetLetter":"fgsdf","country":"sdgsert"}
+{"id":10,"type":true,"city":"siodfjgiosjdfg","ZIPCode":"df;igjsoidfjg","street":"fdijgoisdjfg","streetNumber":"fdgjsofdjg","streetLetter":"sdfgjsodfg","country":"isdjfgio"}

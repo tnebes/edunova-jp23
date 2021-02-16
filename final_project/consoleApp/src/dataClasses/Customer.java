@@ -18,9 +18,30 @@ public class Customer {
 	private String 				lastName;
 	private Address				billingAddress;
 	private Address 			shippingAddress;
-	private ArrayList<Invoice> 	invoices;
-	
-	
+	private ArrayList<Long> 	invoicesIDs;
+
+	private void initialise() {
+		this.invoicesIDs = new ArrayList<>();
+	}
+
+	public Customer() {
+		initialise();
+	}
+
+	public Customer(long id, boolean type, Date dateOfCreation, String VATID, String nationalIdNumber, String name, String firstName, String middleName, String lastName, Address billingAddress, Address shippingAddress) {
+		this.id = id;
+		this.type = type;
+		this.dateOfCreation = dateOfCreation;
+		this.VATID = VATID;
+		this.nationalIdNumber = nationalIdNumber;
+		this.name = name;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.billingAddress = billingAddress;
+		this.shippingAddress = shippingAddress;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -87,12 +108,12 @@ public class Customer {
 	public void setShippingAddress(Address shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
-	public ArrayList<Invoice> getInvoices() {
-		return invoices;
+	public ArrayList<Long> getInvoicesIDs() {
+		return invoicesIDs;
 	}
 
-	public void setInvoices(ArrayList<Invoice> invoices) {
-		this.invoices = invoices;
+	public void setInvoicesIDs(ArrayList<Long> invoicesIDs) {
+		this.invoicesIDs = invoicesIDs;
 	}
 	
 	@Override

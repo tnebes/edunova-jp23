@@ -1,5 +1,6 @@
 package dataHandler;
 
+import IO.DataIO;
 import IO.IDCounter;
 import IO.UserInputHandler;
 import dataClasses.Address;
@@ -85,8 +86,11 @@ public class AddressHandler {
 	}
 	
 	public static Address getAddress(long addressID) {
-		if (Controller.getAddresses().get((int) addressID) != null) {
-			return Controller.getAddresses().get((int) addressID);
+		ArrayList<Address> tempAddresses = Controller.getAddresses();
+		for (Address address : tempAddresses) {
+			if (address.getId() == addressID) {
+				return address;
+			}
 		}
 		return null;
 	}
@@ -127,6 +131,7 @@ public class AddressHandler {
 			if (AddressHandler.getAddress(userInput) != null) {
 				Controller.getAddresses().remove(AddressHandler.getAddress(userInput));
 				System.out.printf("Successfully removed address %d\n", userInput);
+				DataIO.writeDataToFiles();
 				return;
 			} else {
 				System.out.print("No such address.\n");

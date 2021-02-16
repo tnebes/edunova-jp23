@@ -1,9 +1,13 @@
 package IO;
 
+import dataClasses.Address;
 import dataHandler.Controller;
 import org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException;
 
+import javax.activation.DataHandler;
+import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -13,6 +17,10 @@ public class SQLCommunicator {
 
     private static Connection connection;
     private static String databaseName = "final_project_store_database";
+    static final int CUSTOMERS = 0;
+    static final int ADDRESSES = 1;
+    static final int INVOICES = 2;
+    static final int ARTICLES = 3;
 
     public static void initialise() {
         connection = createConnection();
@@ -66,14 +74,13 @@ public class SQLCommunicator {
         }
     }
 
-    public static ResultSet getSQLItems(String entity) {
-        entity = entity.toLowerCase();
+    public static ResultSet getSQLItems(int entity) {
         String SQLQuery;
         switch (entity) {
-            case "customers": return sendQuery("SELECT * FROM CUSTOMER;");
-            case "addresses": return sendQuery("SELECT * FROM ADDRESS;");
-            case "invoices": return sendQuery("SELECT * FROM INVOICE;");
-            case "articles": return sendQuery("SELECT * FROM ARTICLE;");
+            case CUSTOMERS: return sendQuery("SELECT * FROM customer;");
+            case ADDRESSES: return sendQuery("SELECT * FROM address;");
+            case INVOICES: return sendQuery("SELECT * FROM invoice;");
+            case ARTICLES: return sendQuery("SELECT * FROM article;");
             default: System.out.print("Wrong.\n");
             return null;
         }
@@ -120,7 +127,34 @@ public class SQLCommunicator {
     }
 
     public static void updateLocalDataFromSQL() {
-        return;
+        getAddresses();
+
+        DataIO.writeDataToFiles();
+    }
+
+    private static void getAddresses() {
+        ResultSet resultSet = getSQLItems(ADDRESSES);
+        ArrayList<Address> tempAddress = new ArrayList<>();
+        try {
+            int counter;
+            while (resultSet.next()) {
+                counter = 1;
+                tempAddress.add(new Address(
+                        resultSet.getInt(counter++),
+                        resultSet.getBoolean(counter++),
+                        resultSet.getString(counter++),
+                        resultSet.getString(counter++),
+                        resultSet.getString(counter++),
+                        resultSet.getString(counter++),
+                        resultSet.getString(counter++),
+                        resultSet.getString(counter++)
+                        ));
+            }
+            Controller.setAddresses(tempAddress);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     public static void purgeDatabase() {
