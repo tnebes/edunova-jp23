@@ -11,5 +11,9 @@ Basics of manipulating SQL databases, including, but not limited to, using comma
 
 Basics of using Java in commandline and compiling from commandline. Using IDEs for Java, e.g. Eclipse, and debugging.
 
-Basic syntax of Java. Variables, arrays, methods and packages.
+IDEs: Eclipse, IntelliJ, and NetBeans. VIM sometimes.
+
+Intermediate syntax of Java. Variables, arrays, loops and packages. Methods and data fields. Encapsulation and inheritance. Swing.
+
+Designed a CRUD console. Handled saving to local disk using Gson. Sent data to and from MariaDB. 
 
