@@ -2,7 +2,6 @@ package IO;
 
 import dataClasses.Address;
 import dataHandler.Controller;
-import org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,11 +12,11 @@ public class SQLCommunicator {
     // add ability to pull from SQL
 
     private static Connection connection;
-    private static String databaseName = "final_project_store_database";
-    static final int CUSTOMERS = 0;
-    static final int ADDRESSES = 1;
-    static final int INVOICES = 2;
-    static final int ARTICLES = 3;
+    private static final String databaseName = "final_project_store_database";
+    private static final int CUSTOMERS = 0;
+    private static final int ADDRESSES = 1;
+    private static final int INVOICES = 2;
+    private static final int ARTICLES = 3;
 
     public static void initialise() {
         connection = createConnection();
@@ -72,7 +71,6 @@ public class SQLCommunicator {
     }
 
     public static ResultSet getSQLItems(int entity) {
-        String SQLQuery;
         switch (entity) {
             case CUSTOMERS: return sendQuery("SELECT * FROM customer;");
             case ADDRESSES: return sendQuery("SELECT * FROM address;");
@@ -96,9 +94,7 @@ public class SQLCommunicator {
         if (data == null || data.isBlank()) {
             return null;
         }
-        StringBuilder sb = new StringBuilder("");
-        sb.append("'").append(data).append("'");
-        return sb.toString();
+        return "" + "'" + data + "'";
     }
 
     private static String sendAddress(dataClasses.Address address) {
@@ -123,8 +119,28 @@ public class SQLCommunicator {
         }
     }
 
+    /**
+     * Retrieves all data from SQL database. Updates counters when necessary.
+     */
     public static void updateLocalDataFromSQL() {
         getAddresses();
+        long maxCounter = 0;
+        for (Address address : Controller.getAddresses()) {
+            if(address.getId() > maxCounter) {
+                maxCounter = address.getId();
+            }
+        }
+        if (IDCounter.getAddressCounter() != maxCounter) {
+            IDCounter.setAddressCounter(maxCounter);
+        }
+        // TODO customer
+        // TODO transaction_type
+        // TODO status
+        // TODO invoice
+        // TODO article
+        // TODO article_invoice
+
+        // TODO associate data with other data (invoices to customers, etc.)
 
         DataIO.writeDataToFiles();
     }
@@ -156,8 +172,8 @@ public class SQLCommunicator {
 
     public static void purgeDatabase() {
         sendQuery("DROP DATABASE ".concat(databaseName).concat(";"));
-        System.out.printf("Database purged. Use external client to rebuild database.\n");
-        System.exit(0);
+        System.out.print("Database purged." +
+                "\nUse external client to rebuild database before continuing to work on this program.\n");
     }
 
 }

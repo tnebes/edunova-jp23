@@ -15,9 +15,9 @@ import dataHandler.InvoiceHandler;
 public class UI {
 
     // Menu strings.
-    static private String[] mainMenuChoices = {"Invoices", "Customers", "Addresses", "Articles", "Database", "Exit"};
-    static private String[] genericManipulation = {"Show", "Add", "Change", "Delete", "Exit"};
-    static private String notification = "=== Drau ElektroSoftware GmbH ===";
+    static private final String[] mainMenuChoices = {"Invoices", "Customers", "Addresses", "Articles", "Database", "Exit"};
+    static private final String[] genericManipulation = {"Show", "Add", "Change", "Delete", "Exit"};
+    static private final String notification = "=== Drau ElektroSoftware GmbH ===";
 
     // value of ints is not index but what user sees. e.g. invoices is 1 and not 0.
     static final int SQL = 5;
@@ -55,7 +55,7 @@ public class UI {
         int userInput;
         // options will have a different menu
         if (previousMenu == SQL) {
-            System.out.printf("1 - update database\n2 - load from database\n3 - purge database\n0 - return\n");
+            System.out.print("1 - update database\n2 - load from database\n3 - purge database\n0 - return\n");
             userInput = (int) UserInputHandler.getIntegerInput(false);
             if (userInput < 1 || userInput > 3) {
                 return;

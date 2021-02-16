@@ -85,10 +85,9 @@ public class Invoice {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(id).append(" ");
-		sb.append(dateOfCreation.toString()).append(" ");
-		return sb.toString();
+		String sb = id + " " +
+				dateOfCreation.toString() + " ";
+		return sb;
 	}
 	
 	

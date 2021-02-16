@@ -28,41 +28,71 @@ public class IDCounter {
 			articleCounter = 0;
 			sendCountersToWrite();
 		}
-
 	}
 
 	public static void sendCountersToWrite() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(invoiceCounter).append(" ");
-		sb.append(customerCounter).append(" ");
-		sb.append(addressCounter).append(" ");
-		sb.append(addressCounter).append(" ");
-		DataIO.writeDataCountersFile(sb.toString());
+		String sb = invoiceCounter + " " +
+				customerCounter + " " +
+				addressCounter + " " +
+				addressCounter + " ";
+		DataIO.writeDataCountersFile(sb);
 
 	}
 
-	public static long getInvoiceCounter() {
+	public static long incrementInvoiceCounter() {
 		invoiceCounter++;
 		sendCountersToWrite();
 		return invoiceCounter;
 	}
 
-	public static long getCustomerCounter() {
+	public static long incrementCustomerCounter() {
 		customerCounter++;
 		sendCountersToWrite();
 		return customerCounter;
 	}
 
-	public static long getAddressCounter() {
+	public static long incrementAddressCounter() {
 		addressCounter++;
 		sendCountersToWrite();
 		return addressCounter;
 	}
 
-	public static long getArticleCounter() {
+	public static long incrementArticleCounter() {
 		articleCounter++;
 		sendCountersToWrite();
 		return articleCounter;
+	}
+
+	public static long getInvoiceCounter() {
+		return invoiceCounter;
+	}
+
+	public static long getCustomerCounter() {
+		return customerCounter;
+	}
+
+	public static long getAddressCounter() {
+		return addressCounter;
+	}
+
+	public static long getArticleCounter() {
+		return articleCounter;
+	}
+
+	public static void setInvoiceCounter(long invoiceCounter) {
+		IDCounter.invoiceCounter = invoiceCounter;
+	}
+
+	public static void setCustomerCounter(long customerCounter) {
+		IDCounter.customerCounter = customerCounter;
+	}
+
+	public static void setAddressCounter(long addressCounter) {
+		IDCounter.addressCounter = addressCounter;
+	}
+
+	public static void setArticleCounter(long articleCounter) {
+		IDCounter.articleCounter = articleCounter;
 	}
 
 }

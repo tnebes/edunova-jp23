@@ -6,6 +6,7 @@ import IO.UserInputHandler;
 import dataClasses.Address;
 import dataClasses.Customer;
 
+import javax.naming.ldap.Control;
 import java.util.ArrayList;
 
 public class AddressHandler {
@@ -59,7 +60,7 @@ public class AddressHandler {
 		// } else {
 		// address.setId(enterId((byte) 2, userInput));
 		// }
-		address.setId(IDCounter.getAddressCounter());
+		address.setId(IDCounter.incrementAddressCounter());
 	}
 
 	@Deprecated
@@ -73,16 +74,15 @@ public class AddressHandler {
 	}
 
 	static void showAddress(Address address) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(address.getId()).append(" ");
-		sb.append(address.isType() == Address.BILLING_ADDRESS ? "billing address" : "shipping address").append(" ");
-		sb.append(address.getStreet()).append(" ");
-		sb.append(address.getStreetNumber()).append(" ");
-		sb.append(address.getStreetLetter()).append(" ");
-		sb.append(address.getCity()).append(" ");
-		sb.append(address.getZIPCode()).append(" ");
-		sb.append(address.getCountry());
-		System.out.print(sb.toString());
+		String sb = address.getId() + " " +
+				(address.isType() == Address.BILLING_ADDRESS ? "billing address" : "shipping address") + " " +
+				address.getStreet() + " " +
+				address.getStreetNumber() + " " +
+				address.getStreetLetter() + " " +
+				address.getCity() + " " +
+				address.getZIPCode() + " " +
+				address.getCountry();
+		System.out.print(sb);
 	}
 	
 	public static Address getAddress(long addressID) {
@@ -142,10 +142,13 @@ public class AddressHandler {
 
 	public static void purgeFromAddressesCustomer(Customer deletedCustomer) {
 		ArrayList<Address> addresses = Controller.getAddresses();
-		if (addresses.remove(deletedCustomer)) {
-			System.out.printf("Purged %s from addresses.\n", deletedCustomer.toString());
-		} else {
-			System.out.printf("Customer %s has not been purged from addresses.\n", deletedCustomer.toString());
+		for (Address address : Controller.getAddresses()) {
+			for (long customerID : address.getCustomerIDs()) {
+				if (customerID == deletedCustomer.getId()) {
+					address.getCustomerIDs().remove(deletedCustomer.getId());
+					System.out.printf("Purged %s from address %d\n", deletedCustomer.toString(), address.getId());
+				}
+			}
 		}
 		IO.DataIO.writeDataToFiles();
 	}

@@ -37,7 +37,7 @@ public class InvoiceHandler {
 			newInvoice.setShippingAddress(Controller.getAddresses().get(Controller.getAddresses().size() - 1));
 		}
 		Controller.getInvoices().add(newInvoice);
-		System.out.printf("Successfully added invoice ");
+		System.out.print("Successfully added invoice ");
 		showInvoice(getLastInvoice());
 		IO.DataIO.writeDataToFiles();
 	}
@@ -55,7 +55,6 @@ public class InvoiceHandler {
 					// existing customer
 					if (Controller.getCustomers().size() == 0) {
 						System.out.print("No customers in database\n");
-						continue;
 					} else {
 						while (true) {
 							System.out.print("Enter ID or name. Empty to cancel: ");
@@ -74,7 +73,6 @@ public class InvoiceHandler {
 									// no hit
 									System.out.print("No such customer.\n");
 									CustomerHandler.showCustomers();
-									continue;
 								}
 							} else {
 								// if it a string
@@ -84,7 +82,6 @@ public class InvoiceHandler {
 								// restart search
 								if (suspectCustomers.size() == 0) {
 									System.out.print("No such customer found\n");
-									continue;
 								}
 								// if there is only one
 								// get his id
@@ -95,7 +92,6 @@ public class InvoiceHandler {
 								else {
 									Customer suspectCustomer = selectCustomerFromCustomers(suspectCustomers);
 									if (suspectCustomer == null) {
-										continue;
 									}
 									else {
 										return suspectCustomer;
@@ -104,8 +100,8 @@ public class InvoiceHandler {
 							}
 						}
 						// if something went wrong
-						continue;
 					}
+					continue;
 				}
 				// adding a new customer
 				else {
@@ -128,7 +124,6 @@ public class InvoiceHandler {
 			System.out.print("Enter one of the IDs above. Leave blank to retry: ");
 			String idChoice = UserInputHandler.getStringInput(false);
 			if (idChoice.isEmpty()) {
-				continue;
 			} else {
 				while (true) {
 					for (Customer customer : suspectCustomers) {
@@ -138,7 +133,6 @@ public class InvoiceHandler {
 					}
 					// you are not blessed with perception
 					System.out.print("Enter the ID above: ");
-					continue;
 				}
 			}
 		}
@@ -153,7 +147,7 @@ public class InvoiceHandler {
 		// } else {
 		// invoice.setId(enterId((byte) 0, userInput));
 		// }
-		invoice.setId(IDCounter.getInvoiceCounter());
+		invoice.setId(IDCounter.incrementInvoiceCounter());
 	}
 
 	public static Invoice getLastInvoice() {
@@ -204,7 +198,6 @@ public class InvoiceHandler {
 			}
 			if (getInvoice(userInput) == null) {
 				System.out.print("No such invoice.\n");
-				continue;
 			} else {
 				changeInvoiceAttributes(getInvoice(userInput));
 				IO.DataIO.writeDataToFiles();
@@ -232,7 +225,6 @@ public class InvoiceHandler {
 					return;
 				} else {
 					System.out.printf("Customer with id %d does not exist.\n", userInput);
-					continue;
 				}
 			}
 		}
@@ -287,7 +279,6 @@ public class InvoiceHandler {
 				return;
 			} else {
 				System.out.print("No such invoice.\n");
-				continue;
 			}
 		}
 	}

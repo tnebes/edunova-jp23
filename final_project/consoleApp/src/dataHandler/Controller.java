@@ -19,8 +19,8 @@ import dataClasses.Invoice;
 
 public class Controller {
 
-	static private double DOUBLE_EPSILON = 10e-14;
-	static private float FLOAT_EPSILON = 10e-7f;
+	static private final double DOUBLE_EPSILON = 10e-14;
+	static private final float FLOAT_EPSILON = 10e-7f;
 
 	static private ArrayList<Invoice> invoices = new ArrayList<>();
 	static private ArrayList<Customer> customers = new ArrayList<>();
@@ -75,17 +75,13 @@ public class Controller {
 		// CUSTOMERS 1
 		// ADDRESSES 2
 		// ARTICLES 3
-		switch (type) {
-		case 0:
-			return InvoiceHandler.invoiceIdIsUnique(id);
-		case 1:
-			return CustomerHandler.customerIdIsUnique(id);
-		case 2:
-			return AddressHandler.addressIdIsUnique(id);
-		case 3:
-			return ArticleHandler.articleIdIsUnique(id);
-		}
-		return false;
+		return switch (type) {
+			case 0 -> InvoiceHandler.invoiceIdIsUnique(id);
+			case 1 -> CustomerHandler.customerIdIsUnique(id);
+			case 2 -> AddressHandler.addressIdIsUnique(id);
+			case 3 -> ArticleHandler.articleIdIsUnique(id);
+			default -> false;
+		};
 	}
 
 	public static long enterId(byte type, long id) {
@@ -100,13 +96,13 @@ public class Controller {
 				} else {
 					switch (type) {
 					case 0:
-						return IDCounter.getInvoiceCounter();
+						return IDCounter.incrementInvoiceCounter();
 					case 1:
-						return IDCounter.getCustomerCounter();
+						return IDCounter.incrementCustomerCounter();
 					case 2:
-						return IDCounter.getAddressCounter();
+						return IDCounter.incrementAddressCounter();
 					case 3:
-						return IDCounter.getInvoiceCounter();
+						return IDCounter.incrementArticleCounter();
 					default:
 						System.out.print("Something went wrong.");
 						System.exit(1);

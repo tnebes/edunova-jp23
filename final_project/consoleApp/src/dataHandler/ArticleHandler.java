@@ -91,7 +91,7 @@ public class ArticleHandler {
 		// } else {
 		// article.setId(enterId((byte) 3, userInput));
 		// }
-		article.setId(IDCounter.getArticleCounter());
+		article.setId(IDCounter.incrementArticleCounter());
 	}
 
 	private static void calculateArticleRetailPrice(Article article) {

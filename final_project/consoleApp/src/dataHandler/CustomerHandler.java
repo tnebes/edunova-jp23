@@ -1,6 +1,5 @@
 package dataHandler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -57,7 +56,7 @@ public class CustomerHandler {
 		// userInput = enterId((byte) 1, userInput);
 		// customer.setId(userInput);
 		// }
-		customer.setId(IDCounter.getCustomerCounter());
+		customer.setId(IDCounter.incrementCustomerCounter());
 	}
 
 	static void customerSetAddress(Customer customer) {
@@ -104,13 +103,10 @@ public class CustomerHandler {
 		for (Customer customer : Controller.getCustomers()) {
 			if (customer.getFirstName().toLowerCase().contains(token.toLowerCase())) {
 				suspectCustomers.add(customer);
-				continue;
 			} else if (customer.getMiddleName().toLowerCase().contains(token.toLowerCase())) {
 				suspectCustomers.add(customer);
-				continue;
 			} else if (customer.getLastName().toLowerCase().contains(token.toLowerCase())) {
 				suspectCustomers.add(customer);
-				continue;
 			}
 		}
 		return suspectCustomers;
@@ -129,13 +125,12 @@ public class CustomerHandler {
 				sb.append(customer.getMiddleName()).append(" ");
 			}
 			sb.append(customer.getLastName()).append(" ");
-			System.out.print(sb.toString());
 		} else {
 			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getName()).append(" ");
 			sb.append(customer.getVATID());
-			System.out.print(sb.toString());
 		}
+		System.out.print(sb.toString());
 	}
 
 	public static void showCustomers() {
@@ -198,7 +193,6 @@ public class CustomerHandler {
 					IO.DataIO.writeDataToFiles();
 				} else {
 					System.out.print("Customer does not exist.\n");
-					continue;
 				}
 			}
 		}
@@ -226,8 +220,6 @@ public class CustomerHandler {
 				if (returnAddress != null) {
 					customer.setBillingAddress(AddressHandler.getAddress((int) userInput));
 					break;
-				} else {
-					continue;
 				}
 			}
 		}
@@ -321,7 +313,6 @@ public class CustomerHandler {
 				return;
 			} else {
 				System.out.print("No such customer.\n");
-				continue;
 			}
 		}
 	}

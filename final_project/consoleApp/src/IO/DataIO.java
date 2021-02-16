@@ -65,7 +65,7 @@ public class DataIO {
 			return false;
 		} catch (IOException e) {
 			System.out.print("IO error.\n");
-			System.out.print(e);
+			e.printStackTrace();
 			System.exit(1);
 		}
 		return false;
@@ -85,7 +85,7 @@ public class DataIO {
 					System.out.printf("%s present at %s\n", path.getFileName().toString(), path.toAbsolutePath().toString());
 				}
 			} catch (IOException e) {
-				System.out.print(e);
+				e.printStackTrace();
 				System.exit(1);
 			}
 		}
@@ -116,10 +116,10 @@ public class DataIO {
 		IDCounter.initialiseCounters();
 		Controller.initialiseData();
 		// check if the SQL script is there.
-		if (SQLDatabaseScriptFilePath.toFile() == null) {
-			System.out.printf("MySQL file required at %s", SQLConnectionStringFilePath.toString());
-			System.exit(1);
-		}
+//		if (SQLDatabaseScriptFilePath.toFile() == null) {
+//			System.out.printf("MySQL file required at %s", SQLConnectionStringFilePath.toString());
+//			System.exit(1);
+//		}
 		
 		System.out.print("\n");
 	}
