@@ -49,6 +49,7 @@ public class SQLCommunicator {
     }
 
     private static ResultSet sendQuery(String query) {
+        //TODO check if string contains "drop database"
         ResultSet resultSet;
         try {
             Statement myStatement = connection.createStatement();
