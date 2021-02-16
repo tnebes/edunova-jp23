@@ -1,8 +1,10 @@
 package IO;
 
 import dataClasses.Address;
+import dataClasses.Article;
 import dataHandler.Controller;
 
+import javax.naming.ldap.Control;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -86,6 +88,13 @@ public class SQLCommunicator {
     }
 
     public static void updateSQLDatabase() {
+        // TODO article_invoice
+        // TODO article
+        updateArticles();
+        // TODO invoice
+        // TODO customer
+        // TODO status
+        // TODO transaction_type
         updateAddresses();
 
     }
@@ -97,7 +106,21 @@ public class SQLCommunicator {
         return "" + "'" + data + "'";
     }
 
-    private static String sendAddress(dataClasses.Address address) {
+    private static void updateArticles() {
+        sendQuery("DELETE FROM articles");
+        for (dataClasses.Article article : Controller.getArticles()) {
+            sendQuery(sendArticlesToDB(article));
+        }
+    }
+
+    private static String sendArticlesToDB(Article article) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO article VALUES (");
+        //sb.append() // TODO CONTINUE
+        return null;
+    }
+
+    private static String sendAddressToDB(dataClasses.Address address) {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO address VALUES (");
         sb.append(address.getId()).append(",");
@@ -115,14 +138,14 @@ public class SQLCommunicator {
     private static void updateAddresses() {
         sendQuery("DELETE FROM address");
         for (dataClasses.Address address : Controller.getAddresses()) {
-            sendQuery(sendAddress(address));
+            sendQuery(sendAddressToDB(address));
         }
     }
 
     /**
      * Retrieves all data from SQL database. Updates counters when necessary.
      */
-    public static void updateLocalDataFromSQL() {
+    public static void updateLocalDataFromDB() {
         getAddresses();
         long maxCounter = 0;
         for (Address address : Controller.getAddresses()) {

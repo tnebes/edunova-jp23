@@ -267,5 +267,21 @@ public class DataIO {
 	public static Path getSQLDatabaseScriptFilePath() {
 		return SQLDatabaseScriptFilePath;
 	}
-	
+
+	public static void purgeJSON() {
+		FileWriter fw;
+		for (Path path : pathList) {
+			if (path.toString().contains(".json")) {
+				try {
+					fw = new FileWriter(path.toFile());
+					fw.write("");
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.exit(1);
+				}
+			}
+		}
+		IDCounter.writeZeroCounters();
+	}
 }

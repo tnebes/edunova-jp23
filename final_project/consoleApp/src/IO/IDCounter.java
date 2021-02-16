@@ -22,12 +22,16 @@ public class IDCounter {
 		} catch (Exception e) {
 			// e.printStackTrace();
 			System.out.print("\nID counters reset to 0 due to error.\n");
-			invoiceCounter = 0;
-			customerCounter = 0;
-			addressCounter = 0;
-			articleCounter = 0;
-			sendCountersToWrite();
+			writeZeroCounters();
 		}
+	}
+
+	public static void writeZeroCounters() {
+		invoiceCounter = 0;
+		customerCounter = 0;
+		addressCounter = 0;
+		articleCounter = 0;
+		sendCountersToWrite();
 	}
 
 	public static void sendCountersToWrite() {

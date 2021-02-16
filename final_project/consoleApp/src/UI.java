@@ -1,5 +1,6 @@
 
 
+import IO.DataIO;
 import IO.SQLCommunicator;
 import IO.UserInputHandler;
 import dataHandler.AddressHandler;
@@ -55,9 +56,13 @@ public class UI {
         int userInput;
         // options will have a different menu
         if (previousMenu == SQL) {
-            System.out.print("1 - update database\n2 - load from database\n3 - purge database\n0 - return\n");
+            System.out.print("1 - update database\n" +
+                    "2 - load from database\n" +
+                    "3 - purge database\n" +
+                    "4 - purge local JSON\n" +
+                    "0 - cancel: ");
             userInput = (int) UserInputHandler.getIntegerInput(false);
-            if (userInput < 1 || userInput > 3) {
+            if (userInput < 1 || userInput > 4) {
                 return;
             }
             switch (userInput) {
@@ -65,10 +70,13 @@ public class UI {
                     SQLCommunicator.updateSQLDatabase();
                     return;
                 case 2:
-                    SQLCommunicator.updateLocalDataFromSQL();
+                    SQLCommunicator.updateLocalDataFromDB();
                     return;
                 case 3:
                     SQLCommunicator.purgeDatabase();
+                    return;
+                case 4:
+                    DataIO.purgeJSON();
                     return;
                 default:
                     return;
