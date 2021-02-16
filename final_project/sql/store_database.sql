@@ -17,7 +17,7 @@ create table address(
    ZIP_code          varchar(32) not null,
    street            varchar(50) not null,
    street_number     varchar(10) not null,
-   street_letter     varchar(10) not null,
+   street_letter     varchar(10),
    country           varchar(100) not null default 'Croatia'
 );
 

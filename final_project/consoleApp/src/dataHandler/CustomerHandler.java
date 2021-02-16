@@ -125,7 +125,7 @@ public class CustomerHandler {
 			sb.append(customer.getId()).append(" ");
 			sb.append(customer.getNationalIdNumber()).append(" ");
 			sb.append(customer.getFirstName()).append(" ");
-			if (!customer.getMiddleName().isBlank()) {
+			if (!customer.getMiddleName().isEmpty()) {
 				sb.append(customer.getMiddleName()).append(" ");
 			}
 			sb.append(customer.getLastName()).append(" ");
@@ -280,7 +280,7 @@ public class CustomerHandler {
 		if (customer.getName() != null) {
 			System.out.printf("* Name is %s. Enter new name or leave blank to skip: ", customer.getName());
 			userInput = UserInputHandler.getStringInput(false);
-			if (!userInput.isBlank()) {
+			if (!userInput.isEmpty()) {
 				customer.setName(userInput);
 			}
 		} else {
@@ -289,7 +289,7 @@ public class CustomerHandler {
 		}
 		userInput = UserInputHandler.getStringInput(false);
 		System.out.print("* VATID is %s. Enter new VATID or leave blank to skip: ");
-		if (!userInput.isBlank()) {
+		if (!userInput.isEmpty()) {
 			customer.setVATID(userInput);
 		}
 	}

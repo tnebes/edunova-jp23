@@ -47,6 +47,7 @@ public class InvoiceHandler {
 	 * 
 	 * @return badness
 	 */
+	// TODO add each invoice to the customers invoice list.
 	public static Customer addInvoiceAddCustomer() {
 		if (UserInputHandler.yesNoDialogue("Customer required? y/n ")) {
 			while (true) {

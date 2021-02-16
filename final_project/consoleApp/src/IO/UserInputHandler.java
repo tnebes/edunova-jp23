@@ -25,10 +25,10 @@ public class UserInputHandler {
 				String userInput;
 				do {
 					userInput = input.nextLine().trim();
-					if (userInput.isBlank()) {
+					if (userInput.isEmpty()) {
 						System.out.print("Some data is required.\n");
 					}
-				} while (userInput.isBlank());
+				} while (userInput.isEmpty());
 				return userInput;
 			}
 		}
@@ -44,7 +44,7 @@ public class UserInputHandler {
 		Long returnValue;
 		while (true) {
 			userInput = input.nextLine();
-			if (!isRequired && userInput.isBlank()) {
+			if (!isRequired && userInput.isEmpty()) {
 				return 0;
 			}
 			try {
@@ -68,7 +68,7 @@ public class UserInputHandler {
 		Double returnValue;
 		while (true) {
 			userInput = input.nextLine();
-			if (!isRequired && userInput.isBlank()) {
+			if (!isRequired && userInput.isEmpty()) {
 				return 0.0;
 			}
 			try {

@@ -1,22 +1,24 @@
 package dataClasses;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Customer {
 
 	static public final boolean NATURAL_PERSON = true;
 	static public final boolean LEGAL_PERSON = false;
-	private long 		id;
-	private boolean 	type;
-	private Date 		dateOfCreation;
-	private String 	VATID;
-	private String 	nationalIdNumber;
-	private String 	name;
-	private String 	firstName;
-	private String 	middleName;
-	private String 	lastName;
-	private Address	billingAddress;
-	private Address 	shippingAddress;
+	private long 				id;
+	private boolean 			type;
+	private Date 				dateOfCreation;
+	private String 				VATID;
+	private String 				nationalIdNumber;
+	private String 				name;
+	private String 				firstName;
+	private String 				middleName;
+	private String 				lastName;
+	private Address				billingAddress;
+	private Address 			shippingAddress;
+	private ArrayList<Invoice> 	invoices;
 	
 	
 	public long getId() {
@@ -84,6 +86,13 @@ public class Customer {
 	}
 	public void setShippingAddress(Address shippingAddress) {
 		this.shippingAddress = shippingAddress;
+	}
+	public ArrayList<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public void setInvoices(ArrayList<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 	
 	@Override

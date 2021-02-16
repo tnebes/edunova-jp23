@@ -120,7 +120,7 @@ public class ArticleHandler {
 	static void showArticle(Article article) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(article.getId()).append(" ");
-		if (!(article.getLongName() == null) || !article.getLongName().isBlank()) {
+		if (!(article.getLongName() == null) || !article.getLongName().isEmpty()) {
 			sb.append(article.getLongName()).append(" ");
 		}
 		sb.append(article.getShortName()).append(" ");

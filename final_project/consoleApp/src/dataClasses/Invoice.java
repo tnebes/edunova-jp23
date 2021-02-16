@@ -20,6 +20,7 @@ public class Invoice {
 	private float 				amountDue;
 	private float				amountPaid; // not null
 	private Address				shippingAddress;
+
 	
 	public long getId() {
 		return id;

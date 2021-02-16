@@ -1,0 +1,1 @@
+jdbc:mariadb://localhost/final_project_store_database edunova edunova

@@ -1,5 +1,6 @@
 package IO;
 
+import dataHandler.Controller;
 import org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException;
 
 import java.sql.*;
@@ -31,7 +32,7 @@ public class SQLCommunicator {
         String connectionData;
         try {
             connectionData = DataIO.getSQLConnectionData();
-            if (connectionData.isBlank()) {
+            if (connectionData.isEmpty()) {
                 System.out.print("SQL connection data is blank. Exiting...\n");
                 System.exit(1);
             }
@@ -58,8 +59,9 @@ public class SQLCommunicator {
             return null;
         } catch (SQLException e) {
             e.printStackTrace();
-            connection = createConnection();
-            return sendQuery(query);
+            // connection = createConnection();
+            System.exit(1);
+            return null;
         }
     }
 
@@ -81,7 +83,39 @@ public class SQLCommunicator {
     }
 
     public static void updateSQLDatabase() {
-        return;
+        updateAddresses();
+
+    }
+
+    private static String parseDataAsString(String data) {
+        if (data == null || data.isEmpty()) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder("");
+        sb.append("'").append(data).append("'");
+        return sb.toString();
+    }
+
+    private static String sendAddress(dataClasses.Address address) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO address VALUES (");
+        sb.append(address.getId()).append(",");
+        sb.append(address.isType() ? "1" : "0").append(",");
+        sb.append(parseDataAsString(address.getCity())).append(",");
+        sb.append(parseDataAsString(address.getZIPCode())).append(",");
+        sb.append(parseDataAsString(address.getStreet())).append(",");
+        sb.append(parseDataAsString(address.getStreetNumber())).append(",");
+        sb.append(parseDataAsString(address.getStreetLetter())).append(",");
+        sb.append(parseDataAsString(address.getCountry())).append(");");
+        System.out.println(sb.toString());
+        return sb.toString();
+    }
+
+    private static void updateAddresses() {
+        sendQuery("DELETE FROM address");
+        for (dataClasses.Address address : Controller.getAddresses()) {
+            sendQuery(sendAddress(address));
+        }
     }
 
     public static void updateLocalDataFromSQL() {

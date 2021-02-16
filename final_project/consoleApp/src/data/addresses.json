@@ -1,0 +1,3 @@
+{"id":1,"type":true,"city":"Osijek","ZIPCode":"1235412","street":"Test","streetNumber":"123","streetLetter":"","country":"Croatia"}
+{"id":2,"type":true,"city":"Cepin","ZIPCode":"5857","street":"Testerova","streetNumber":"123","streetLetter":"a","country":"Croatia"}
+{"id":3,"type":false,"city":"Cepin","ZIPCode":"34454","street":"Osjecka","streetNumber":"12","streetLetter":"a","country":"Croatia"}
