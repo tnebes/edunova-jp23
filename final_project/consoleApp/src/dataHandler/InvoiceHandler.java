@@ -61,7 +61,7 @@ public class InvoiceHandler {
 							System.out.print("Enter ID or name. Empty to cancel: ");
 							String searchToken = UserInputHandler.getStringInput(true);
 							// check if cancelled
-							if (searchToken.isEmpty()) {
+							if (searchToken.isBlank()) {
 								break;
 							}
 							// if it is an id

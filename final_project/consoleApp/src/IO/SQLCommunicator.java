@@ -4,11 +4,8 @@ import dataClasses.Address;
 import dataHandler.Controller;
 import org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException;
 
-import javax.activation.DataHandler;
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class SQLCommunicator {
@@ -40,7 +37,7 @@ public class SQLCommunicator {
         String connectionData;
         try {
             connectionData = DataIO.getSQLConnectionData();
-            if (connectionData.isEmpty()) {
+            if (connectionData.isBlank()) {
                 System.out.print("SQL connection data is blank. Exiting...\n");
                 System.exit(1);
             }
@@ -96,7 +93,7 @@ public class SQLCommunicator {
     }
 
     private static String parseDataAsString(String data) {
-        if (data == null || data.isEmpty()) {
+        if (data == null || data.isBlank()) {
             return null;
         }
         StringBuilder sb = new StringBuilder("");
