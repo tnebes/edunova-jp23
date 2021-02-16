@@ -1,10 +1,12 @@
 use final_project_store_database;
 
-insert into customer(name, billing_city, billing_country, billing_street, billing_street_number,
-	billing_street_letter, billing_ZIP_code)
-	values ('tnebes d.o.o.', 'Wien', 'Austria', 'Schwarzstrasse', '23', 'E', '1100');
-
 insert into status(id) values (1);
+
+insert into address(type, city, ZIP_code, street, street_number, country)
+	values (0, "Osijek", "31000", "Osjecka ulica", "1", "Croatia");
+
+insert into customer(type, VATIN, name, billing_address_id, shipping_address_id)
+	values (0, "32490282384", "tnebes d.o.o.", 1, 1);
 
 insert into transaction_type(id, name)
 	values (1, 'creditcard');

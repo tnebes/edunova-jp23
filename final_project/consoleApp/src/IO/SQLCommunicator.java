@@ -3,6 +3,7 @@ package IO;
 import org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException;
 
 import java.sql.*;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class SQLCommunicator {
@@ -55,9 +56,6 @@ public class SQLCommunicator {
         } catch (SQLTransientConnectionException e) {
             e.printStackTrace();
             return null;
-        } catch (MariaDbSqlException e) {
-            e.printStackTrace();
-            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             connection = createConnection();
@@ -83,16 +81,17 @@ public class SQLCommunicator {
     }
 
     public static void updateSQLDatabase() {
-
+        return;
     }
 
     public static void updateLocalDataFromSQL() {
-
+        return;
     }
 
     public static void purgeDatabase() {
         sendQuery("DROP DATABASE ".concat(databaseName).concat(";"));
-        sendQuery("CREATE DATABASE ".concat(databaseName.concat(" ").concat("CHARACTER SET utf8;")));
-        System.out.printf("Database purged. Populate using SQL script.\n");
+        System.out.printf("Database purged. Use external client to rebuild database.\n");
+        System.exit(0);
     }
+
 }

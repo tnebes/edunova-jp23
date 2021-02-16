@@ -32,6 +32,7 @@ public class DataIO {
 	private static final String dataArticlesFileStringPath = "articles.json";
 	private static final String dataCountersStringPath = "counters.txt";
 	private static final String SQLConnectionStringPath = "MYSQL.txt";
+	private static final String SQLDatabaseScript = "./sql/store_database.sql";
 
 	private static final Path dataDirPath = Paths.get(dataDirStringPath);
 	private static final Path dataInvoicesFilePath = Paths.get(dataDirStringPath, dataInvoiceFileStringPath);
@@ -40,6 +41,8 @@ public class DataIO {
 	private static final Path dataArticlesFilePath = Paths.get(dataDirStringPath, dataArticlesFileStringPath);
 	private static final Path dataCountersFilePath = Paths.get(dataDirStringPath, dataCountersStringPath);
 	private static final Path SQLConnectionStringFilePath = Paths.get(dataDirStringPath, SQLConnectionStringPath);
+
+	private static final Path SQLDatabaseScriptFilePath = Paths.get(SQLDatabaseScript);
 
 	private static ArrayList<Path> pathList = new ArrayList<>();
 	
@@ -112,6 +115,11 @@ public class DataIO {
 		createNewDataFiles();
 		IDCounter.initialiseCounters();
 		Controller.initialiseData();
+		// check if the SQL script is there.
+		if (SQLDatabaseScriptFilePath.toFile() == null) {
+			System.out.printf("MySQL file required at %s", SQLConnectionStringFilePath.toString());
+			System.exit(1);
+		}
 		
 		System.out.print("\n");
 	}
@@ -254,6 +262,10 @@ public class DataIO {
 			System.out.print("Unable to write counters to file.\n");
 			System.exit(1);
 		}
+	}
+
+	public static Path getSQLDatabaseScriptFilePath() {
+		return SQLDatabaseScriptFilePath;
 	}
 	
 }
