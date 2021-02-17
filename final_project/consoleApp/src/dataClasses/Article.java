@@ -14,7 +14,24 @@ public class Article {
 	private String 		longName;
 	private String 		shortDescription;
 	private String 		longDescription;
-	
+
+	public Article() {
+
+	}
+
+	public Article(long id, String warehouseLocation, long warehouseQuantity, float wholesalePrice, float retailPrice, byte taxRate, String shortName, String longName, String shortDescription, String longDescription) {
+		this.id = id;
+		this.warehouseLocation = warehouseLocation;
+		this.warehouseQuantity = warehouseQuantity;
+		this.wholesalePrice = wholesalePrice;
+		this.retailPrice = retailPrice;
+		this.taxRate = taxRate;
+		this.shortName = shortName;
+		this.longName = longName;
+		this.shortDescription = shortDescription;
+		this.longDescription = longDescription;
+	}
+
 	public long getId() {
 		return id;
 	}

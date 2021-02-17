@@ -1,7 +1,7 @@
 
 
 import IO.DataIO;
-import IO.SQLCommunicator;
+import IO.SQL.SQLCommunicator;
 import IO.UserInputHandler;
 import dataHandler.AddressHandler;
 import dataHandler.ArticleHandler;

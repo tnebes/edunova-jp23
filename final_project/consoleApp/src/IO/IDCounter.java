@@ -85,18 +85,22 @@ public class IDCounter {
 
 	public static void setInvoiceCounter(long invoiceCounter) {
 		IDCounter.invoiceCounter = invoiceCounter;
+		sendCountersToWrite();
 	}
 
 	public static void setCustomerCounter(long customerCounter) {
 		IDCounter.customerCounter = customerCounter;
+		sendCountersToWrite();
 	}
 
 	public static void setAddressCounter(long addressCounter) {
 		IDCounter.addressCounter = addressCounter;
+		sendCountersToWrite();
 	}
 
 	public static void setArticleCounter(long articleCounter) {
 		IDCounter.articleCounter = articleCounter;
+		sendCountersToWrite();
 	}
 
 }

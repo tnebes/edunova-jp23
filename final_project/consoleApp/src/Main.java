@@ -1,3 +1,5 @@
+import IO.SQL.SQLCommunicator;
+
 import java.io.IOException;
 
 /**
@@ -10,7 +12,7 @@ public class Main {
 
 	public Main() throws IOException {
 		IO.DataIO.initialise();
-		IO.SQLCommunicator.initialise();
+		SQLCommunicator.initialise();
 		while(true) {
 			UI.mainMenu();
 		}
