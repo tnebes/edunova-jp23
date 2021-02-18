@@ -1,7 +1,7 @@
 package dataClasses;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Customer {
 
@@ -9,7 +9,7 @@ public class Customer {
 	static public final boolean LEGAL_PERSON = true;
 	private long 				id;
 	private boolean 			type;
-	private Date 				dateOfCreation;
+	private Instant 			dateOfCreation;
 	private String 				VATID;
 	private String 				nationalIdNumber;
 	private String 				name;
@@ -28,7 +28,7 @@ public class Customer {
 		initialise();
 	}
 
-	public Customer(long id, boolean type, Date dateOfCreation, String VATID, String nationalIdNumber, String name, String firstName, String middleName, String lastName, Address billingAddress, Address shippingAddress) {
+	public Customer(long id, boolean type, Instant dateOfCreation, String VATID, String nationalIdNumber, String name, String firstName, String middleName, String lastName, Address billingAddress, Address shippingAddress) {
 		this.id = id;
 		this.type = type;
 		this.dateOfCreation = dateOfCreation;
@@ -54,10 +54,10 @@ public class Customer {
 	public void setType(boolean type) {
 		this.type = type;
 	}
-	public Date getDateOfCreation() {
+	public Instant getDateOfCreation() {
 		return dateOfCreation;
 	}
-	public void setDateOfCreation(Date dateOfCreation) {
+	public void setDateOfCreation(Instant dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
 	public String getVATID() {

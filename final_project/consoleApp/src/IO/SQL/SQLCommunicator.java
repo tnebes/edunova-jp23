@@ -15,6 +15,8 @@ public class SQLCommunicator {
     static final int ADDRESSES = 1;
     static final int INVOICES = 2;
     static final int ARTICLES = 3;
+    static final int STATUSES = 4;
+    static final int TRANSACTION_TYPES = 5;
 
     /**
      * Connects to the database.
@@ -92,10 +94,12 @@ public class SQLCommunicator {
      */
     public static ResultSet getSQLItems(int entity) {
         switch (entity) {
-            case CUSTOMERS: return sendQuery("SELECT * FROM customer;");
-            case ADDRESSES: return sendQuery("SELECT * FROM address;");
-            case INVOICES: return sendQuery("SELECT * FROM invoice;");
-            case ARTICLES: return sendQuery("SELECT * FROM article;");
+            case CUSTOMERS:         return sendQuery("SELECT * FROM customer;");
+            case ADDRESSES:         return sendQuery("SELECT * FROM address;");
+            case INVOICES:          return sendQuery("SELECT * FROM invoice;");
+            case ARTICLES:          return sendQuery("SELECT * FROM article;");
+            case STATUSES:          return sendQuery("SELECT * FROM status;");
+            case TRANSACTION_TYPES: return sendQuery("SELECT * FROM transaction_type;");
             default: System.out.print("Wrong.\n");
             return null;
         }
@@ -106,13 +110,14 @@ public class SQLCommunicator {
     }
 
     public static void updateSQLDatabase() {
+        GetterSetter.updateAddresses();
         // TODO article_invoice
         GetterSetter.updateArticles();
-        // TODO invoice
+        GetterSetter.updateInvoices();
         // TODO customer
-        // TODO status
-        // TODO transaction_type
-        GetterSetter.updateAddresses();
+        GetterSetter.updateStatuses();
+        GetterSetter.updateTransactionTypes();
+
 
     }
 
@@ -133,12 +138,12 @@ public class SQLCommunicator {
      */
     public static void updateLocalDataFromDB() {
         // TODO article_invoice
-        GetterSetter.getAddresses();
-        // TODO invoice
-        // TODO customer
-        // TODO status
-        // TODO transaction_type
-        GetterSetter.getArticles();
+        GetterSetter.getAddressesFromDB();
+        GetterSetter.getInvoicesFromDB();
+        // TODO GetterSetter.getCustomersFromDB();
+        GetterSetter.getStatusesFromDB();
+        GetterSetter.getTransactionTypesFromDB();
+        GetterSetter.getArticlesFromDB();
         // TODO associate data with other data (invoices to customers, etc.)
         DataIO.writeDataToFiles();
     }

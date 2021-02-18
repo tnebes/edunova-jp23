@@ -8,6 +8,8 @@ public class IDCounter {
 	public static long customerCounter;
 	public static long addressCounter;
 	public static long articleCounter;
+	public static byte statusCounter;
+	public static byte transactionTypeCounter;
 
 	public static void initialiseCounters() {
 		try {
@@ -17,6 +19,8 @@ public class IDCounter {
 			customerCounter = stringReader.nextLong();
 			addressCounter = stringReader.nextLong();
 			articleCounter = stringReader.nextLong();
+			statusCounter = stringReader.nextByte();
+			transactionTypeCounter = stringReader.nextByte();
 			stringReader.close();
 
 		} catch (Exception e) {
@@ -31,6 +35,8 @@ public class IDCounter {
 		customerCounter = 0;
 		addressCounter = 0;
 		articleCounter = 0;
+		statusCounter = 0;
+		transactionTypeCounter = 0;
 		sendCountersToWrite();
 	}
 
@@ -38,7 +44,9 @@ public class IDCounter {
 		String sb = invoiceCounter + " " +
 				customerCounter + " " +
 				addressCounter + " " +
-				addressCounter + " ";
+				articleCounter + " " +
+				statusCounter + " " +
+				transactionTypeCounter;
 		DataIO.writeDataCountersFile(sb);
 
 	}
@@ -67,6 +75,18 @@ public class IDCounter {
 		return articleCounter;
 	}
 
+	public static byte incrementStatusCounter() {
+		statusCounter++;
+		sendCountersToWrite();
+		return statusCounter;
+	}
+
+	public static byte incrementTransactionTypeCounter() {
+		transactionTypeCounter++;
+		sendCountersToWrite();
+		return transactionTypeCounter;
+	}
+
 	public static long getInvoiceCounter() {
 		return invoiceCounter;
 	}
@@ -81,6 +101,14 @@ public class IDCounter {
 
 	public static long getArticleCounter() {
 		return articleCounter;
+	}
+
+	public static byte getStatusCounter() {
+		return statusCounter;
+	}
+
+	public static byte getTransactionTypeCounter() {
+		return transactionTypeCounter;
 	}
 
 	public static void setInvoiceCounter(long invoiceCounter) {
@@ -103,4 +131,11 @@ public class IDCounter {
 		sendCountersToWrite();
 	}
 
+	public static void setStatusCounter(byte statusCounter) {
+		IDCounter.statusCounter = statusCounter;
+	}
+
+	public static void setTransactionTypeCounter(byte transactionTypeCounter) {
+		IDCounter.transactionTypeCounter = transactionTypeCounter;
+	}
 }

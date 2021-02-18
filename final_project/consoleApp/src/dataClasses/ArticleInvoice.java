@@ -1,19 +1,20 @@
 package dataClasses;
 
-import java.util.Date;
+import java.time.Instant;
 
+@Deprecated
 public class ArticleInvoice {
 
-	private long id;
-	private Date dateOfCreation;
-	private long articleId;
-	private long invoiceId;
-	private byte discount;
-	private long quantity;
-	private float wholesalePrice;
-	private float retailPrice;
-	private byte taxRate;
-	private String note;
+	private long 	id;
+	private Instant dateOfCreation;
+	private long 	articleId;
+	private long 	invoiceId;
+	private byte 	discount;
+	private long 	quantity;
+	private float 	wholesalePrice;
+	private float 	retailPrice;
+	private byte 	taxRate;
+	private String 	note;
 	
 	public long getId() {
 		return id;
@@ -21,10 +22,10 @@ public class ArticleInvoice {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getDateOfCreation() {
+	public Instant getDateOfCreation() {
 		return dateOfCreation;
 	}
-	public void setDateOfCreation(Date dateOfCreation) {
+	public void setDateOfCreation(Instant dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
 	public long getArticleId() {

@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import IO.DataIO;
 import IO.IDCounter;
 import IO.UserInputHandler;
-import dataClasses.Address;
-import dataClasses.Article;
-import dataClasses.Customer;
-import dataClasses.Invoice;
+import dataClasses.*;
 
 /**
  * 
@@ -19,19 +16,23 @@ import dataClasses.Invoice;
 
 public class Controller {
 
-	static private final double DOUBLE_EPSILON = 10e-14;
-	static private final float FLOAT_EPSILON = 10e-7f;
+//	static private final double DOUBLE_EPSILON = 10e-14;
+//	static private final float FLOAT_EPSILON = 10e-7f;
 
 	static private ArrayList<Invoice> invoices = new ArrayList<>();
 	static private ArrayList<Customer> customers = new ArrayList<>();
 	static private ArrayList<Address> addresses = new ArrayList<>();
 	static private ArrayList<Article> articles = new ArrayList<>();
+	static private ArrayList<Status> statuses = new ArrayList<>();
+	static private ArrayList<TransactionType> transactionTypes = new ArrayList<>();
 
 	public static void initialiseData() throws FileNotFoundException {
 		invoices = DataIO.getDataInvoicesFileData();
 		customers = DataIO.getDataCustomersFileData();
 		addresses = DataIO.getDataAddressesFileData();
 		articles = DataIO.getDataArticlesFileData();
+		statuses = DataIO.getDataStatusesFileData();
+		transactionTypes = DataIO.getTransactionTypesFileData();
 	}
 
 	public static ArrayList<Invoice> getInvoices() {
@@ -62,6 +63,22 @@ public class Controller {
 		return articles;
 	}
 
+	public static ArrayList<Status> getStatuses() {
+		return statuses;
+	}
+
+	public static void setStatuses(ArrayList<Status> statuses) {
+		Controller.statuses = statuses;
+	}
+
+	public static ArrayList<TransactionType> getTransactionTypes() {
+		return transactionTypes;
+	}
+
+	public static void setTransactionTypes(ArrayList<TransactionType> transactionTypes) {
+		Controller.transactionTypes = transactionTypes;
+	}
+
 	public static void setArticles(ArrayList<Article> articles) {
 		Controller.articles = articles;
 	}
@@ -84,6 +101,8 @@ public class Controller {
 		};
 	}
 
+	// FIXME update this method to be in line with the rest of the methods that use auto-generation
+	// of IDs.
 	public static long enterId(byte type, long id) {
 		while (true) {
 			if (idIsUnique(id, type)) {

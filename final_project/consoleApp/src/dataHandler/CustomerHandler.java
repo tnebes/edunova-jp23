@@ -1,5 +1,6 @@
 package dataHandler;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,8 +15,8 @@ public class CustomerHandler {
 		Controller.addMessage();
 		Customer newCustomer = new Customer();
 		assignIDCustomer(newCustomer);
-		newCustomer.setDateOfCreation(new Date());
-		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - natural person\n2 - legal person: "));
+		newCustomer.setDateOfCreation(Instant.now());
+		newCustomer.setType(UserInputHandler.oneOrTwoDialogue("1 - legal person\n2 - natural person: "));
 		if (newCustomer.isType() == Customer.NATURAL_PERSON) {
 			addCustomerNaturalPerson(newCustomer);
 		} else {
@@ -88,7 +89,7 @@ public class CustomerHandler {
 		return null;
 	}
 	
-	static Customer getCustomer(long id) {
+	public static Customer getCustomer(long id) {
 		for (Customer suspectCustomer : Controller.getCustomers()) {
 			if (suspectCustomer.getId() == id) {
 				return suspectCustomer;

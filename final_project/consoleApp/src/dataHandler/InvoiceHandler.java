@@ -1,12 +1,14 @@
 package dataHandler;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 import IO.IDCounter;
 import IO.UserInputHandler;
 import dataClasses.Customer;
 import dataClasses.Invoice;
+import dataClasses.Status;
+import dataClasses.TransactionType;
 
 public class InvoiceHandler {
 
@@ -14,11 +16,10 @@ public class InvoiceHandler {
 		Controller.addMessage();
 		Invoice newInvoice = new Invoice();
 		assignIDInvoice(newInvoice);
-		newInvoice.setDateOfCreation(new Date());
-		// TODO
-		newInvoice.setStatus(null);
-		// TODO
-		newInvoice.setTranscationType(null);
+		newInvoice.setDateOfCreation(Instant.now());
+		addTransactionTypeToInvoice(newInvoice);
+		addStatusToInvoice(newInvoice);
+		addDiscountToInvoice(newInvoice);
 
 		// do we need a customer?
 		Customer tempCustomer = addInvoiceAddCustomer();
@@ -26,15 +27,18 @@ public class InvoiceHandler {
 			newInvoice.setCustomer(null);
 		} else {
 			newInvoice.setCustomer(tempCustomer);
-			// TODO WTF
 			tempCustomer.getInvoicesIDs().add(newInvoice.getId());
 		}
 
-		if (!(UserInputHandler.yesNoDialogue("Has shipping address? y/n"))) {
-			newInvoice.setShippingAddress(null);
-		} else {
+		if (UserInputHandler.yesNoDialogue("Has shipping address? y/n ")) {
 			AddressHandler.addAddress();
 			newInvoice.setShippingAddress(Controller.getAddresses().get(Controller.getAddresses().size() - 1));
+		} else {
+			// if there is no shipping address, the billing address becomes shipping address.
+			// only if the customer exists
+			if (newInvoice.getCustomer() != null) {
+				newInvoice.setShippingAddress(newInvoice.getCustomer().getBillingAddress());
+			}
 		}
 		Controller.getInvoices().add(newInvoice);
 		System.out.print("Successfully added invoice ");
@@ -42,11 +46,55 @@ public class InvoiceHandler {
 		IO.DataIO.writeDataToFiles();
 	}
 
+	private static void addDiscountToInvoice(Invoice newInvoice) {
+		// FIXME temporary
+		newInvoice.setInvoiceDiscountPercent((byte) 0);
+	}
+
+	private static void addStatusToInvoice(Invoice newInvoice) {
+		ArrayList<Status> statuses = Controller.getStatuses();
+		if (!(statuses.size() > 1)) {
+			newInvoice.setStatus(statuses.get(0));
+			return;
+		}
+		StatusHandler.showStatuses();
+		while (true) {
+			System.out.print("* Select status: ");
+			byte userInput = (byte) IO.UserInputHandler.getIntegerInput(true);
+			Status selectedStatus = StatusHandler.getStatusByID(userInput);
+			if (selectedStatus == null) {
+				continue;
+			}
+			newInvoice.setStatus(selectedStatus);
+			return;
+		}
+	}
+
+	private static void addTransactionTypeToInvoice(Invoice newInvoice) {
+		ArrayList<TransactionType> transactionTypes = Controller.getTransactionTypes();
+		if (!(transactionTypes.size() > 1)) {
+			newInvoice.setTransacationType(transactionTypes.get(0));
+			return;
+		}
+		TransactionTypeHandler.showTransactionTypes();
+		while (true) {
+			System.out.print("* Select transaction type: ");
+			byte userInput = (byte) IO.UserInputHandler.getIntegerInput(true);
+			TransactionType selectedTransactionType = TransactionTypeHandler.getTransactionTypeByID(userInput);
+			if (selectedTransactionType == null) {
+				continue;
+			}
+			newInvoice.setTransacationType(selectedTransactionType);
+			return;
+		}
+	}
+
 	/**
 	 * This is incredibly bad
 	 * 
 	 * @return badness
 	 */
+	// FIXME this entire this is bad. rewrite.
 	// TODO add each invoice to the customers invoice list.
 	public static Customer addInvoiceAddCustomer() {
 		if (UserInputHandler.yesNoDialogue("Customer required? y/n ")) {

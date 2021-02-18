@@ -26,8 +26,8 @@ public class AddressHandler {
 		newAddress.setType(type);
 		System.out.print("* Enter street name: ");
 		newAddress.setStreet(UserInputHandler.getStringInput(true));
-		System.out.print("Enter street number: ");
-		newAddress.setStreetNumber(UserInputHandler.getStringInput(false));
+		System.out.print("* Enter street number: ");
+		newAddress.setStreetNumber(UserInputHandler.getStringInput(true));
 		System.out.print("Enter street letter: ");
 		newAddress.setStreetLetter(UserInputHandler.getStringInput(false));
 		System.out.print("* Enter ZIP code: ");

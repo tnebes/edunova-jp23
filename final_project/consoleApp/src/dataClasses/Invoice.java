@@ -1,6 +1,6 @@
 package dataClasses;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * 
@@ -11,9 +11,9 @@ import java.util.Date;
 public class Invoice {
 	
 	private long 				id; // not null
-	private Date 				dateOfCreation; // not null 
+	private Instant				dateOfCreation; // not null
 	private Customer			customer;
-	private TransactionType 	transcationType; // not null
+	private TransactionType 	transacationType; // not null
 	private Status				status; // not null
 	private byte 				invoiceDiscountPercent;
 	private float 				subtotal;
@@ -21,17 +21,33 @@ public class Invoice {
 	private float				amountPaid; // not null
 	private Address				shippingAddress;
 
-	
+	public Invoice() {
+
+	}
+
+	public Invoice(long id, Instant dateOfCreation, Customer customer, TransactionType transcationType, Status status, byte invoiceDiscountPercent, float subtotal, float amountDue, float amountPaid, Address shippingAddress) {
+		this.id = id;
+		this.dateOfCreation = dateOfCreation;
+		this.customer = customer;
+		this.transacationType = transcationType;
+		this.status = status;
+		this.invoiceDiscountPercent = invoiceDiscountPercent;
+		this.subtotal = subtotal;
+		this.amountDue = amountDue;
+		this.amountPaid = amountPaid;
+		this.shippingAddress = shippingAddress;
+	}
+
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getDateOfCreation() {
+	public Instant getDateOfCreation() {
 		return dateOfCreation;
 	}
-	public void setDateOfCreation(Date dateOfCreation) {
+	public void setDateOfCreation(Instant dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
 	public Customer getCustomer() {
@@ -41,10 +57,10 @@ public class Invoice {
 		this.customer = customer;
 	}
 	public TransactionType getTranscationTypeId() {
-		return transcationType;
+		return transacationType;
 	}
-	public void setTranscationType(TransactionType transcationType) {
-		this.transcationType = transcationType;
+	public void setTransacationType(TransactionType transacationType) {
+		this.transacationType = transacationType;
 	}
 	public Status getStatus() {
 		return status;
