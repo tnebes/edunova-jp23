@@ -1,12 +1,26 @@
 package invoiceGenerator.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "status")
 public class Status extends Identity {
-	
+
+	@Column(columnDefinition = "char(50)", nullable = false)
 	private String 			name;
+
+	@Column(columnDefinition = "char(100)")
 	private String 			description;
+
+	@Column(name = "description_long", columnDefinition = "text")
 	private String 			descriptionLong;
-	private ArrayList<Long> invoicesID;
+
+	@Column(name = "invoices_id")
+	@OneToMany(mappedBy = "status")
+	private List<Invoice> invoices;
 
 	public Status() {
 
@@ -20,7 +34,7 @@ public class Status extends Identity {
 	}
 
 	private void initialise() {
-		this.invoicesID = new ArrayList<>();
+		this.invoices = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -41,11 +55,11 @@ public class Status extends Identity {
 	public void setDescriptionLong(String descriptionLong) {
 		this.descriptionLong = descriptionLong;
 	}
-	public ArrayList<Long> getInvoicesID() {
-		return invoicesID;
+	public List<Invoice> getInvoices() {
+		return invoices;
 	}
-	public void setInvoicesID(ArrayList<Long> invoicesID) {
-		this.invoicesID = invoicesID;
+	public void setInvoices(ArrayList<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 
 	@Override

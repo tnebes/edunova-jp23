@@ -1,32 +1,35 @@
 package invoiceGenerator.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
+import java.util.List;
 
+@Entity(name = "address")
 public class Address extends Identity {
 
 	static public final boolean SHIPPING_ADDRESS = false;
 	static public final boolean BILLING_ADDRESS = true;
 
 	private Boolean					type;
-	@Column(columnDefinition = "char(50)")
-	private String 					city;
-	@Column(columnDefinition = "char(50)")
-	private String					ZIPCode;
-	@Column(columnDefinition = "char(50)")
-	private String					street;
-	@Column(columnDefinition = "char(10)")
-	private String					streetNumber;
-	@Column(columnDefinition = "char(10)")
-	private String					streetLetter;
-	@Column(columnDefinition = "char(50)")
-	private String					country;
+	@Column(columnDefinition = "char(50)", nullable = false)
+	private String city;
 
-	@OneToMany(mappedBy = "customer")
-	private ArrayList<Customer>		customers;
-	@OneToMany(mappedBy = "invoice")
-	private ArrayList<Invoice> 		invoices;
+	@Column(name = "ZIP_code", columnDefinition = "char(50)", nullable = false)
+	private String					ZIPCode;
+
+	@Column(columnDefinition = "char(50)", nullable = false)
+	private String					street;
+
+	@Column(name = "street_number", columnDefinition = "char(10)")
+	private String					streetNumber;
+
+	@Column(name = "street_letter", columnDefinition = "char(10)")
+	private String					streetLetter;
+
+	@Column(columnDefinition = "char(50)", nullable = false)
+	private String					country;
 
 	public Address(Boolean type, String city, String ZIPCode, String street, String streetNumber, String streetLetter, String country) {
 		this.type = type;
@@ -84,18 +87,13 @@ public class Address extends Identity {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public ArrayList<Customer> getCustomers() {
-		return customers;
-	}
-	public void setCustomers(ArrayList<Customer> customers) {
-		this.customers = customers;
-	}
-	public ArrayList<Invoice> getInvoices() {
-		return invoices;
-	}
-	public void setInvoices(ArrayList<Invoice> invoiceIDs) {
-		this.invoices = invoices;
-	}
+
+//	public List<Invoice> getInvoices() {
+//		return invoices;
+//	}
+//	public void setInvoices(List<Invoice> invoiceIDs) {
+//		this.invoices = invoices;
+//	}
 	
 	
 	

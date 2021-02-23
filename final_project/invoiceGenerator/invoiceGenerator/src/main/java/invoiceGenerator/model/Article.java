@@ -1,24 +1,52 @@
 package invoiceGenerator.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.math.BigDecimal;
+import java.util.List;
+
+@Entity(name = "article")
 public class Article extends Identity {
 
 	static public final byte STANDARD_TAX_RATE = 25;
 
+	@Column(columnDefinition = "char(10)", name = "warehouse_location", nullable = false)
 	private String		warehouseLocation; // not null
+
+	@Column(name = "warehouse_quantity", nullable = false)
 	private Long 		warehouseQuantity; // not null
-	private Float 		wholesalePrice; // not null
-	private Float 		retailPrice;
+
+	@Column(name = "wholesale_price", nullable = false)
+	private BigDecimal 	wholesalePrice; // not null
+
+	@Column(name = "retail_price", nullable = false)
+	private BigDecimal	retailPrice;
+
+	@Column(name = "tax_rate", nullable = false)
 	private Byte 		taxRate;
+
+	@Column(name = "short_name", columnDefinition = "char(50)", nullable = false)
 	private String 		shortName; // not null
+
+	@Column(name = "long_name", columnDefinition = "char(100)")
 	private String 		longName;
+
+	@Column(name = "short_description", columnDefinition = "char(100)")
 	private String 		shortDescription;
+
+	@Column(name = "long_description", columnDefinition = "text")
 	private String 		longDescription;
+
+	@Column(name = "article_invoice")
+	@OneToMany(mappedBy = "article")
+	private List<ArticleInvoice> articleInvoice;
 
 	public Article() {
 
 	}
 
-	public Article(String warehouseLocation, Long warehouseQuantity, Float wholesalePrice, Float retailPrice, Byte taxRate, String shortName, String longName, String shortDescription, String longDescription) {
+	public Article(String warehouseLocation, Long warehouseQuantity, BigDecimal wholesalePrice, BigDecimal retailPrice, Byte taxRate, String shortName, String longName, String shortDescription, String longDescription) {
 		this.warehouseLocation = warehouseLocation;
 		this.warehouseQuantity = warehouseQuantity;
 		this.wholesalePrice = wholesalePrice;
@@ -42,16 +70,16 @@ public class Article extends Identity {
 	public void setWarehouseQuantity(Long warehouseQuantity) {
 		this.warehouseQuantity = warehouseQuantity;
 	}
-	public Float getWholesalePrice() {
+	public BigDecimal getWholesalePrice() {
 		return wholesalePrice;
 	}
-	public void setWholesalePrice(Float wholesalePrice) {
+	public void setWholesalePrice(BigDecimal wholesalePrice) {
 		this.wholesalePrice = wholesalePrice;
 	}
-	public Float getRetailPrice() {
+	public BigDecimal getRetailPrice() {
 		return retailPrice;
 	}
-	public void setRetailPrice(Float retailPrice) {
+	public void setRetailPrice(BigDecimal retailPrice) {
 		this.retailPrice = retailPrice;
 	}
 	public Byte getTaxRate() {

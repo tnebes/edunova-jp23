@@ -1,18 +1,37 @@
 package invoiceGenerator.model;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.Instant;
 
+@Entity(name = "article_invoice")
 public class ArticleInvoice extends Identity {
 
-	private Instant dateOfCreation;
-	private Long 	articleId;
-	private Long 	invoiceId;
-	private Byte 	discount;
-	private Long 	quantity;
-	private Float 	wholesalePrice;
-	private Float 	retailPrice;
-	private Byte 	taxRate;
-	private String 	note;
+	@Column(name = "date_of_creation")
+	private Instant 	dateOfCreation;
+
+	@ManyToOne()
+	@JoinColumn(name = "article")
+	private Article		article;
+
+	@ManyToOne()
+	@JoinColumn(name = "invoice")
+	private Invoice		invoice;
+
+	private Byte 		discount;
+	private Long 		quantity;
+
+	@Column(name = "wholesale_price")
+	private BigDecimal 	wholesalePrice;
+
+	@Column(name = "retail_price")
+	private BigDecimal 	retailPrice;
+
+	@Column(name = "tax_rate")
+	private Byte 		taxRate;
+
+	@Column(columnDefinition = "text")
+	private String 		note;
 	
 	public Instant getDateOfCreation() {
 		return dateOfCreation;
@@ -20,17 +39,17 @@ public class ArticleInvoice extends Identity {
 	public void setDateOfCreation(Instant dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public Long getArticleId() {
-		return articleId;
+	public Article getArticle() {
+		return article;
 	}
-	public void setArticleId(long articleId) {
-		this.articleId = articleId;
+	public void setArticle(Article article) {
+		this.article = article;
 	}
-	public Long getInvoiceId() {
-		return invoiceId;
+	public Invoice getInvoice() {
+		return invoice;
 	}
-	public void setInvoiceId(long invoiceId) {
-		this.invoiceId = invoiceId;
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 	public Byte getDiscount() {
 		return discount;
@@ -44,16 +63,16 @@ public class ArticleInvoice extends Identity {
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;
 	}
-	public Float getWholesalePrice() {
+	public BigDecimal getWholesalePrice() {
 		return wholesalePrice;
 	}
-	public void setWholesalePrice(Float wholesalePrice) {
+	public void setWholesalePrice(BigDecimal wholesalePrice) {
 		this.wholesalePrice = wholesalePrice;
 	}
-	public Float getRetailPrice() {
+	public BigDecimal getRetailPrice() {
 		return retailPrice;
 	}
-	public void setRetailPrice(Float retailPrice) {
+	public void setRetailPrice(BigDecimal retailPrice) {
 		this.retailPrice = retailPrice;
 	}
 	public Byte getTaxRate() {

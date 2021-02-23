@@ -1,12 +1,17 @@
 package invoiceGenerator.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
+@Entity(name = "transaction_type")
 public class TransactionType extends Identity {
 
+	@Column(columnDefinition = "char(100)")
 	private String 				name;
+
+	@Column(columnDefinition = "char(255)")
 	private String 				description;
-	private ArrayList<Invoice> 	invoices;
 
 	public TransactionType() {
 		// this(IDCounter.incrementTransactionTypeCounter(), "default", "default");
@@ -15,12 +20,8 @@ public class TransactionType extends Identity {
 	public TransactionType(String name, String description) {
 		this.name = name;
 		this.description = description;
-		initialise();
 	}
 
-	private void initialise() {
-		this.invoices = new ArrayList<>();
-	}
 	public String getName() {
 		return name;
 	}
@@ -32,12 +33,6 @@ public class TransactionType extends Identity {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public ArrayList<Invoice> getInvoices() {
-		return invoices;
-	}
-	public void setInvoices(ArrayList<Invoice> invoices) {
-		this.invoices = invoices;
 	}
 
 	@Override

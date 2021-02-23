@@ -1,30 +1,54 @@
 package invoiceGenerator.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity(name = "customer")
 public class Customer extends Identity {
 
 	static public final boolean NATURAL_PERSON = false;
 	static public final boolean LEGAL_PERSON = true;
+	@Column(nullable = false)
 	private Boolean 			type;
-	private Instant 			dateOfCreation;
-	private String 				VATID;
-	private String 				nationalIdNumber;
-	private String 				name;
-	private String 				firstName;
-	private String 				middleName;
-	private String 				lastName;
-	private Address				billingAddress;
-	private Address 			shippingAddress;
-	private ArrayList<Long> 	invoicesIDs;
 
-	private void initialise() {
-		this.invoicesIDs = new ArrayList<>();
-	}
+	@Column(name = "date_of_creation", nullable = false)
+	private Instant 			dateOfCreation;
+
+	@Column(columnDefinition = "char(32)")
+	private String 				VATID;
+
+	@Column(name = "national_id_number", columnDefinition = "char(32)")
+	private String 				nationalIdNumber;
+
+	@Column(columnDefinition = "char(100)")
+	private String 				name;
+
+	@Column(name = "first_name", columnDefinition = "char(50)")
+	private String 				firstName;
+
+	@Column(name = "middle_name", columnDefinition = "char(50)")
+	private String 				middleName;
+
+	@Column(name = "last_name", columnDefinition = "char(50)")
+	private String 				lastName;
+
+	@ManyToOne
+	private Address				billingAddress;
+
+	@ManyToOne
+	private Address 			shippingAddress;
+
+//	// TODO
+//	@OneToMany(targetEntity = Invoice.class, mappedBy = "customer")
+//	private ArrayList<Invoice> invoices = new ArrayList<>();
 
 	public Customer() {
-		initialise();
+
 	}
 
 	public Customer(Boolean type, Instant dateOfCreation, String VATID, String nationalIdNumber, String name, String firstName, String middleName, String lastName, Address billingAddress, Address shippingAddress) {
@@ -100,13 +124,13 @@ public class Customer extends Identity {
 	public void setShippingAddress(Address shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
-	public ArrayList<Long> getInvoicesIDs() {
-		return invoicesIDs;
-	}
-
-	public void setInvoicesIDs(ArrayList<Long> invoicesIDs) {
-		this.invoicesIDs = invoicesIDs;
-	}
+//	public List<Invoice> getInvoices() {
+//		return invoices;
+//	}
+//
+//	public void setInvoices(ArrayList<Invoice> invoices) {
+//		this.invoices = invoices;
+//	}
 	
 	@Override
 	public String toString() {
