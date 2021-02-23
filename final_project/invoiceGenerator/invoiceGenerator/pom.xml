@@ -30,4 +30,7 @@
         <version>5.4.28.Final</version>
     </dependency>
 </dependencies>
+    <build>
+        <defaultGoal>install</defaultGoal>
+    </build>
 </project>

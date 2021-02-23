@@ -24,6 +24,13 @@
         <property name="hibernate.dbcp.maxIdle">10</property>
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
-        <!-- <mapping class="net.javaguides.hibernate.entity.Student" /> -->
+        <mapping class="invoiceGenerator.model.Identity"/>
+        <mapping class="invoiceGenerator.model.Address"/>
+        <mapping class="invoiceGenerator.model.Article"/>
+        <mapping class="invoiceGenerator.model.Invoice"/>
+        <mapping class="invoiceGenerator.model.ArticleInvoice"/>
+        <mapping class="invoiceGenerator.model.Customer"/>
+        <mapping class="invoiceGenerator.model.Status"/>
+        <mapping class="invoiceGenerator.model.TransactionType"/>
     </session-factory>
 </hibernate-configuration>

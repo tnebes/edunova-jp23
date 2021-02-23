@@ -18,6 +18,8 @@ public class Main {
         
         SessionFactory sessionFactory = invoiceGenerator.util.HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.getTransaction().commit();
         
     }
     
