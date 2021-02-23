@@ -7,10 +7,10 @@ import java.util.ArrayList;
 @Entity(name = "transaction_type")
 public class TransactionType extends Identity {
 
-	@Column(columnDefinition = "char(100)")
+	@Column(columnDefinition = "varchar(100)")
 	private String 				name;
 
-	@Column(columnDefinition = "char(255)")
+	@Column(columnDefinition = "varchar(255)")
 	private String 				description;
 
 	public TransactionType() {

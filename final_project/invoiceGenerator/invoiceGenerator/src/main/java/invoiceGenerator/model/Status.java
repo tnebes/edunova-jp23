@@ -9,10 +9,10 @@ import java.util.List;
 @Entity(name = "status")
 public class Status extends Identity {
 
-	@Column(columnDefinition = "char(50)", nullable = false)
+	@Column(columnDefinition = "varchar(50)", nullable = false)
 	private String 			name;
 
-	@Column(columnDefinition = "char(100)")
+	@Column(columnDefinition = "varchar(100)")
 	private String 			description;
 
 	@Column(name = "description_long", columnDefinition = "text")

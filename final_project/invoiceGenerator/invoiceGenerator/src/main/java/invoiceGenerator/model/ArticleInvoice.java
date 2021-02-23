@@ -19,7 +19,7 @@ public class ArticleInvoice extends Identity {
 	private Invoice		invoice;
 
 	private Byte 		discount;
-	
+
 	@Column(nullable = false)
 	private Long 		quantity;
 

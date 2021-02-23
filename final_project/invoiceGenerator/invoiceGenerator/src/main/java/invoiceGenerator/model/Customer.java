@@ -19,22 +19,22 @@ public class Customer extends Identity {
 	@Column(name = "date_of_creation", nullable = false)
 	private Instant 			dateOfCreation;
 
-	@Column(columnDefinition = "char(32)")
+	@Column(columnDefinition = "varchar(32)")
 	private String 				VATID;
 
-	@Column(name = "national_id_number", columnDefinition = "char(32)")
+	@Column(name = "national_id_number", columnDefinition = "varchar(32)")
 	private String 				nationalIdNumber;
 
 	@Column(columnDefinition = "char(100)")
 	private String 				name;
 
-	@Column(name = "first_name", columnDefinition = "char(50)")
+	@Column(name = "first_name", columnDefinition = "varchar(50)")
 	private String 				firstName;
 
-	@Column(name = "middle_name", columnDefinition = "char(50)")
+	@Column(name = "middle_name", columnDefinition = "varchar(50)")
 	private String 				middleName;
 
-	@Column(name = "last_name", columnDefinition = "char(50)")
+	@Column(name = "last_name", columnDefinition = "varchar(50)")
 	private String 				lastName;
 
 	@ManyToOne

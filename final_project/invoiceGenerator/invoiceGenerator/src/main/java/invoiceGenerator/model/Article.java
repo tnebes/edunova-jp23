@@ -11,7 +11,7 @@ public class Article extends Identity {
 
 	static public final byte STANDARD_TAX_RATE = 25;
 
-	@Column(columnDefinition = "char(10)", name = "warehouse_location", nullable = false)
+	@Column(name = "warehouse_location", columnDefinition = "varchar(10)", nullable = false)
 	private String		warehouseLocation; // not null
 
 	@Column(name = "warehouse_quantity", nullable = false)
@@ -26,13 +26,13 @@ public class Article extends Identity {
 	@Column(name = "tax_rate", nullable = false)
 	private Byte 		taxRate;
 
-	@Column(name = "short_name", columnDefinition = "char(50)", nullable = false)
+	@Column(name = "short_name", columnDefinition = "varchar(50)", nullable = false)
 	private String 		shortName; // not null
 
-	@Column(name = "long_name", columnDefinition = "char(100)")
+	@Column(name = "long_name", columnDefinition = "varchar(100)")
 	private String 		longName;
 
-	@Column(name = "short_description", columnDefinition = "char(100)")
+	@Column(name = "short_description", columnDefinition = "varchar(100)")
 	private String 		shortDescription;
 
 	@Column(name = "long_description", columnDefinition = "text")

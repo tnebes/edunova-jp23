@@ -13,22 +13,22 @@ public class Address extends Identity {
 	static public final boolean BILLING_ADDRESS = true;
 
 	private Boolean					type;
-	@Column(columnDefinition = "char(50)", nullable = false)
+	@Column(columnDefinition = "varchar(50)", nullable = false)
 	private String city;
 
-	@Column(name = "ZIP_code", columnDefinition = "char(50)", nullable = false)
+	@Column(name = "ZIP_code", columnDefinition = "varchar(50)", nullable = false)
 	private String					ZIPCode;
 
 	@Column(columnDefinition = "char(50)", nullable = false)
 	private String					street;
 
-	@Column(name = "street_number", columnDefinition = "char(10)")
+	@Column(name = "street_number", columnDefinition = "varchar(10)")
 	private String					streetNumber;
 
-	@Column(name = "street_letter", columnDefinition = "char(10)")
+	@Column(name = "street_letter", columnDefinition = "varchar(10)")
 	private String					streetLetter;
 
-	@Column(columnDefinition = "char(50)", nullable = false)
+	@Column(columnDefinition = "varchar(50)", nullable = false)
 	private String					country;
 
 	public Address(Boolean type, String city, String ZIPCode, String street, String streetNumber, String streetLetter, String country) {
