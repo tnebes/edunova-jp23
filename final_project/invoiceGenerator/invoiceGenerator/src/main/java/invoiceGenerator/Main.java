@@ -7,6 +7,7 @@ package invoiceGenerator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import invoiceGenerator.UI.MainMenu;
 
 /**
  *
@@ -20,6 +21,11 @@ public class Main {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.getTransaction().commit();
+        
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.setVisible(true);
+        
+        
         
     }
     

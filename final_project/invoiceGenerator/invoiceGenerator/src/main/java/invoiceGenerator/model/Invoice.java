@@ -50,6 +50,7 @@ public class Invoice extends Identity {
 	@ManyToOne(optional = true)
 	private Address				shippingAddress;
 
+	// TODO delete this?
 	@Column(name = "article_invoice")
 	@OneToMany(mappedBy = "invoice")
 	List<ArticleInvoice> articleInvoice;

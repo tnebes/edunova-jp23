@@ -38,6 +38,7 @@ public class Article extends Identity {
 	@Column(name = "long_description", columnDefinition = "text")
 	private String 		longDescription;
 
+	// TODO delete this?
 	@Column(name = "article_invoice")
 	@OneToMany(mappedBy = "article")
 	private List<ArticleInvoice> articleInvoice;
