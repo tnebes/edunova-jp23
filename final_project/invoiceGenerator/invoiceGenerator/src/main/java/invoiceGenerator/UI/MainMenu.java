@@ -27,15 +27,13 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jButton1 = new javax.swing.JButton();
         tabController = new javax.swing.JTabbedPane();
         registerTab = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        customerScrollPane = new javax.swing.JScrollPane();
         customerTextArea = new javax.swing.JTextArea();
         addCustomerButton = new javax.swing.JButton();
         removeCustomerButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        shippingScrollPane = new javax.swing.JScrollPane();
         shippingTextArea = new javax.swing.JTextArea();
         addCustomerButton1 = new javax.swing.JButton();
         removeCustomerButton1 = new javax.swing.JButton();
@@ -52,15 +50,6 @@ public class MainMenu extends javax.swing.JFrame {
         refreshDatabaseButton = new javax.swing.JButton();
         purgeDatabaseButton = new javax.swing.JButton();
 
-        jMenuItem1.setText("jMenuItem1");
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tabController.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -70,7 +59,7 @@ public class MainMenu extends javax.swing.JFrame {
         customerTextArea.setEditable(false);
         customerTextArea.setColumns(20);
         customerTextArea.setRows(5);
-        jScrollPane1.setViewportView(customerTextArea);
+        customerScrollPane.setViewportView(customerTextArea);
 
         addCustomerButton.setText("Add Customer");
         addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +78,7 @@ public class MainMenu extends javax.swing.JFrame {
         shippingTextArea.setEditable(false);
         shippingTextArea.setColumns(20);
         shippingTextArea.setRows(5);
-        jScrollPane2.setViewportView(shippingTextArea);
+        shippingScrollPane.setViewportView(shippingTextArea);
 
         addCustomerButton1.setText("Add Shipping");
         addCustomerButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -121,14 +110,14 @@ public class MainMenu extends javax.swing.JFrame {
                     .addGroup(registerTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(registerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(customerScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(registerTabLayout.createSequentialGroup()
                                 .addComponent(addCustomerButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(removeCustomerButton)))
                         .addGap(35, 35, 35)
                         .addGroup(registerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(shippingScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(registerTabLayout.createSequentialGroup()
                                 .addComponent(addCustomerButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -144,13 +133,13 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(registerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(registerTabLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(customerScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(registerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addCustomerButton)
                             .addComponent(removeCustomerButton)))
                     .addGroup(registerTabLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(shippingScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(registerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addCustomerButton1)
@@ -320,10 +309,6 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_printInvoiceButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void purgeDatabaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purgeDatabaseButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_purgeDatabaseButtonActionPerformed
@@ -370,14 +355,11 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel addressPanel;
     private javax.swing.JPanel articlePanel;
     private javax.swing.JPanel customerPanel;
+    private javax.swing.JScrollPane customerScrollPane;
     private javax.swing.JTextArea customerTextArea;
     private javax.swing.JLabel databaseLabel;
     private javax.swing.JPanel databasePanel;
     private javax.swing.JPanel invoicePanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel optionsTab;
     private javax.swing.JButton printInvoiceButton;
@@ -386,6 +368,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel registerTab;
     private javax.swing.JButton removeCustomerButton;
     private javax.swing.JButton removeCustomerButton1;
+    private javax.swing.JScrollPane shippingScrollPane;
     private javax.swing.JTextArea shippingTextArea;
     private javax.swing.JTabbedPane tabController;
     // End of variables declaration//GEN-END:variables
