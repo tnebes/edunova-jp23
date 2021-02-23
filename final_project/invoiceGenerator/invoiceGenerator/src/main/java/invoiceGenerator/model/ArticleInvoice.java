@@ -7,27 +7,29 @@ import java.time.Instant;
 @Entity(name = "article_invoice")
 public class ArticleInvoice extends Identity {
 
-	@Column(name = "date_of_creation")
+	@Column(name = "date_of_creation", nullable = false)
 	private Instant 	dateOfCreation;
 
 	@ManyToOne()
-	@JoinColumn(name = "article")
+	@JoinColumn(name = "article", nullable = false)
 	private Article		article;
 
 	@ManyToOne()
-	@JoinColumn(name = "invoice")
+	@JoinColumn(name = "invoice", nullable = false)
 	private Invoice		invoice;
 
 	private Byte 		discount;
+	
+	@Column(nullable = false)
 	private Long 		quantity;
 
-	@Column(name = "wholesale_price")
+	@Column(name = "wholesale_price", nullable = false)
 	private BigDecimal 	wholesalePrice;
 
-	@Column(name = "retail_price")
+	@Column(name = "retail_price", nullable = false)
 	private BigDecimal 	retailPrice;
 
-	@Column(name = "tax_rate")
+	@Column(name = "tax_rate", nullable = false)
 	private Byte 		taxRate;
 
 	@Column(columnDefinition = "text")

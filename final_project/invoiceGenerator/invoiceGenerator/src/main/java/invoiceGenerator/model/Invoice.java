@@ -1,5 +1,8 @@
 package invoiceGenerator.model;
 
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -20,27 +23,31 @@ public class Invoice extends Identity {
 	@Column(name = "date_of_creation", nullable = false)
 	private Instant				dateOfCreation; // not null
 
-	@ManyToOne(targetEntity = Customer.class)
+	@ManyToOne(targetEntity = Customer.class, optional = true)
 	private Customer			customer;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private TransactionType 	transactionType; // not null
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Status				status; // not null
 
-	@Column(name = "invoice_discount_percent")
+	@Column(name = "invoice_discount_percent", nullable = false)
 	private Byte 				invoiceDiscountPercent;
 
+	@Column(nullable = false)
 	private BigDecimal			subtotal;
 
-	@Column(name = "amount_due")
+	@Column(nullable = false)
+	private BigDecimal			total;
+
+	@Column(name = "amount_due", nullable = false)
 	private BigDecimal			amountDue;
 
-	@Column(name = "amount_paid")
+	@Column(name = "amount_paid", nullable = false)
 	private BigDecimal			amountPaid; // not null
 
-	@ManyToOne
+	@ManyToOne(optional = true)
 	private Address				shippingAddress;
 
 	@Column(name = "article_invoice")
@@ -55,7 +62,7 @@ public class Invoice extends Identity {
 				   Status status, Byte invoiceDiscountPercent, BigDecimal subtotal,
 				   BigDecimal amountDue, BigDecimal amountPaid, Address shippingAddress) {
 		this.dateOfCreation = dateOfCreation;
-//		this.customer = customer;
+		this.customer = customer;
 		this.transactionType = transactionType;
 		this.status = status;
 		this.invoiceDiscountPercent = invoiceDiscountPercent;
@@ -71,12 +78,12 @@ public class Invoice extends Identity {
 	public void setDateOfCreation(Instant dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-//	public Customer getCustomer() {
-//		return customer;
-//	}
-//	public void setCustomer(Customer customer) {
-//		this.customer = customer;
-//	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	public TransactionType getTransactionTypeId() {
 		return transactionType;
 	}
@@ -106,6 +113,13 @@ public class Invoice extends Identity {
 	}
 	public void setAmountDue(BigDecimal amountDue) {
 		this.amountDue = amountDue;
+	}
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 	public BigDecimal getAmountPaid() {
 		return amountPaid;
