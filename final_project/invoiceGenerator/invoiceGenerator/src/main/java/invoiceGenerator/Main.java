@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import invoiceGenerator.UI.MainMenu;
 
+
 /**
  *
  * @author tnebes
@@ -24,9 +25,6 @@ public class Main {
         
         MainMenu mainMenu = new MainMenu();
         mainMenu.setVisible(true);
-        
-        
-        
     }
     
     public static void main(String[] args) {

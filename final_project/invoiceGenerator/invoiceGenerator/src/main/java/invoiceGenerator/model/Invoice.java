@@ -1,12 +1,6 @@
 package invoiceGenerator.model;
 
-import com.sun.istack.NotNull;
-import com.sun.istack.Nullable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -60,7 +54,7 @@ public class Invoice extends Identity {
 	}
 
 	public Invoice(Instant dateOfCreation, Customer customer, TransactionType transactionType,
-				   Status status, Byte invoiceDiscountPercent, BigDecimal subtotal,
+				   Status status, Byte invoiceDiscountPercent, BigDecimal subtotal, BigDecimal total,
 				   BigDecimal amountDue, BigDecimal amountPaid, Address shippingAddress) {
 		this.dateOfCreation = dateOfCreation;
 		this.customer = customer;
@@ -68,6 +62,7 @@ public class Invoice extends Identity {
 		this.status = status;
 		this.invoiceDiscountPercent = invoiceDiscountPercent;
 		this.subtotal = subtotal;
+		this.total = total;
 		this.amountDue = amountDue;
 		this.amountPaid = amountPaid;
 		this.shippingAddress = shippingAddress;
@@ -118,7 +113,6 @@ public class Invoice extends Identity {
 	public BigDecimal getTotal() {
 		return total;
 	}
-
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
@@ -134,6 +128,8 @@ public class Invoice extends Identity {
 	public void setShippingAddress(Address shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
+
+
 	
 	@Override
 	public String toString() {

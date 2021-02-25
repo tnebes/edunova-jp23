@@ -41,6 +41,8 @@ public class MainMenu extends javax.swing.JFrame {
         accountingTab = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         invoicePanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         customerPanel = new javax.swing.JPanel();
         articlePanel = new javax.swing.JPanel();
         addressPanel = new javax.swing.JPanel();
@@ -151,15 +153,33 @@ public class MainMenu extends javax.swing.JFrame {
 
         tabController.addTab("Register", registerTab);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout invoicePanelLayout = new javax.swing.GroupLayout(invoicePanel);
         invoicePanel.setLayout(invoicePanelLayout);
         invoicePanelLayout.setHorizontalGroup(
             invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(invoicePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                .addContainerGap())
         );
         invoicePanelLayout.setVerticalGroup(
             invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(invoicePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Invoice", invoicePanel);
@@ -251,8 +271,6 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(purgeDatabaseButton)
                 .addGap(0, 130, Short.MAX_VALUE))
         );
-
-        purgeDatabaseButton.getAccessibleContext().setAccessibleName("Purge database");
 
         javax.swing.GroupLayout optionsTabLayout = new javax.swing.GroupLayout(optionsTab);
         optionsTab.setLayout(optionsTabLayout);
@@ -360,7 +378,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel databaseLabel;
     private javax.swing.JPanel databasePanel;
     private javax.swing.JPanel invoicePanel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JPanel optionsTab;
     private javax.swing.JButton printInvoiceButton;
     private javax.swing.JButton purgeDatabaseButton;
