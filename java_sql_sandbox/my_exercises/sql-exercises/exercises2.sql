@@ -40,3 +40,14 @@ FROM orders
 
 # 10 Write a SQL query to display order number, purchase amount, achieved, the unachieved percentage for those order which exceeds the 50% of the target value of 6000.
 
+SELECT ord_no, purch_amt,
+(purch_amt / 6000) * 100 AS "Achieved %",
+(6000 - purch_amt) / 6000 ) * 100 AS "Unachieved %"
+FROM orders
+    WHERE purch_amt > 6000 / 2;
+
+# 12 Write a query in SQL to display all the data of employees that work in department 47 or department 63.
+
+SELECT *
+FROM emp_details
+WHERE EMP_DEPT IN (47, 63);
