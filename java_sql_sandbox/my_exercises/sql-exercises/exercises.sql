@@ -1,3 +1,7 @@
+/*
+ * Exercises from https://www.w3resource.com/sql-exercises/sql-retrieve-from-table.php
+*/
+
 # Write a SQL query to show all the winners in Physics for 1970 together with the winner of Economics for 1971.
 
 SELECT * FROM nobel_win
