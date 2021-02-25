@@ -42,5 +42,14 @@ SELECT * FROM nobel_win
     ASC,
         SUBJECT, WINNER;
 
-        
+# Write a SQL query to find all the products with a price between Rs.200 and Rs.600.
+
+SELECT * FROM item_mast
+    WHERE PRO_PRICE BETWEEN 200 AND 600;
+
+# Write a SQL query to calculate the average price of all products of the manufacturer which code is 16.
+
+SELECT AVG(PRO_PRICE) as avg FROM item_mast
+WHERE PRO_COM = 16;
+
 
