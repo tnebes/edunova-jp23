@@ -17,7 +17,7 @@ public class Student extends Identity {
     @Column(length = 50)
     private String contractNumber;
 
-    @ManyToOne()
+    @ManyToOne(optional = false)
     private Person person;
 
     @ManyToMany(mappedBy = "students")

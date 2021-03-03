@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 @Entity(name = "lecturer")
 public class Lecturer extends Identity {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Person person;
 
     @Column(length = 50)
